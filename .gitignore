@@ -3,6 +3,7 @@ app/tmp/*
 !empty
 app/Config/database.php
 app/Config/passwords.php
+app/Config/email.php
 nbproject/
 cake20/
 public_html/js/ckeditor/*
