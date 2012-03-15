@@ -30,7 +30,7 @@
                         'label' => 'Año de publicación:',
                         'type' => 'number',
                         'class' => 'numeric',
-                        'min' => '1',
+                        'min' => '1950',
                         'max' => '2012'
                     ));
                 ?>

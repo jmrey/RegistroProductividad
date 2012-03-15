@@ -2,9 +2,40 @@
     <header>
         <h1 class="title btn-small">Artículos</h1>
         <div class="btn-group right">
+                <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#exportar">
+                    Guardar como
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <?php 
+                        echo $this->Html->link('Texto', array(
+                            'controller' => 'articulos',
+                            'action' => 'exportar',
+                            'txt'
+                            ), array());
+                        ?>
+                    </li>
+                    <li>
+                        <?php 
+                        echo $this->Html->link('PDF', array(
+                            'controller' => 'articulos',
+                            'action' => 'exportar',
+                            'pdf'
+                            ), array());
+                        ?>
+                    </li>
+                    <li>
+                        <?php 
+                        echo $this->Html->link('XML', array(
+                            'controller' => 'articulos',
+                            'action' => 'exportar',
+                            'xml'
+                            ), array());
+                        ?>
+                    </li>
+                </ul>
             <?php
-                echo $this->Html->link('Exportar', array('controller' => 'articulos', 'action' => 'exportar'),
-                    array('class' => 'btn btn-small'));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
                 echo $this->Html->link($icon_plus, array('controller' => 'articulos', 'action' => 'agregar'),
                     array('class' => 'btn btn-small', 'escape' => false));

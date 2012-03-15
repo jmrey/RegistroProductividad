@@ -3,6 +3,7 @@
 class ArticulosController extends AppController {
     public $name = 'Articulos';
     public $components = array('Session');
+    public $uses = array('Articulo', 'Contenido');
     
     public function beforeFilter() {
         parent::beforeFilter();
@@ -16,6 +17,12 @@ class ArticulosController extends AppController {
             'conditions' => $conditions 
         ));    
         $this->set('articulos', $articulos);
+    }
+    
+    public function admin_index() {
+        $this->Articulo->recursive = -1;
+        $this->set('articulos', $this->paginate());
+        $this->render('index'); 
     }
     
     public function agregar() {
@@ -61,21 +68,48 @@ class ArticulosController extends AppController {
     
     public function exportar($type = null) {
         $this->layout = false;
-        
         //if ($this->request->is('get')) {
         $this->Articulo->recursive = -1;
         $conditions = array('Articulo.user_id' => $this->Auth->user('id'));
         $articulos = $this->Articulo->find('all', array(
             'conditions' => $conditions 
         ));
-        $this->set('articulos', $articulos);
-        //} /*else if ($this->request-is('get')) {
-            
-        //}*/
-        $this->response->type('txt');
-        $this->response->download('example.txt');
-        $this->response->disableCache();
-        $this->render('export_txt');
+        $force_downloads = $this->Contenido->getPropertyValue('force_downloads', 'bool');
+        
+        if ($type == 'txt') {
+            $this->response->type('txt');
+            if ($force_downloads) {
+                $this->response->download('mis-articulos.txt');
+            }
+            $this->response->disableCache();
+            $this->set('articulos', $articulos);
+            $this->render('export_txt');
+        } else if ($type == 'xml') {
+            $this->response->type('xml');
+            if ($force_downloads) {
+                $this->response->download('mis-articulos.xml');
+            }
+            $this->response->disableCache();
+            $this->set('articulos', $this->_fix_assoc_array($articulos));
+            $this->render('export_xml');
+        } else if ($type == 'pdf') {
+            $this->layout = 'pdf';
+            $this->response->type('pdf');
+            if ($force_downloads) {
+                $this->response->download('mis-articulos.pdf');
+            }
+            $this->response->disableCache();
+            $this->set('articulos', $articulos);
+            $this->render('export_pdf');
+        }
+    }
+    
+    private function _fix_assoc_array($array = array()) {
+        $assoc_articulos = array('articulo' => array());
+        foreach ($array as $key => $value) {
+            array_push($assoc_articulos['articulo'], $value['Articulo']);
+        }
+        return array('articulos' => $assoc_articulos);
     }
 }
 ?>
