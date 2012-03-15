@@ -4,7 +4,12 @@ App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel {
     public $name = 'User';
     public $useTable = 'usuarios';
-    
+    public $deptosArray = array(
+                    '0' => 'Básicas',
+                    '1' => 'Sociales',
+                    '2' => 'Sistemas',
+                    '3' => 'Electronica'
+                );
     
     public $validate = array(
         'username' => array(

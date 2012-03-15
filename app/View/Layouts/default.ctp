@@ -51,25 +51,13 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <!--<div class="navbar-inner">
-                <div class="container">
-                    <a class="brand">5dfsdf</a>
-                    <ul class="nav">
-                        <li><?php echo $this->Html->link('Inicio', '/'); ?></li>
-                        <li><?php echo $this->Html->link('Acerca', '/'); ?></li>
-                        <li><?php echo $this->Html->link('Contacto', '/'); ?></li>
-                        <li><?php echo $this->Html->link(null, array('controller' => 'users', 'action' => 'index')); ?></li>
-                    </ul>
-                    
-                </div>
-            </div>-->
         </div>
         <div class="container">
             <?php echo $content_for_layout; ?>
         </div>
     </body>
     <?php 
-        $scripts_array = array('jquery-1.7.1', 'bootstrap-alert', 'bootstrap-dropdown','main');
+        $scripts_array = array('jquery-1.7.1', 'bootstrap-alert', 'bootstrap-dropdown', 'bootstrap-button','main');
         echo $this->Html->script($scripts_array); 
     ?>
 </html>

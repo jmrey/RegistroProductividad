@@ -32,24 +32,12 @@ class Articulo extends AppModel {
             )
         ),
         'volumen' => array(
-            'validate' => array(
-                'rule' => 'notEmpty',
-                'allowEmpty' => false,
-                'required' => true,
-                'message' => 'Este campo es obligatorio.'
-            ),
             'numeric' => array(
                 'rule' => 'numeric',
                 'message' => 'Ingresa sólo números.'
             )
         ),
         'num_volumen' => array(
-            'validate' => array(
-                'rule' => 'notEmpty',
-                'allowEmpty' => false,
-                'requried' => true,
-                'message' => 'Este campo es obligatorio.'
-            ),
             'numeric' => array(
                 'rule' => 'numeric',
                 'message' => 'Ingresa sólo números.'
@@ -95,7 +83,7 @@ class Articulo extends AppModel {
                 'message' => 'Este campo es obligatorio y debe contener sólo números.'
             ),
             'range' => array(
-                'rule' => array('range', -1, 2013),
+                'rule' => array('range', 1949, 2013),
                 'message' => 'Ingresa un año válido.'
             )
         ),

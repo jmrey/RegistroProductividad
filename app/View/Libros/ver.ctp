@@ -87,15 +87,15 @@
             <div class="row-fluid">
                 <div class="span4">
                     <span class="label">Palabra Clave 1:</span>
-                    <?php echo 'palabra clave1';//$lib['palabra_clave1']; ?>
+                    <?php echo $lib['palabra_clave1']; ?>
                 </div>
                 <div class="span4">
                     <span class="label">Palabra Clave 2:</span>
-                    <?php echo 'palabra clave2';//$lib['palabra_clave2']; ?>
+                    <?php echo $lib['palabra_clave2']; ?>
                 </div>
                 <div class="span4">
                     <span class="label">Palabra Clave 3:</span>
-                    <?php echo 'palabra clave3';//$lib['palabra_clave3']; ?>
+                    <?php echo $lib['palabra_clave3']; ?>
                 </div>
             </div>
         </div>

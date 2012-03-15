@@ -75,8 +75,7 @@
                     echo $this->Form->input('volumen', array(
                         'label' => 'Volumen:',
                         'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
+                        'class' => 'numeric'
                     ));
                 ?>
             </div>
@@ -85,8 +84,7 @@
                     echo $this->Form->input('num_paginas', array(
                         'label' => 'Págs:',
                         'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
+                        'class' => 'numeric'
                     ));
                 ?>
             </div>
@@ -95,8 +93,7 @@
                     echo $this->Form->input('num_citas', array(
                         'label' => 'No. Citas:',
                         'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
+                        'class' => 'numeric'
                     ));
                 ?>
             </div>

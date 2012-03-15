@@ -47,8 +47,8 @@ class LibrosController extends AppController {
             throw new NotFoundException('Libro no existe.');
         }
         if ($this->request->is('post') || $this->request->is('put')) {
+            $this->request->data['Libro']['id'] = $id;
             if ($this->Libro->save($this->request->data)) {
-                $this->request->data['Libro']['id'] = $id;
                 $this->success('Se han actualizado los datos.');
             } else {
                 $this->error('No se han podido guardar los datos.');
@@ -56,6 +56,7 @@ class LibrosController extends AppController {
         } else {
             $this->Libro->recursive = -1;
             $this->request->data = $this->Libro->read(null, $id);
+            //$this->request->data['Libro']['id'] = $id;
         }
     }
 }

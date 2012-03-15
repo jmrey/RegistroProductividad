@@ -74,8 +74,7 @@
                     echo $this->Form->input('volumen', array(
                         'label' => 'Volumen:',
                         'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
+                        'class' => 'numeric'
                     ));
                 ?>
             </div>
@@ -84,8 +83,7 @@
                     echo $this->Form->input('num_paginas', array(
                         'label' => 'Págs:',
                         'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
+                        'class' => 'numeric'
                     ));
                 ?>
             </div>
@@ -94,8 +92,7 @@
                     echo $this->Form->input('num_citas', array(
                         'label' => 'No. Citas:',
                         'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
+                        'class' => 'numeric'
                     ));
                 ?>
             </div>
@@ -103,30 +100,36 @@
     <fieldset>
         <legend>Datos de Autores</legend>
         <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
                 <?php 
                     echo $this->Form->input('num_autores', array(
                         'label' => 'Total Autores:',
                         'type' => 'number',
                         'class' => 'numeric',
-                        'min' => '1'
+                        'min' => '1',
+                        'max' => '5'
                     ));
                 ?>
             </div>
-            <span class="info"><i class="icon-info-sign"></i> Se refire al n&uacute;mero de personas que participaron en la elaboraci&oacute;n del art&iacute;culo en cuesti&oacute;n.</span>
+            <?php echo $this->element('info_message', array(
+                'message' => 'Se refire al n&uacute;mero de personas que participaron en la elaboraci&oacute;n del art&iacute;culo en cuesti&oacute;n.'
+            )); ?>
         </div>
         <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
                 <?php 
                     echo $this->Form->input('pos_autor', array(
                         'label' => 'Posición Autor:',
                         'type' => 'number',
                         'class' => 'numeric',
-                        'min' => '1'
+                        'min' => '1',
+                        'max' => '5'
                     ));
             ?>
             </div>
-            <span class="info"><i class="icon-info-sign"></i> Se refire a la posici&oacute;n que ocupa el investigador en la lista de autores.</span>
+            <?php echo $this->element('info_message', array(
+                'message' => 'Se refire a la posici&oacute;n que ocupa el investigador en la lista de autores.'
+            )); ?>
         </div>
         <div class="row-fluid">
             <div class="span12">
