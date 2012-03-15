@@ -1,26 +1,64 @@
 <div class="box form">
-    <?php echo $this->Form->create('Contenido', array('action' =>'editar' ,'class' => 'form-inline big')); ?>
+    <header>
+        <h1 class="title btn-small">Contenidos</h1>
+        <div class="btn-group right">
+            <?php 
+                echo $this->Html->link('Ver', array('controller' => 'contenidos', 'action' => 'display', $this->request->data['Contenido']['name'], 'admin' => 0),
+                    array('class' => 'btn btn-small'));
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
+                echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'dashboard', 'admin' => 0),
+                    array('class' => 'btn btn-small', 'escape' => false));
+            ?>
+        </div>
+    </header>
+    <?php echo $this->Form->create('Contenido', array('url' => array(
+        'controller' => 'contenidos', 'action' => 'editar', $this->request->data['Contenido']['name'], 'admin' => $isAdmin
+    ),'class' => 'form-inline container-fluid')); ?>
     <fieldset>
         <legend>Datos de Contenido</legend>
-        <?php 
-            echo $this->Form->input('name', array(
-                'label' => 'Nombre:'
-            ));
-            echo $this->Form->input('title', array(
-                'label' => 'Título:'
-            ));
-            echo $this->Form->input('content', array(
-                'type' => 'textarea',
-                'label' => 'Contenido:'
-            ));
-            echo $this->Form->input('type', array(
-                'label' => 'Tipo:',
-                'options' => array(
-                    'page' => 'Página'
-                ),
-                'class' => 'disabled'
-            ));
-        ?>
+        <div class="row-fluid">
+            <div class="span12">
+                <?php
+                    echo $this->Form->hidden('id');
+                    echo $this->Form->input('name', array(
+                        'label' => 'Nombre:'
+                    ));
+                ?>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <?php
+                    echo $this->Form->input('title', array(
+                        'label' => 'Título:'
+                    ));
+                ?>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <?php
+                    echo $this->Form->input('content', array(
+                        'type' => 'textarea',
+                        'label' => 'Contenido:'
+                    ));
+                ?>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <?php
+                    echo $this->Form->input('type', array(
+                        'label' => 'Tipo:',
+                        'options' => array(
+                            'page' => 'Página',
+                            'text' => 'Texto'
+                        ),
+                        'class' => 'disabled'
+                    ));
+                ?>
+            </div>
+        </div>
     </fieldset>
     <div class="form-actions f-right">
         <div class="left">

@@ -9,10 +9,22 @@ class ContenidosController extends AppController {
         $this->Auth->allow('display');
     }
     
-    public function add() {
+    public function display($name = null) {
+        $contenido = $this->Contenido->findByName($name);
+        if ($contenido == null) {
+            throw new NotFoundException('Contenido no existe.');
+        }
+        $name = $contenido['Contenido']['name'];
+        if ($name === 'inicio') {
+            $this->set('titulo', $this->Contenido->getValue('titulo'));
+        }
+        $this->set('contenido', $contenido['Contenido']);
+    }
+    
+    public function admin_add() {
         if ($this->request->is('post')) {
-            $this->Setting->create();
-            if ($this->Setting->save($this->request->data)) {
+            $this->Contenido->create();
+            if ($this->Contenido->save($this->request->data)) {
                 $this->success('La configuración se ha guardado satisfactoriamente.');
             } else {
                 $this->warning('Ha ocurrido un problema.');
@@ -20,22 +32,21 @@ class ContenidosController extends AppController {
         }
     }
     
-    public function display($name = null) {
-        $conditions = array('Contenido.name' => $name);
-        $contenido = $this->Contenido->find('first', array(
-            'conditions' => $conditions
-        ));
-        $this->set('contenido', $contenido);
+    public function admin_set($property = null, $value = null){
+        $this->autoRender = false;
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        
+        echo $this->Contenido->setProperty($property, $value) ? 'success': 'error';
     }
     
-    public function editar($id = null) {
-        $this->Contenido->id = $id;
-        if (!$this->Contenido->exists()) {
+    public function admin_editar($name = null) {
+        $contenido = $this->Contenido->findByName($name);
+        if (empty($contenido)) {
             throw new NotFoundException('Contenido no existe.');
         }
         
-        $this->Contenido->recursive = -1;
-        $contenido = $this->Contenido->read(null, $id);
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Contenido->save($this->request->data)) {
                 $this->success('Se han actualizado los datos.');

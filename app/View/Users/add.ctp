@@ -26,6 +26,11 @@
                 'class' => 'capitalize',
                 'placeholder' => 'Nombre Completo'
             ));
+            echo $this->Form->input('depto', array(
+                'label' => 'Depto. de Adscripción:',
+                'placeholder' => 'Número de Empleado',
+                'options' => $deptos
+            ));
             echo $this->Form->input('no_empleado', array(
                 'label' => 'Número de Empleado:',
                 'type' => 'text',

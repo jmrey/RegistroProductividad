@@ -5,6 +5,7 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
     public $name = 'Users';
     public $components = array('Session');
+    public $uses = array('User', 'Contenido');
     
     public function beforeFilter() {
         parent::beforeFilter();
@@ -38,13 +39,19 @@ class UsersController extends AppController {
     }
     
     public function add() {
+        $this->set('deptos', $this->User->deptosArray);
         if ($this->request->is('post')) {
             $this->User->create();
+            $validate_accounts = $this->Contenido->getPropertyValue('validate_accounts', 'bool');
             $keycode = Security::hash(date('mdY').rand(4000000,4999999));
+            $this->request->data['User']['status'] = (!$validate_accounts) ? 1 : 0;
             $this->request->data['User']['keycode'] = $keycode;
+            
             if ($this->User->save($this->request->data)) {
-                $email = $this->request->data['User']['email'];
-                $this->_sendKeyCode($email, $keycode);
+                if ($validate_accounts) {
+                    $email = $this->request->data['User']['email'];
+                    $this->_sendKeyCode($email, $keycode);
+                }
                 $this->success('Te has registrado satisfactoriamente.');
             } else {
                 $this->warning('Ha ocurrido un problema. Verifica tus datos.');
@@ -57,7 +64,10 @@ class UsersController extends AppController {
     }
     
     public function dashboard() {
-        $this->set('message', 'Loggeado');
+        $this->set('content_articles', $this->Contenido->getPropertyValue('content_articles', 'bool'));
+        $this->set('content_books', $this->Contenido->getPropertyValue('content_books', 'bool'));
+        $this->set('content_chapters', $this->Contenido->getPropertyValue('content_chapters', 'bool'));
+        $this->set('content_patents', $this->Contenido->getPropertyValue('content_patents', 'bool'));
     }
     
     public function validar($keycode = null) {
@@ -83,6 +93,15 @@ class UsersController extends AppController {
             $this->set('email', $user['User']['email']);
             $this->set('keycode', $keycode);
         }
+    }
+    
+    public function admin_config() {
+        $this->set('validate_accounts', $this->Contenido->getPropertyValue('validate_accounts', 'bool'));
+        $this->set('force_downloads', $this->Contenido->getPropertyValue('force_downloads', 'bool'));
+        $this->set('content_articles', $this->Contenido->getPropertyValue('content_articles', 'bool'));
+        $this->set('content_books', $this->Contenido->getPropertyValue('content_books', 'bool'));
+        $this->set('content_chapters', $this->Contenido->getPropertyValue('content_chapters', 'bool'));
+        $this->set('content_patents', $this->Contenido->getPropertyValue('content_patents', 'bool'));
     }
     
     private function _sendKeyCode($email = null, $keycode = null) {
