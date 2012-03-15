@@ -85,6 +85,7 @@ body {
   border: 1px solid #ccc;
   .border-radius(4px);
   .box-shadow(0 0 3px rgba(128,128,128,0.25));
+  margin-bottom:20px;
   padding: 10px 20px;
   header {
     .buttonBackground(@box-color, darken(@box-color, 10%));
@@ -111,6 +112,12 @@ body {
     legend {
       border-bottom-color: #ddd;
     }
+  }
+  h1.title {
+    font-family: Helvetica, Arial;
+    font-size:24px;
+    font-weight:100;
+    text-align:center;
   }
   .form-actions {
     background-color:transparent;
@@ -143,10 +150,50 @@ body {
   font-style: normal;
 }
 
+button {
+  &.btn[data-toggle="button"] {
+    .buttonBackground(#ee5f5b, #bd362f);
+    color:#fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:after{
+      content: "No";
+    }
+    &.active {
+      .buttonBackground(#62c462, #51a351);
+      .box-shadow(none);
+      &:after{
+        content: "Sí";
+      }
+    }
+  }
+}
+
+.btn-group[data-toggle="buttons-checkbox"] {
+  .btn {
+    &.active {
+      .buttonBackground(#62c462, #51a351);
+      .box-shadow(none);
+      color:#fff;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+.form-inline {
+  .input{
+    > * {
+      display:inline-block;
+    }
+    .btn-group {
+      
+    }
+  }
+}
+
 form {
   margin:0 auto;
   position:relative;
-  input, textarea, legend,
+  input, textarea, legend, select,
   .form-actions .btn {
     font-family: Georgia, Helvetica, Arial;
     font-style: oblique;
@@ -238,6 +285,11 @@ form {
         font-size: 18px;
         line-height: 24px;
         width: 300px;
+      }
+      select {
+        font-size: 16px;
+        line-height: 24px;
+        width: 310px;
       }
     }
   }

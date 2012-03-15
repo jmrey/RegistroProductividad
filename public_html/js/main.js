@@ -74,5 +74,13 @@ $(document).on('ready', function(){
     $('.input .form-error').focus(function () {
         $(this).siblings('.error-message').children('.close').click();
     });
+    $('[data-property]').bind('click', function () {
+        var dataProperty = $(this).attr('data-property');
+        var value = !$(this).hasClass('active');
+        $.post('/admin/contenidos/set/' + dataProperty + '/' + value, function (data) {
+            //alert(data);
+            if (data === 'error') return false;
+        });
+    });
 });
 
