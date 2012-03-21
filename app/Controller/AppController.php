@@ -75,9 +75,11 @@ class AppController extends Controller {
 		            for ($i = 0; $i < count($css_array); $i++) {
                     // Establece el directorio donde está el archivo LESS.
                     $less = ROOT . DS . WEBROOT_DIR . DS . 'less' . DS . $css_array[$i] .'.less';
+                    //$less = ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'less' . DS . $css_array[$i] .'.less';
  
                     // Establece dónde se guardará el CSS compilado.
                     $css = ROOT . DS . WEBROOT_DIR . DS . 'css' . DS . $css_array[$i] . '.css';
+                    //$css = ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'css' . DS . $css_array[$i] . '.css';
  
                     // Compila el archivo LESS
                     lessc::ccompile($less, $css);  
@@ -130,5 +132,5 @@ class AppController extends Controller {
     
     public function info($message) {
         $this->alert($message, 'info');
-    }
+    }       
 }

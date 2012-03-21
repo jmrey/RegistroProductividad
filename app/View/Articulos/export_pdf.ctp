@@ -1,55 +1,56 @@
 <html>
     <head>
+        <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css">-->
         <style type="text/css">
             body {
                 font-family: Helvetica, Arial, sans-serif;
                 font-size: 9px;
                 color: #333;
-                padding: 0 20px;
             }
             h1 {
-                font-size: 13px;
-                font-weight: 100;
-                line-height: 24px;
-                position: absolute;
-                top: -5px;
-                text-shadow: -1px -1px 0 #EEE;
-                white-space: nowrap;
+                font-size: 12px;
+                padding: 0 10px 0 0;
             }
-            #ipn-header {
-                margin-bottom: 15px;
-                margin-top: 5px;
-                position: relative;
+            span.title {
+                font-family: Georgia, Helvetica, Arial, sans-serif;
+                font-size: 16px;
             }
-            #ipn-header h1 {
-                display: inline;
+            .right {
+                text-align: right;
             }
-            #ipn-header .main-menu-container {
-                background-color: #007FD3;
-                margin: 30px 90px 0 60px;
-                padding: 0 15px 0 20px;
+            .center {
+                text-align: center;
             }
-            table {
-                border:1px solid #000;
+            table.sample {
+                border-width: 1px;
+                border-spacing: 0px;
+                border-style: solid;
+                border-color: black;
+                border-collapse: collapse;
+                background-color: white;
+                width:100%;
+            }
+            table.sample th {
+                border-width: 1px;
+                padding: 3px;
+                border-style: solid;
+                border-color: black;
+                background-color: white;
+            }
+            table.sample td {
+                border-width: 1px;
+                padding: 2px;
+                border-style: solid;
+                border-color: black;
+                background-color: white;
             }
         </style>
     </head>
-    <body>
-        <div class="container" id="ipn-header">
-            <div class="logo-ipn" style="float: left; display: inline;">
-                <img src="img/logo-IPN.gif" alt="Instituto Politecnico Nacional" style="height:40px">
-                <h1>Instituto Polit&eacute;cnico Nacional</h1>
-            </div>
-            <div class="logo-escom" style="float: right; display: inline;">
-                <h1>Escuela Superior de C&oacute;mputo</h1>
-                <img src="img/escom.gif" alt="Instituto Politecnico Nacional" style="height:40px">
-            </div>
-            <div class="main-menu-container">
-                <span>Registro de Productividad</span>
-            </div>
-        </div>
-        <h1>Artículos</h1>
-        <table>
+    <body marginwidth="0" marginheight="0" style="padding:10px;">
+        <?php echo $this->element('pdf_header', array(
+            'title' => 'Artículos'
+        )); ?>
+        <table class="sample">
             <thead>
                 <tr>
                     <th>#</th>
@@ -70,9 +71,9 @@
                 <tr>
                     <td><?php echo ++$count; ?></td>
                     <td><?php echo $art['titulo']; ?></td>
-                    <td><?php echo $art['anio_publicacion']; ?></td>
-                    <td><?php echo $art['volumen']; ?></td>
-                    <td><?php echo $art['paginas']; ?></td>
+                    <td class="center"><?php echo $art['anio_publicacion']; ?></td>
+                    <td class="center"><?php echo $art['volumen']; ?></td>
+                    <td class="center"><?php echo $art['paginas']; ?></td>
                     <td><?php echo $art['lista_autores']; ?></td>
                     <td><?php echo $art['titulo_revista']; ?></td>
                 </tr>

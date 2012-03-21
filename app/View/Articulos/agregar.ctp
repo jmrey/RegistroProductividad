@@ -24,13 +24,14 @@
         <div class="row-fluid">
             <div class="span4">
                 <?php
+                    $currentYear = date('Y');
                     echo $this->Form->input('anio_publicacion', array(
                         'label' => 'Año de publicación:',
                         'type' => 'number',
                         'class' => 'numeric',
                         'min' => '1950',
-                        'max' => '2012',
-                        'value' => '2012'
+                        'max' => $currentYear,
+                        'value' => $currentYear
                     ));
                 ?>
             </div>
@@ -59,7 +60,11 @@
             <div class="span12">
                 <?php
                     echo $this->Form->input('titulo', array(
-                      'label' => 'Titulo de Artículo:'
+                        'label' => 'Titulo de Artículo:',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-field' => 'titulo',
+                        'data-source' => 'articulos'
                     ));
                 ?>
             </div>
@@ -83,7 +88,11 @@
             <div class="span6">
                 <?php
                     echo $this->Form->input('titulo_revista', array(
-                        'label' => 'Revista:'
+                        'label' => 'Revista:',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-field' => 'titulo_revista',
+                        'data-source' => 'articulos'
                     ));
             ?>
             </div>

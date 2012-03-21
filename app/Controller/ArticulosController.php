@@ -7,15 +7,12 @@ class ArticulosController extends AppController {
     
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow('add', 'login', 'logout');
+        $this->Auth->allow('json_index');
     }
     
     public function index() {
         $this->Articulo->recursive = -1;
-        $conditions = array('Articulo.user_id' => $this->Auth->user('id'));
-        $articulos = $this->Articulo->find('all', array(
-            'conditions' => $conditions 
-        ));    
+        $articulos = $this->Articulo->findAllByUserId($this->Auth->user('id'));
         $this->set('articulos', $articulos);
     }
     
@@ -23,6 +20,22 @@ class ArticulosController extends AppController {
         $this->Articulo->recursive = -1;
         $this->set('articulos', $this->paginate());
         $this->render('index'); 
+    }
+    
+    public function json_index($field = null, $query = null) {
+        $this->autoRender = false;
+        $conditions = array(
+            'conditions' => array('Articulo.' . $field . ' LIKE' => '%' . $query .'%'),
+            'fields' => 'DISTINCT Articulo.' . $field,
+            'order' => 'Articulo.' . $field,
+        );
+        
+        $results = $this->Articulo->find('all', $conditions);
+        $json_array = array();
+        foreach ($results as $key => $value) {
+            array_push($json_array, $value['Articulo'][$field]);
+        }
+        echo json_encode($json_array);
     }
     
     public function agregar() {
@@ -70,10 +83,8 @@ class ArticulosController extends AppController {
         $this->layout = false;
         //if ($this->request->is('get')) {
         $this->Articulo->recursive = -1;
-        $conditions = array('Articulo.user_id' => $this->Auth->user('id'));
-        $articulos = $this->Articulo->find('all', array(
-            'conditions' => $conditions 
-        ));
+        $articulos = $this->Articulo->findAllByUserId($this->Auth->user('id'));
+        
         $force_downloads = $this->Contenido->getPropertyValue('force_downloads', 'bool');
         
         if ($type == 'txt') {

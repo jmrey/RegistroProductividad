@@ -2,7 +2,8 @@
     /*header("Content-Type: plain/text");
     header("Content-Disposition: Attachment; filename=mis-articulos.txt");
     header("Pragma: no-cache");*/
-    echo '---Título del Artículo' . "---";
+    echo '#' . "---";
+    echo 'Título del Artículo' . "---";
     echo 'Año' . "---";
     echo 'Vol.' . "---";
     echo 'Páginas' . "---";

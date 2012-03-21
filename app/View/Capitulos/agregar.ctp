@@ -32,13 +32,14 @@
             </div>
             <div class="span4">
                 <?php 
+                    $currentYear = date('Y');
                     echo $this->Form->input('anio_publicacion', array(
                         'label' => 'Año Publicación:',
                         'type' => 'number',
                         'class' => 'numeric',
-                        'min' => '1',
-                        'max' => '2012',
-                        'value' => '2012'
+                        'min' => '1950',
+                        'max' => $currentYear,
+                        'value' => $currentYear
                     ));
                 ?>
             </div>
@@ -47,7 +48,11 @@
             <div class="span12">
                 <?php
                     echo $this->Form->input('titulo_libro', array(
-                        'label' => 'Titulo de Libro:'
+                        'label' => 'Titulo de Libro:',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-source' => 'capitulos',
+                        'data-field' => 'titulo_libro'
                     ));
                 ?>
             </div>
@@ -56,7 +61,11 @@
             <div class="span12">
                 <?php
                     echo $this->Form->input('editores', array(
-                        'label' => 'Editores:'
+                        'label' => 'Editores:',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-source' => 'capitulos',
+                        'data-field' => 'editores'
                     ));
                 ?>
             </div>
@@ -65,7 +74,11 @@
             <div class="span6">
                 <?php
                     echo $this->Form->input('editorial', array(
-                        'label' => 'Editorial:'
+                        'label' => 'Editorial:',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-source' => 'capitulos',
+                        'data-field' => 'editorial'
                     ));
                 ?>
             </div>

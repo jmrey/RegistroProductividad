@@ -37,13 +37,7 @@
                 <?php 
                     echo $this->Form->input('tipo_libro', array(
                         'label' => 'Identificador Libro:',
-                        'options' => array( 
-                            '0' => 'Autorizado',
-                            '1' => 'Compilación',
-                            '2' => 'Editado',
-                            '3' => 'Publicado',
-                            '4' => 'Traducido'
-                        )
+                        'options' => $tipo_libros
                     ));
                 ?>
             </div>

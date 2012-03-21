@@ -2,22 +2,19 @@
     /*header("Content-Type: plain/text");
     header("Content-Disposition: Attachment; filename=mis-articulos.txt");
     header("Pragma: no-cache");*/
-    echo '---Título del Artículo' . "---";
+    echo '#' . "---";
+    echo 'Título Capítulo' . "---";
+    echo 'Título Libro' . "---";
     echo 'Año' . "---";
-    echo 'Vol.' . "---";
-    echo 'Páginas' . "---";
-    echo 'Autores' . "---";
-    echo 'Título de la Revista' . "\n";    
+    echo 'Editorial' . "\n";    
 
-    foreach ($articulos as $a):
-        $art = $a['Articulo'];
-        echo $art['id'] . "---";
-        echo $art['titulo'] . "---";
-        echo $art['anio_publicacion'] . "---";
-        echo $art['volumen'] . "---";
-        echo $art['paginas'] . "---";
-        echo $art['lista_autores'] . "---";
-        echo $art['titulo_revista'] . "\n"; 
+    foreach ($capitulos as $c):
+        $cap = $c['Capitulo'];
+        echo $cap['id'] . "---";
+        echo $cap['titulo_capitulo'] . "---";
+        echo $cap['titulo_libro'] . "---";
+        echo $cap['anio_publicacion'] . "---";
+        echo $cap['editorial'] . "\n"; 
     endforeach;
 ?>
 

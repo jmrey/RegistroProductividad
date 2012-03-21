@@ -26,8 +26,7 @@
                 <?php 
                     echo $this->Form->input('isbn', array(
                         'label' => 'Numero de ISBN:',
-                        'type' => 'text',
-                        'class' => 'numeric'
+                        'type' => 'text'
                     ));
                 ?>
             </div>
@@ -35,13 +34,7 @@
                 <?php 
                     echo $this->Form->input('tipo_libro', array(
                         'label' => 'Identificador Libro:',
-                        'options' => array( 
-                            '0' => 'Autorizado',
-                            '1' => 'Compilación',
-                            '2' => 'Editado',
-                            '3' => 'Publicado',
-                            '4' => 'Traducido'
-                        )
+                        'options' => $tipo_libros
                     ));
                 ?>
             </div>
@@ -50,7 +43,12 @@
             <div class="span12">
                 <?php
                     echo $this->Form->input('titulo', array(
-                        'label' => 'Titulo de Libro:'
+                        'label' => 'Titulo de Libro:',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-source' => 'libros',
+                        'data-field' => 'titulo'
+                        
                     ));
                 ?>
             </div>
@@ -59,7 +57,11 @@
             <div class="span6">
                 <?php
                     echo $this->Form->input('editorial', array(
-                        'label' => 'Editorial:'
+                        'label' => 'Editorial:',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-source' => 'libros',
+                        'data-field' => 'editorial'
                     ));
                 ?>
             </div>
@@ -74,13 +76,14 @@
         <div class="row-fluid">
             <div class="span4">
                 <?php
+                    $currentYear = date('Y');
                     echo $this->Form->input('anio_publicacion', array(
                         'label' => 'Año Publicación:',
                         'type' => 'number',
                         'class' => 'numeric',
-                        'min' => '1',
-                        'max' => '2012',
-                        'value' => '2012'
+                        'min' => 1950,
+                        'max' => $currentYear,
+                        'value' => $currentYear
                     ));
                 ?>
             </div>
@@ -120,7 +123,11 @@
                 <?php 
                     echo $this->Form->input('idioma', array(
                         'label' => 'Idioma:',
-                        'type' => 'text'
+                        'type' => 'text',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-source' => 'libros',
+                        'data-field' => 'idioma'
                     ));
                 ?>
             </div>
