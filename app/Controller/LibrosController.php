@@ -34,6 +34,11 @@ class LibrosController extends AppController {
     }
     
     public function agregar() {
+        $message_autors = array(
+            'total' => $this->Contenido->getPropertyValue('message_total_autor'),
+            'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
+        );
+        $this->set('message_autors', $message_autors);
         $this->set('tipo_libros', $this->Libro->tipoLibros);
         if ($this->request->is('post')) {
             $this->Libro->create();
@@ -63,6 +68,11 @@ class LibrosController extends AppController {
         if (!$this->Libro->exists()) {
             throw new NotFoundException('Libro no existe.');
         }
+        $message_autors = array(
+            'total' => $this->Contenido->getPropertyValue('message_total_autor'),
+            'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
+        );
+        $this->set('message_autors', $message_autors);
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data['Libro']['id'] = $id;
             if ($this->Libro->save($this->request->data)) {

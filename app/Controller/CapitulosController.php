@@ -33,6 +33,11 @@ class CapitulosController extends AppController {
     }
     
     public function agregar() {
+        $message_autors = array(
+            'total' => $this->Contenido->getPropertyValue('message_total_autor'),
+            'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
+        );
+        $this->set('message_autors', $message_autors);
         if ($this->request->is('post')) {
             $this->Capitulo->create();
             $this->request->data['Capitulo']['user_id'] = $this->Auth->user('id');
@@ -60,6 +65,11 @@ class CapitulosController extends AppController {
         if (!$this->Capitulo->exists()) {
             throw new NotFoundException('Capitulo no existe.');
         }
+        $message_autors = array(
+            'total' => $this->Contenido->getPropertyValue('message_total_autor'),
+            'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
+        );
+        $this->set('message_autors', $message_autors);
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Capitulo->save($this->request->data)) {
                 $this->request->data['Capitulo']['id'] = $id;

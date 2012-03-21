@@ -112,7 +112,10 @@
                     ));
                 ?>
             </div>
-            <span class="info"><i class="icon-info-sign"></i> Se refire al n&uacute;mero de personas que participaron en la elaboraci&oacute;n del art&iacute;culo en cuesti&oacute;n.</span>
+            <?php echo $this->element('info_message', array(
+                'message' => $message_autors['total'],
+                'name' => 'message_total_autor'
+            )); ?>
         </div>
         <div class="row-fluid">
             <div class="span4">
@@ -125,7 +128,10 @@
                     ));
             ?>
             </div>
-            <span class="info"><i class="icon-info-sign"></i> Se refire a la posici&oacute;n que ocupa el investigador en la lista de autores.</span>
+            <?php echo $this->element('info_message', array(
+                'message' => $message_autors['pos'],
+                'name' => 'message_pos_autor'
+            )); ?>
         </div>
         <div class="row-fluid">
             <div class="span12">

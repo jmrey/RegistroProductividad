@@ -21,10 +21,10 @@ class Contenido extends AppModel {
         return false;
     }
     
-    public function getPropertyValue($property = null, $type = 'string') {
+    public function getPropertyValue($property = null, $type = 'text') {
         $conditions = array(
             'Contenido.name' => $property,
-            'Contenido.type' => 'property'
+            'Contenido.type' => $type
         );
         
         if ($type == 'bool') {

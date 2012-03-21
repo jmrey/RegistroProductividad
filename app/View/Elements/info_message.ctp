@@ -4,7 +4,7 @@
     <?php
         if ($isAdmin) {
             $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-pencil'));
-            echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'configuracion', 'admin' => $isAdmin),
+            echo $this->Html->link($icon_plus, array('controller' => 'contenidos', 'action' => 'editar', $name, 'admin' => $isAdmin),
                 array('class' => 'btn btn-mini', 'escape' => false, 'alt' => 'Configuración'));
         }
     ?>

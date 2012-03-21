@@ -125,7 +125,8 @@
                 ?>
             </div>
             <?php echo $this->element('info_message', array(
-                'message' => 'Se refire al n&uacute;mero de personas que participaron en la elaboraci&oacute;n del art&iacute;culo en cuesti&oacute;n.'
+                'message' => $message_autors['total'],
+                'name' => 'message_total_autor'
             )); ?>
         </div>
         <div class="row-fluid">
@@ -141,7 +142,8 @@
             ?>
             </div>
             <?php echo $this->element('info_message', array(
-                'message' => 'Se refire a la posici&oacute;n que ocupa el investigador en la lista de autores.'
+                'message' => $message_autors['pos'],
+                'name' => 'message_pos_autor'
             )); ?>
         </div>
         <div class="row-fluid">
