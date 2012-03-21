@@ -4,8 +4,8 @@
     <div class="btn-group right">
         <?php 
             $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-pencil'));
-            echo $this->Html->link($icon_plus, array('controller' => 'contenidos', 'action' => 'editar', 'titulo', 'admin' => $isAdmin),
-                array('class' => 'btn btn-mini', 'escape' => false));
+            echo $this->Html->link('Editar ' . $icon_plus, array('controller' => 'contenidos', 'action' => 'editar', 'titulo', 'admin' => $isAdmin),
+                array(/*'class' => 'btn btn-mini',*/ 'escape' => false));
         ?>
     </div>
     <?php endif; ?>
@@ -17,8 +17,8 @@
     <div class="btn-group right">
         <?php 
             $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-pencil'));
-            echo $this->Html->link($icon_plus, array('controller' => 'contenidos', 'action' => 'editar', $contenido['name'], 'admin' => $isAdmin),
-                array('class' => 'btn btn-mini', 'escape' => false));
+            echo $this->Html->link('Editar ' . $icon_plus, array('controller' => 'contenidos', 'action' => 'editar', $contenido['name'], 'admin' => $isAdmin),
+                array(/*'class' => 'btn btn-mini',*/ 'escape' => false));
         ?>
     </div>
     <?php endif; ?>

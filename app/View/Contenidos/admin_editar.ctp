@@ -20,8 +20,11 @@
             <div class="span12">
                 <?php
                     echo $this->Form->hidden('id');
+                    echo $this->Form->hidden('type');
                     echo $this->Form->input('name', array(
-                        'label' => 'Nombre:'
+                        'label' => 'Nombre:',
+                        'disabled' => true,
+                        'class' => 'disabled'
                     ));
                 ?>
             </div>
@@ -45,7 +48,7 @@
                 ?>
             </div>
         </div>
-        <div class="row-fluid">
+        <!--<div class="row-fluid">
             <div class="span12">
                 <?php
                     echo $this->Form->input('type', array(
@@ -58,7 +61,7 @@
                     ));
                 ?>
             </div>
-        </div>
+        </div>-->
     </fieldset>
     <div class="form-actions f-right">
         <div class="left">
