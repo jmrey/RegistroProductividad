@@ -5,18 +5,19 @@ class User extends AppModel {
     public $name = 'User';
     public $useTable = 'usuarios';
     public $deptosArray = array(
-                    '0' => 'Básicas',
-                    '1' => 'Sociales',
-                    '2' => 'Sistemas',
-                    '3' => 'Electronica'
-                );
+        '0' => 'Posgrado',
+        '1' => 'Formación Básica',
+        '2' => 'Ingeniería en Sistemas Computacionales',
+        '3' => 'Ciencias e Ingenierías de la Computación',
+        '4' => 'Formación Integral e Institucional'
+    );
     
     public $validate = array(
         'username' => array(
             'validateUsername' => array(
                 'rule' => array('alphaNumeric'),
                 'required' => true,
-                'message' => 'Nombre usuario debe contener letras y números.'
+                'message' => 'Nombre usuario debe contener sólo letras y números.'
             ),
             'uniqueUsername' => array(
                 'rule' => 'isUnique',
@@ -32,6 +33,10 @@ class User extends AppModel {
                 'rule' => array('notEmpty'),
                 'require' => true,
                 'message' => 'Nombre Completo es requerido.'
+            ),
+            'validate' => array(
+                'rule' => '/^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$/i',
+                'message' => 'Caracteres no permitidos.'
             )
         ),
         'password' => array(

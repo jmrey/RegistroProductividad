@@ -23,7 +23,7 @@ class Capitulo extends AppModel {
                 'message' => 'Este campo es obligatorio y debe contener sólo números.'
             ),
             'range' => array(
-                'rule' => array('range', 1949, 2013),
+                'rule' => 'isYearInRange',
                 'message' => 'Ingresa un año válido.'
             )
         ),
@@ -54,6 +54,7 @@ class Capitulo extends AppModel {
         'volumen' => array(
             'numeric' => array(
                 'rule' => 'numeric',
+                'allowEmpty' => true,
                 'message' => 'Ingresa sólo números.'
             )
         ),

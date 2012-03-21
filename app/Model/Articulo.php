@@ -5,7 +5,6 @@ class Articulo extends AppModel {
     public $name = 'Articulo';
     public $useTable = 'articulos';
     
-    
     public $validate = array(
         'titulo' => array(
             'validate' => array(
@@ -34,12 +33,14 @@ class Articulo extends AppModel {
         'volumen' => array(
             'numeric' => array(
                 'rule' => 'numeric',
+                'allowEmpty' => true,
                 'message' => 'Ingresa sólo números.'
             )
         ),
         'num_volumen' => array(
             'numeric' => array(
                 'rule' => 'numeric',
+                'allowEmpty' => true,
                 'message' => 'Ingresa sólo números.'
             )
         ),
@@ -83,7 +84,8 @@ class Articulo extends AppModel {
                 'message' => 'Este campo es obligatorio y debe contener sólo números.'
             ),
             'range' => array(
-                'rule' => array('range', 1949, 2013),
+                'rule' => 'isYearInRange',
+                //'rule' => array('range', 1949, 2013),
                 'message' => 'Ingresa un año válido.'
             )
         ),
