@@ -14,10 +14,7 @@ class UsersController extends AppController {
     
     public function login() {
         if ($this->request->is('post')) {
-            $conditions = array('User.username' => $this->request->data['User']['username']);
-            $user = $this->User->find('first', array(
-                'conditions' => $conditions
-            ));
+            $user = $this->User->findByUsername($this->request->data['User']['username']);
             if ($user != null && $user['User']['status'] <= 0) {
                 $this->error('Tu cuenta no ha sido verificada');
             } else {
@@ -32,6 +29,10 @@ class UsersController extends AppController {
                 $this->redirect($this->Auth->redirect());
             }
         }
+    }
+    
+    public function admin_login() {
+        $this->redirect(array('action' => 'login', 'admin' => 0));
     }
     
     public function logout() {
@@ -72,10 +73,7 @@ class UsersController extends AppController {
     
     public function validar($keycode = null) {
         $this->User->recursive = -1;
-        $conditions = array('User.keycode' => $keycode);
-        $user = $this->User->find('first', array(
-            'conditions' => $conditions
-        ));
+        $user = $this->User->findByKeycode($keycode);
         if ($this->request->is('post') && $user != null) {
             $user['User']['status'] = 1;
             if($this->User->save($user['User'], true, array('status'))) {
@@ -96,6 +94,9 @@ class UsersController extends AppController {
     }
     
     public function admin_config() {
+        if (!parent::isAdmin()) {
+            $this->redirect('/dashboard');
+        }
         $this->set('validate_accounts', $this->Contenido->getPropertyValue('validate_accounts', 'bool'));
         $this->set('force_downloads', $this->Contenido->getPropertyValue('force_downloads', 'bool'));
         $this->set('content_articles', $this->Contenido->getPropertyValue('content_articles', 'bool'));

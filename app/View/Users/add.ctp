@@ -4,17 +4,14 @@
         <legend>Datos de Sesi&oacute;n</legend>
         <?php 
             echo $this->Form->input('username', array(
-                'label' => 'Nombre de Usuario:',
-                'placeholder' => 'Nombre de Usuario'
+                'label' => 'Nombre de Usuario:'
             ));
             echo $this->Form->input('email', array(
                 'label' => 'Correo Electrónico:',
-                'type' => 'email',
-                'placeholder' => 'Correo Electrónico'
+                'type' => 'email'
             ));
             echo $this->Form->input('password', array(
-                'label' => 'Contraseña:',
-                'placeholder' => 'Contraseña'
+                'label' => 'Contraseña:'
             ));
         ?>
     </fieldset>
@@ -23,18 +20,15 @@
         <?php 
             echo $this->Form->input('nombre', array(
                 'label' => 'Nombre completo:',
-                'class' => 'capitalize',
-                'placeholder' => 'Nombre Completo'
+                'class' => 'capitalize'
             ));
             echo $this->Form->input('depto', array(
                 'label' => 'Depto. de Adscripción:',
-                'placeholder' => 'Número de Empleado',
                 'options' => $deptos
             ));
             echo $this->Form->input('no_empleado', array(
                 'label' => 'Número de Empleado:',
                 'type' => 'text',
-                'placeholder' => 'Número de Empleado',
                 'class' => 'numeric'
             ));
         ?>
