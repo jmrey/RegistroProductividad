@@ -130,6 +130,13 @@ body {
     display: inline-block;
     margin: 0 10px 0;
   }
+  .welcome-message {
+    margin: 0px 20px 15px;
+    text-align:left;
+  }
+}
+.capitalize {
+  text-transform: capitalize;
 }
 
 .counterText {
@@ -237,6 +244,9 @@ form {
     }
     textarea {
       height:50px;
+      &#autocomplete {
+        height:auto;
+      }
     }
     .input {
       padding: 5px 0;
@@ -361,5 +371,15 @@ form {
         right:80%;
       }
     }
+  }
+}
+
+.fixed-bottom {
+  position:fixed;
+  bottom:0;
+  text-align:center;
+  width:100%;
+  p {
+    margin:0;
   }
 }
