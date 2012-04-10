@@ -48,34 +48,30 @@
     </head>
     <body marginwidth="0" marginheight="0" style="padding:10px;">
         <?php echo $this->element('pdf_header', array(
-            'title' => 'Artículos'
+            'title' => 'Tesis'
         )); ?>
         <table class="sample">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Título del Artículo</th>
+                    <th>Nombre</th>
+                    <th>Tipo de Tesis</th>
                     <th>Año</th>
-                    <th>Vol.</th>
-                    <th>Páginas</th>
                     <th>Autores</th>
-                    <th>Título de la Revista</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     $count = 0;
-                    foreach ($articulos as $a):
-                        $art = $a['Articulo'];
+                    foreach ($tesis as $content):
+                        $t = $content['Tesis'];
                 ?>
                 <tr>
                     <td><?php echo ++$count; ?></td>
-                    <td><?php echo $art['titulo']; ?></td>
-                    <td class="center"><?php echo $art['anio_publicacion']; ?></td>
-                    <td class="center"><?php echo $art['volumen']; ?></td>
-                    <td class="center"><?php echo $art['paginas']; ?></td>
-                    <td><?php echo $art['lista_autores']; ?></td>
-                    <td><?php echo $art['titulo_revista']; ?></td>
+                    <td><?php echo $t['nombre']; ?></td>
+                    <td class="center"><?php echo $tipo_tesis[$t['tipo_tesis']]; ?></td>
+                    <td class="center"><?php echo $t['anio_publicacion']; ?></td>
+                    <td><?php echo $t['lista_autores']; ?></td>
                 </tr>
                 <?php
                     endforeach;

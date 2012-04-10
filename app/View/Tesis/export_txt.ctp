@@ -3,22 +3,18 @@
     header("Content-Disposition: Attachment; filename=mis-articulos.txt");
     header("Pragma: no-cache");*/
     echo '#' . "---";
-    echo 'Título del Artículo' . "---";
+    echo 'Nombre de Tesis' . "---";
     echo 'Año' . "---";
-    echo 'Vol.' . "---";
-    echo 'Páginas' . "---";
-    echo 'Autores' . "---";
-    echo 'Título de la Revista' . "\n";    
+    echo 'Tipo de Tesis' . "---";
+    echo 'Autores' . "\n";    
 
-    foreach ($articulos as $a):
-        $art = $a['Articulo'];
-        echo $art['id'] . "---";
-        echo $art['titulo'] . "---";
-        echo $art['anio_publicacion'] . "---";
-        echo $art['volumen'] . "---";
-        echo $art['paginas'] . "---";
-        echo $art['lista_autores'] . "---";
-        echo $art['titulo_revista'] . "\n"; 
+    foreach ($tesis as $content):
+        $t = $content['Tesis'];
+        echo $t['id'] . "---";
+        echo $t['nombre'] . "---";
+        echo $t['anio_publicacion'] . "---";
+        echo $tipo_tesis[$t['tipo_tesis']] . "---";
+        echo $t['lista_autores'] . "\n"; 
     endforeach;
 ?>
 
