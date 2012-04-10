@@ -76,7 +76,7 @@ $(document).on('ready', function(){
     });
     $('[data-property]').bind('click', function () {
         var dataProperty = $(this).attr('data-property');
-        var value = !$(this).hasClass('active');
+        var value = !$(this).hasClass('active') ? 1 : 0;
         $.post('/admin/contenidos/set/' + dataProperty + '/' + value, function (data) {
             //alert(data);
             if (data === 'error') return false;
@@ -118,5 +118,48 @@ $(document).on('ready', function(){
                 }
             }
         });
+        
+        $('#fileupload').fileupload();
+        $('#fileupload').fileupload(
+            'option',
+            'redirect',
+            window.location.href.replace(
+                /\/[^\/]*$/,
+                '/cors/result.html?%s'
+            )
+        );
+        if (window.location.hostname === 'regprod.org') {
+            // Demo settings:
+            $('#fileupload').fileupload('option', {
+                url: $('#fileupload').attr('action'),
+                maxFileSize: 5000000,
+                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                resizeMaxWidth: 1920,
+                resizeMaxHeight: 1200
+            });
+            // Upload server status check for browsers with CORS support:
+            if ($.support.cors) {
+                $.ajax({
+                    url: $('#fileupload').attr('action'),
+                    type: 'HEAD'
+                }).fail(function () {
+                    $('<span class="alert alert-error"/>')
+                        .text('Upload server currently unavailable - ' +
+                                new Date())
+                        .appendTo('#fileupload');
+                });
+            }
+        } else {
+            // Load existing files:
+            $('#fileupload').each(function () {
+                var that = this;
+                $.getJSON(this.action, function (result) {
+                    if (result && result.length) {
+                        $(that).fileupload('option', 'done')
+                            .call(that, null, {result: result});
+                    }
+                });
+            });
+        }
 });
 
