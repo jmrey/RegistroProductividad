@@ -49,30 +49,30 @@
     </head>
     <body marginwidth="0" marginheight="0" style="padding:10px;">
         <?php echo $this->element('pdf_header', array(
-            'title' => 'Libros'
+            'title' => 'Cursos'
         )); ?>
         <table class="sample">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Título del Libro</th>
-                    <th>Tipo de Libro</th>
+                    <th>Nombre de Curso</th>
+                    <th>Tipo de Curso</th>
                     <th>Año</th>
-                    <th>Editorial</th>
+                    <th>Autores</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     $count = 0;
-                    foreach ($libros as $l):
-                        $libro = $l['Libro'];
+                    foreach ($cursos as $curso):
+                        $c = $curso['Curso'];
                 ?>
                 <tr>
                     <td><?php echo ++$count; ?></td>
-                    <td><?php echo $libro['titulo']; ?></td>
-                    <td><?php echo $tipo_libros[$libro['tipo_libro']]; ?></td>
-                    <td class="center"><?php echo $libro['anio_publicacion']; ?></td>
-                    <td><?php echo $libro['editorial']; ?></td>
+                    <td><?php echo $c['nombre']; ?></td>
+                    <td><?php echo $tipo_curso[$c['tipo_curso']]; ?></td>
+                    <td class="center"><?php echo $c['anio_publicacion']; ?></td>
+                    <td><?php echo $c['lista_autores']; ?></td>
                 </tr>
                 <?php
                     endforeach;

@@ -3,18 +3,18 @@
     header("Content-Disposition: Attachment; filename=mis-libros.txt");
     header("Pragma: no-cache");*/
     echo '#' . "---";
-    echo 'Título del Libro' . "---";
-    echo 'Tipo de Libro' . "---";
+    echo 'Nombre de Curso' . "---";
+    echo 'Tipo de Curso' . "---";
     echo 'Año' . "---";
-    echo 'Editorial' . "\n";   
+    echo 'Autores' . "\n";   
 
-    foreach ($libros as $l):
-        $libro = $l['Libro'];
-        echo $libro['id'] . "---";
-        echo $libro['titulo'] . "---";
-        echo $libro['tipo_libro'] . "---";
-        echo $libro['anio_publicacion'] . "---";
-        echo $libro['editorial'] . "\n"; 
+    foreach ($cursos as $curso):
+        $c = $curso['Curso'];
+        echo $c['id'] . "---";
+        echo $c['nombre'] . "---";
+        echo $tipo_curso[$c['tipo_curso']] . "---";
+        echo $c['anio_publicacion'] . "---";
+        echo $c['lista_autores'] . "\n"; 
     endforeach;
 ?>
 
