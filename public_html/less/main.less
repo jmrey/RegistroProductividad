@@ -6,16 +6,32 @@
 @box-color: #f7f7f7;
 @arrowWidth: 10px;
 
+body {
+  background-color: @bg-color;
+  padding-top:100px;
+  position:relative;
+  .wrapper {
+	  margin: 0 auto;
+  }
+  footer {
+    height:60px;
+    &.fixed-bottom {
+      bottom:0;
+      position:fixed;
+      text-align:center;
+      width:100%;
+      p {
+        margin:0;
+      }
+    }
+  }
+}
+
 .left {
   float: left !important;
 }
 .right {
   float: right !important;
-}
-
-body {
-  background-color: @bg-color;
-  padding-top: 110px;
 }
 
 .navbar-inner {
@@ -27,8 +43,9 @@ body {
    border-bottom: 1px solid #ccc;
   .border-radius(0);
 }
+
 #ipn-header{
-  margin-bottom:15px;
+  margin-bottom:10px;
   margin-top:5px;
   position: relative;
   h1 {
@@ -87,7 +104,7 @@ body {
   .box-shadow(0 0 3px rgba(128,128,128,0.25));
   margin-bottom:20px;
   padding: 10px 20px;
-  header {
+  header, .header {
     .buttonBackground(@box-color, darken(@box-color, 10%));
     border: 1px solid #CCC;
     border-bottom-color: #BBB;
@@ -100,11 +117,18 @@ body {
     .btn-group {
       margin:-1px -1px 0 0; 
       .btn {
-        background:transparent;
+        //background:transparent;
         .border-radius(0);
-        &:hover {
-          .buttonBackground(@white, darken(@white, 5%));
-        }
+      }
+    }
+    &.admin {
+      @shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+      .box-shadow(@shadow);
+      .buttonBackground(#454545, #262626);
+      h1 {
+        color: #fff;
+        text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+        vertical-align: middle;
       }
     }
   }
@@ -124,15 +148,23 @@ body {
   }
 }
 
-.dashboard {
-  text-align: center;
-  > div {
-    display: inline-block;
-    margin: 0 10px 0;
-  }
-  .welcome-message {
-    margin: 0px 20px 15px;
-    text-align:left;
+.dashboard .pane {
+  text-align:center;
+  > div.btn-group {
+    display:inline-block;
+    margin: 10px;
+    position:relative;
+    > a.btn {
+      text-align:left;
+      width:150px;
+      &.dropdown-toggle {
+        width:auto;
+      }
+    }
+    .dropdown-menu {
+      left:80%;
+      position:absolute;
+    }
   }
 }
 .capitalize {
@@ -195,6 +227,11 @@ button {
       
     }
   }
+}
+
+.actions {
+  margin: 15px 0 0;
+  padding: 15px 0 0;
 }
 
 form {
@@ -318,6 +355,7 @@ form {
         input, textarea, select {
           float:left;
           font-size: 16px;
+          margin-bottom:5px;
           max-width:900px;
           padding: 3px 7px 5px;
           width:100%;
@@ -372,14 +410,36 @@ form {
       }
     }
   }
-}
-
-.fixed-bottom {
-  position:fixed;
-  bottom:0;
-  text-align:center;
-  width:100%;
-  p {
-    margin:0;
+  &.btn {
+    padding:0;
+    
+    .text {
+      display:inline-block;
+      border-right:1px solid #CCC;
+      input {
+        background-color: #EEE;
+        border:0;
+        .border-radius(0);
+        font-size: 15px;
+        line-height:27px;
+        height:auto;
+        &:focus {
+          background-color:#FFF;
+        }
+      }
+    }
+    .search-btn {
+      background:transparent;
+      border:0;
+      .box-shadow(none);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 18px;
+      color: #333;
+      font-style:normal;
+      padding: 8px 14px;
+    }
   }
 }
+
+
