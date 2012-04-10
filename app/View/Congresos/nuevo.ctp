@@ -1,74 +1,34 @@
 <div class="box form">
     <header>
-        <h1 class="title btn-small">Libros</h1>
+        <h1 class="title btn-small">Congresos</h1>
         <div class="btn-group right">
             <?php 
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'libros', 'action' => 'agregar'),
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
+                echo $this->Html->link($icon_plus . ' Resumen', array('action' => 'index'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
-                echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'dashboard'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
-                echo $this->Html->link($icon_plus, array('controller' => 'libros', 'action' => 'index'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'libros', 'action' => 'agregar'),
+                echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
                     array('class' => 'btn btn-small', 'escape' => false));
             ?>
         </div>
     </header>
-    <?php echo $this->Form->create('Libro', array('class' => 'form-inline container-fluid float-messages')); ?>
+    <?php echo $this->Form->create('Congreso', array('class' => 'form-inline container-fluid float-messages')); ?>
     <fieldset>
         <legend>Datos de Libro</legend>
         <div class="row-fluid">
             <div class="span6">
                 <?php 
-                    echo $this->Form->input('isbn', array(
-                        'label' => 'Numero de ISBN:',
+                    echo $this->Form->input('nombre', array(
+                        'label' => 'Nombre:',
                         'type' => 'text'
                     ));
                 ?>
             </div>
             <div class="span6">
                 <?php 
-                    echo $this->Form->input('tipo_libro', array(
-                        'label' => 'Identificador Libro:',
-                        'options' => $tipo_libros
-                    ));
-                ?>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <?php
-                    echo $this->Form->input('titulo', array(
-                        'label' => 'Titulo de Libro:',
-                        'class' => 'autocomplete',
-                        'data-provide' => 'typehead',
-                        'data-source' => 'libros',
-                        'data-field' => 'titulo'
-                        
-                    ));
-                ?>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <?php
-                    echo $this->Form->input('editorial', array(
-                        'label' => 'Editorial:',
-                        'class' => 'autocomplete',
-                        'data-provide' => 'typehead',
-                        'data-source' => 'libros',
-                        'data-field' => 'editorial'
-                    ));
-                ?>
-            </div>
-            <div class="span6">
-                <?php
-                    echo $this->Form->input('edicion', array(
-                        'label' => 'Edición:'
+                    echo $this->Form->input('tipo_congreso', array(
+                        'label' => 'Tipo de Congreso:',
+                        'options' => $tipo_congreso
                     ));
                 ?>
             </div>
@@ -84,74 +44,6 @@
                         'min' => 1950,
                         'max' => $currentYear,
                         'value' => $currentYear
-                    ));
-                ?>
-            </div>
-            <div class="span4">
-                <?php
-                    echo $this->Form->input('volumen', array(
-                        'label' => 'Volumen:',
-                        'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
-                    ));
-                ?>
-            </div>
-            <div class="span4">
-                <?php 
-                    echo $this->Form->input('num_paginas', array(
-                        'label' => 'No. Páginas:',
-                        'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
-                    ));
-                ?>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span4">
-                <?php
-                    echo $this->Form->input('tiraje', array(
-                        'label' => 'Tiraje:',
-                        'type' => 'number',
-                        'class' => 'numeric',
-                        'min' => '1'
-                    ));
-                ?>
-            </div>
-            <div class="span8">
-                <?php 
-                    echo $this->Form->input('idioma', array(
-                        'label' => 'Idioma:',
-                        'type' => 'text',
-                        'class' => 'autocomplete',
-                        'data-provide' => 'typehead',
-                        'data-source' => 'libros',
-                        'data-field' => 'idioma'
-                    ));
-                ?>
-            </div>
-            
-        </div>
-        <div class="row-fluid">
-            <div class="span4">
-                <?php
-                    echo $this->Form->input('palabra_clave1', array(
-                        'label' => 'Palabra Clave 1:'
-                    ));
-                ?>
-            </div>
-            <div class="span4">
-                <?php
-                    echo $this->Form->input('palabra_clave2', array(
-                        'label' => 'Palabra Clave 2:'
-                    ));
-                ?>
-            </div>
-            <div class="span4">
-                <?php
-                    echo $this->Form->input('palabra_clave3', array(
-                        'label' => 'Palabra Clave 3:'
                     ));
                 ?>
             </div>
@@ -223,8 +115,9 @@
             <?php echo $this->Session->flash(); ?>
         </div>
         <?php 
-            echo $this->Form->end(array('label' => 'Guardar', 'class' => 'btn btn-success btn-large', 'div' => false));
+            echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
             echo $this->Form->button('Cancelar', array('type' => 'reset', 'class' => 'btn btn-large'));
         ?>
     </div>
+    <?php echo $this->Form->end(); ?>
 </div>
