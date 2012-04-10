@@ -42,7 +42,7 @@ class AppController extends Controller {
         'Session',
         'Auth' => array(
             'authError' => "No tienes los suficientes privilegios para esta acción.",
-            'loginRedirect' => array('controller' => 'users', 'action' => 'dashboard'),
+            'loginRedirect' => array('controller' => 'dashboard', 'action' => 'index'),
             'logoutRedirect' => '/',
             'authorize' => array('Controller')
         )
@@ -69,17 +69,18 @@ class AppController extends Controller {
             App::import('Vendor', 'lessc');
  
             if (defined('WEBROOT_DIR')) {
+                //$PUBLIC_HTML_PATH = ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS;
+                $PUBLIC_HTML_PATH = ROOT . DS . WEBROOT_DIR . DS;
+                 
                 // Array de los archivos less.
                 $css_array = array('bootstrap', 'main');
                 
-		            for ($i = 0; $i < count($css_array); $i++) {
+                for ($i = 0; $i < count($css_array); $i++) {
                     // Establece el directorio donde está el archivo LESS.
-                    $less = ROOT . DS . WEBROOT_DIR . DS . 'less' . DS . $css_array[$i] .'.less';
-                    //$less = ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'less' . DS . $css_array[$i] .'.less';
+                    $less = $PUBLIC_HTML_PATH . 'less' . DS . $css_array[$i] .'.less';
  
                     // Establece dónde se guardará el CSS compilado.
-                    $css = ROOT . DS . WEBROOT_DIR . DS . 'css' . DS . $css_array[$i] . '.css';
-                    //$css = ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'css' . DS . $css_array[$i] . '.css';
+                    $css = $PUBLIC_HTML_PATH . 'css' . DS . $css_array[$i] . '.css';
  
                     // Compila el archivo LESS
                     lessc::ccompile($less, $css);  
@@ -89,6 +90,24 @@ class AppController extends Controller {
         
         // Llama a la función de la clase padre 'Controller'.
         parent::beforeRender();
+    }
+    
+    function refreshAuth($field = '', $value = '') {
+        if ($this->Auth->user()) {
+            if (!empty($field) && !empty($value)) {
+                $this->Session->write($this->Auth->sessionKey .'.'. $field, $value);
+            } else {
+                if (isset($this->User)) {
+                    $user = $this->User->read(false, $this->Auth->user('id'));
+                    
+                } else {
+                    $user = ClassRegistry::init('User')->findById($this->Auth->user('id'));
+                    //$this->Auth->login(ClassRegistry::init('User')->read(null, $this->Auth->user('id')));
+                }
+                $this->Auth->login($user['User']);
+                $this->set('authUser', $this->Auth->user());
+            }
+        }
     }
     
     /*
@@ -132,5 +151,50 @@ class AppController extends Controller {
     
     public function info($message) {
         $this->alert($message, 'info');
-    }       
+    }
+    
+    function _exportar($results = array(), $type = null) {
+        $this->layout = false;
+        $modelName = strtolower($this->name);
+        
+        $force_downloads = (bool)$this->Session->read('App.settings.forzar_descargas');
+        
+        if ($type == 'txt') {
+            $this->response->type('txt');
+            if ($force_downloads) {
+                $this->response->download($modelName . '.txt');
+            }
+            $this->response->disableCache();
+            $this->set($modelName, $results);
+            $this->render('export_txt');
+        } else if ($type == 'xml') {
+            $this->response->type('xml');
+            if ($force_downloads) {
+                $this->response->download($modelName . '.xml');
+            }
+            $this->response->disableCache();
+            $this->set($modelName, $this->_fixAssociativeArray($results));
+            //$this->set('articulos', $this->_fix_assoc_array($articulos));
+            $this->render('export_xml');
+        } else if ($type == 'pdf') {
+            $this->layout = 'pdf';
+            $this->response->type('pdf');
+            if ($force_downloads) {
+                $this->response->download($modelName . '.pdf');
+            }
+            $this->response->disableCache();
+            $this->set($modelName, $results);
+            $this->render('export_pdf');
+        }
+    }
+    
+    private function _fixAssociativeArray($array = array()) {
+        $modelName = $this->modelKey;
+        $assoc_articulos = array($modelName => array());
+        foreach ($array as $key => $value) {
+            array_push($assoc_articulos[$modelName], array_shift($value));
+        }
+        $array = array($this->name => $assoc_articulos);
+        return $array;
+    }
 }

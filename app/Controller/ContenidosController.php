@@ -43,8 +43,13 @@ class ContenidosController extends AppController {
         if (!parent::isAdmin()) {
             $this->redirect('/');
         }
+        $response = 'error';
+        if ($this->Contenido->setProperty($property, $value)) {
+            $this->Session->write('App.settings.' . $property, $value);
+            $response = 'success';
+        }
         
-        echo $this->Contenido->setProperty($property, $value) ? 'success': 'error';
+        echo $response;
     }
     
     public function admin_editar($name = null) {

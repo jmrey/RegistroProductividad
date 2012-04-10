@@ -3,11 +3,12 @@
 class ArticulosController extends AppController {
     public $name = 'Articulos';
     public $components = array('Session');
-    public $uses = array('Articulo', 'Contenido');
+    //public $uses = array('Articulo', 'Contenido');
+    public $helpers = array('AjaxMultiUpload.Upload');
     
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('json_index');
+        //$this->Auth->allow('json_index');
     }
     
     public function index() {
@@ -19,10 +20,9 @@ class ArticulosController extends AppController {
     public function admin_index() {
         $this->Articulo->recursive = -1;
         $this->set('articulos', $this->paginate());
-        $this->render('index'); 
     }
     
-    public function json_index($field = null, $query = null) {
+    /*public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
             'conditions' => array('Articulo.' . $field . ' LIKE' => '%' . $query .'%'),
@@ -36,9 +36,10 @@ class ArticulosController extends AppController {
             array_push($json_array, $value['Articulo'][$field]);
         }
         echo json_encode($json_array);
-    }
+    }*/
     
-    public function agregar() {
+    public function nuevo() {
+        $this->loadModel('Contenido');
         $message_autors = array(
             'total' => $this->Contenido->getPropertyValue('message_total_autor'),
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
@@ -49,6 +50,7 @@ class ArticulosController extends AppController {
             $this->request->data['Articulo']['user_id'] = $this->Auth->user('id');
             if ($this->Articulo->save($this->request->data)) {
                 $this->success('Se ha registrado el artículo satisfactoriamente.');
+                $this->redirect('/articulos/' . $this->Articulo->id . '/archivos');
             } else {
                 $this->warning('Ha ocurrido un problema. Verifica los datos.');
             }
@@ -56,7 +58,7 @@ class ArticulosController extends AppController {
     }
     
     public function ver($id = null) {
-        $this->Articulo->id = $id;
+        $this->Articulo->id = isset($id) ? $id : $this->request->params['id'];
         if (!$this->Articulo->exists()) {
             throw new NotFoundException('Articulo que buscas no existe.');
         } else {
@@ -71,6 +73,7 @@ class ArticulosController extends AppController {
         if (!$this->Articulo->exists()) {
             throw new NotFoundException('Articulo no existe.');
         }
+        $this->loadModel('Contenido');
         $message_autors = array(
             'total' => $this->Contenido->getPropertyValue('message_total_autor'),
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
@@ -89,48 +92,36 @@ class ArticulosController extends AppController {
         }
     }
     
-    public function exportar($type = null) {
-        $this->layout = false;
-        //if ($this->request->is('get')) {
-        $this->Articulo->recursive = -1;
-        $articulos = $this->Articulo->findAllByUserId($this->Auth->user('id'));
+    public function borrar($id = null) {
+        $this->autoRender = false;
         
-        $force_downloads = $this->Contenido->getPropertyValue('force_downloads', 'bool');
-        
-        if ($type == 'txt') {
-            $this->response->type('txt');
-            if ($force_downloads) {
-                $this->response->download('mis-articulos.txt');
-            }
-            $this->response->disableCache();
-            $this->set('articulos', $articulos);
-            $this->render('export_txt');
-        } else if ($type == 'xml') {
-            $this->response->type('xml');
-            if ($force_downloads) {
-                $this->response->download('mis-articulos.xml');
-            }
-            $this->response->disableCache();
-            $this->set('articulos', $this->_fix_assoc_array($articulos));
-            $this->render('export_xml');
-        } else if ($type == 'pdf') {
-            $this->layout = 'pdf';
-            $this->response->type('pdf');
-            if ($force_downloads) {
-                $this->response->download('mis-articulos.pdf');
-            }
-            $this->response->disableCache();
-            $this->set('articulos', $articulos);
-            $this->render('export_pdf');
+        if (!($this->request->is('post') || $this->request->is('delete'))) {
+            throw new MethodNotAllowedException();
         }
+        $this->Articulo->id = $id;
+        if (!$this->Articulo->exists()) {
+            throw new NotFoundException('Articulo no existe o ya ha sido borrado.');
+        }
+        
+        $isOwnedBy = $this->Articulo->isOwnedBy($id, $this->Auth->user('id'));
+        if ($isOwnedBy) {
+            if ($this->Articulo->delete()) {
+                $this->success('El articulo ha sido borrado.');
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->error('El articulo no se ha podido borrar.');
+            }
+        } else {
+            $this->error('No tienes los permisos para esta acción.');
+            $this->redirect(array('action' => 'index'));
+        }
+        //$this->redirect(array('action' => 'index'));
     }
     
-    private function _fix_assoc_array($array = array()) {
-        $assoc_articulos = array('articulo' => array());
-        foreach ($array as $key => $value) {
-            array_push($assoc_articulos['articulo'], $value['Articulo']);
-        }
-        return array('articulos' => $assoc_articulos);
+    public function exportar($type = null) {
+        $this->Articulo->recursive = -1;
+        $results = $this->Articulo->findAllByUserId($this->Auth->user('id'));
+        $this->_exportar($results, $type);
     }
 }
 ?>

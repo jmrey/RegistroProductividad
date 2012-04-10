@@ -4,6 +4,7 @@ class CapitulosController extends AppController {
     public $name = 'Capitulos';
     public $components = array('Session');
     public $uses = array('Capitulo', 'Contenido');
+    public $helpers = array('AjaxMultiUpload.Upload');
     
     public function beforeFilter() {
         parent::beforeFilter();
@@ -16,7 +17,12 @@ class CapitulosController extends AppController {
         $this->set('capitulos', $capitulos);
     }
     
-    public function json_index($field = null, $query = null) {
+    public function admin_index() {
+        $this->Capitulo->recursive = -1;
+        $this->set('capitulos', $this->paginate());
+    }
+    
+    /*public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
             'conditions' => array('Capitulo.' . $field . ' LIKE' => '%' . $query .'%'),
@@ -30,9 +36,9 @@ class CapitulosController extends AppController {
             array_push($json_array, $value['Capitulo'][$field]);
         }
         echo json_encode($json_array);
-    }
+    }*/
     
-    public function agregar() {
+    public function nuevo() {
         $message_autors = array(
             'total' => $this->Contenido->getPropertyValue('message_total_autor'),
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
@@ -43,6 +49,7 @@ class CapitulosController extends AppController {
             $this->request->data['Capitulo']['user_id'] = $this->Auth->user('id');
             if ($this->Capitulo->save($this->request->data)) {
                 $this->success('Se ha registrado el artículo satisfactoriamente.');
+                $this->redirect('/capitulos/' . $this->Capitulo->id . '/archivos');
             } else {
                 $this->warning('Ha ocurrido un problema. Verifica los datos.');
             }
@@ -50,7 +57,7 @@ class CapitulosController extends AppController {
     }
     
     public function ver($id = null) {
-        $this->Capitulo->id = $id;
+        $this->Capitulo->id = isset($id) ? $id : $this->request->params['id'];
         if (!$this->Capitulo->exists()) {
             throw new NotFoundException('Capitulo que buscas no existe.');
         } else {
@@ -83,47 +90,36 @@ class CapitulosController extends AppController {
         }
     }
     
-    public function exportar($type = null) {
-        $this->layout = false;
-        //if ($this->request->is('get')) {
-        $this->Capitulo->recursive = -1;
-        $capitulos = $this->Capitulo->findAllByUserId($this->Auth->user('id'));
-        $force_downloads = $this->Contenido->getPropertyValue('force_downloads', 'bool');
+    public function borrar($id = null) {
+        $this->autoRender = false;
         
-        if ($type == 'txt') {
-            $this->response->type('txt');
-            if ($force_downloads) {
-                $this->response->download('mis-capitulos.txt');
-            }
-            $this->response->disableCache();
-            $this->set('capitulos', $capitulos);
-            $this->render('export_txt');
-        } else if ($type == 'xml') {
-            $this->response->type('xml');
-            if ($force_downloads) {
-                $this->response->download('mis-capitulos.xml');
-            }
-            $this->response->disableCache();
-            $this->set('capitulos', $this->_fix_assoc_array($capitulos));
-            $this->render('export_xml');
-        } else if ($type == 'pdf') {
-            $this->layout = 'pdf';
-            $this->response->type('pdf');
-            if ($force_downloads) {
-                $this->response->download('mis-capitulos.pdf');
-            }
-            $this->response->disableCache();
-            $this->set('capitulos', $capitulos);
-            $this->render('export_pdf');
+        if (!($this->request->is('post') || $this->request->is('delete'))) {
+            throw new MethodNotAllowedException();
         }
+        $this->Capitulo->id = $id;
+        if (!$this->Capitulo->exists()) {
+            throw new NotFoundException('Capitulo no existe o ya ha sido borrado.');
+        }
+        
+        $isOwnedBy = $this->Capitulo->isOwnedBy($id, $this->Auth->user('id'));
+        if ($isOwnedBy) {
+            if ($this->Capitulo->delete()) {
+                $this->success('El capítulo ha sido borrado.');
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->error('El capítulo no se ha podido borrar.');
+            }
+        } else {
+            $this->error('No tienes los permisos para está acción.');
+            $this->redirect(array('action' => 'index'));
+        }
+        //$this->redirect(array('action' => 'index'));
     }
     
-    private function _fix_assoc_array($array = array()) {
-        $assoc_capitulos = array('capitulo' => array());
-        foreach ($array as $key => $value) {
-            array_push($assoc_capitulos['capitulo'], $value['Capitulo']);
-        }
-        return array('capitulos' => $assoc_capitulos);
+    public function exportar($type = null) {
+        $this->Capitulo->recursive = -1;
+        $results = $this->Capitulo->findAllByUserId($this->Auth->user('id'));
+        $this->_exportar($results, $type);
     }
 }
 ?>
