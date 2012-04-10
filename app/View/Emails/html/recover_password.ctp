@@ -1,9 +1,10 @@
 <h1>SEPI</h1>
-<p>Este correo es enviado automáticamente para verificar su cuenta de correo: <?php echo $email; ?></p>
+<p>Hemos recibido una solicitud para cambiar tu contraseña, de no ser así, por favor ignora este mensaje.</p>
+<p>Enviado: <?php echo date("Y-m-d H:i:s"); ?></p>
 
-<p>Por favor haga clic en el siguiente enlace para verificar su cuenta de correo:
+<p>Por favor haga clic en el siguiente enlace para continuar con el procedimiento:
     <?php
-        $emailLink = $linkDomain . $this->Html->url(array('controller'=> 'users', 'action' => 'validar', $keycode));
-        echo $this->Html->link($emailLink, $emailLink);
+        $newPasswordLink = $linkDomain . $this->Html->url(array('controller'=> 'users', 'action' => 'ticket', $keycode));
+        echo $this->Html->link($newPasswordLink, $newPasswordLink);
     ?>
 </p>

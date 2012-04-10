@@ -6,7 +6,7 @@
             echo $this->Form->input('name', array(
                 'label' => 'Nombre:'
             ));
-            echo $this->Form->input('titulo', array(
+            echo $this->Form->input('title', array(
                 'label' => 'Título:'
             ));
             echo $this->Form->input('content', array(
@@ -16,7 +16,9 @@
             echo $this->Form->input('type', array(
                 'label' => 'Tipo:',
                 'options' => array(
-                    'page' => 'Página'
+                    'page' => 'Página',
+                    'text' => 'Texto',
+                    'property' => 'Propiedad'
                 )
             ));
         ?>
@@ -26,8 +28,9 @@
             <?php echo $this->Session->flash(); ?>
         </div>
         <?php 
-            echo $this->Form->end(array('label' => 'Guardar', 'class' => 'btn btn-success btn-large', 'div' => false));
+            echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
             echo $this->Form->button('Limpiar', array('type' => 'reset', 'class' => 'btn btn-large'));
         ?>
     </div>
+    <?php echo $this->Form->end(); ?>
 </div>

@@ -1,32 +1,26 @@
 <div class="box dashboard">
-    <p class="welcome-message">Hola, 
+    <header class="admin">
+        <h1 class="title btn-small">Administraci&oacute;n</h1>
+        <div class="btn-group right">
+            <?php 
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-cog icon-white'));
+                echo $this->Html->link($icon_plus . ' Ajustes', array('controller' => 'dashboard', 'action' => 'config', 'admin' => 1),
+                    array('class' => 'btn btn-small btn-success', 'escape' => false));
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home icon-white'));
+                echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index', 'admin' => 0),
+                    array('class' => 'btn btn-small btn-success', 'escape' => false));
+                
+            ?>
+        </div>
+    </header>
+    <div class="pane">
         <?php 
-        $name = implode(' ', explode(' ', $authUser['nombre'], -2));
-        echo $this->Html->link($name, array(
-            'controller' => 'users',
-            'action' => 'perfil'
-        ), array('class' => 'capitalize')); ?>, bienvenido.
-        <?php 
-            if ($isAdmin) {
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-cog'));
-                echo $this->Html->link($icon_plus . 'Configuración', array('controller' => 'users', 'action' => 'config', 'admin' => $isAdmin),
-                    array('class' => 'right', 'escape' => false));
-            }
+            $icon_signal = $this->Html->tag('i', '', array('class' => 'icon-list-alt'));
+            $icon_list = $this->Html->tag('i', '', array('class' => 'icon-list'));
         ?>
-    </p>
-    <?php 
-        /*if ($isAdmin) {
-            $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-cog'));
-            echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'config', 'admin' => $isAdmin),
-                array('class' => 'btn btn-large right', 'escape' => false));
-        }*/
-        $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-        $icon_list = $this->Html->tag('i', '', array('class' => 'icon-list'));
-        if ($content_articles) {
-    ?>
         <div class="btn-group">
             <?php 
-                
+
                 echo $this->Html->link($icon_list . ' Artículos', array('controller' => 'articulos', 'action' => 'index'),
                     array('class' => 'btn btn-large', 'escape' => false));
             ?>
@@ -36,14 +30,12 @@
             <ul class="dropdown-menu">
                 <li>
                     <?php 
-                        echo $this->Html->link($icon_plus . ' Nuevo', array('controller' => 'articulos', 'action' => 'agregar'),
+                        echo $this->Html->link($icon_signal . ' Estadísticas', array('controller' => 'articulos', 'action' => 'agregar'),
                             array('escape' => false)); 
                     ?>
                 </li>
             </ul>
         </div>
-    <?php } ?>
-    <?php if ($content_books) {?>
         <div class="btn-group">
             <?php 
                 echo $this->Html->link($icon_list . ' Libros', array('controller' => 'libros', 'action' => 'index'),
@@ -55,14 +47,12 @@
             <ul class="dropdown-menu">
                 <li>
                     <?php 
-                        echo $this->Html->link($icon_plus . ' Nuevo', array('controller' => 'libros', 'action' => 'agregar'),
+                        echo $this->Html->link($icon_signal . ' Estadísticas', array('controller' => 'libros', 'action' => 'agregar'),
                             array('escape' => false)); 
                     ?>
                 </li>
             </ul>
         </div>
-    <?php } ?>
-    <?php if ($content_chapters) {?>
         <div class="btn-group">
             <?php 
                 echo $this->Html->link($icon_list . ' Capítulos Libros', array('controller' => 'capitulos', 'action' => 'index'),
@@ -74,14 +64,12 @@
             <ul class="dropdown-menu">
                 <li>
                     <?php 
-                        echo $this->Html->link($icon_plus . ' Nuevo', array('controller' => 'capitulos', 'action' => 'agregar'),
+                        echo $this->Html->link($icon_signal . ' Estadísticas', array('controller' => 'capitulos', 'action' => 'agregar'),
                             array('escape' => false)); 
                     ?>
                 </li>
             </ul>
         </div>
-    <?php }?>
-    <?php if ($content_patents) {?>
         <div class="btn-group">
             <?php 
                 echo $this->Html->link($icon_list . ' Patentes', array('controller' => 'patentes', 'action' => 'index'),
@@ -93,11 +81,45 @@
             <ul class="dropdown-menu">
                 <li>
                     <?php 
-                        echo $this->Html->link($icon_plus . ' Nuevo', array('controller' => 'patentes', 'action' => 'agregar'),
+                        echo $this->Html->link($icon_signal . ' Estadísticas', array('controller' => 'patentes', 'action' => 'agregar'),
                             array('escape' => false)); 
                     ?>
                 </li>
             </ul>
         </div>
-    <?php }?>
+        <div class="btn-group">
+            <?php 
+                echo $this->Html->link($icon_list . ' Tesis', array('controller' => 'tesis', 'action' => 'index'),
+                    array('class' => 'btn btn-large', 'escape' => false)); 
+            ?>
+            <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <?php 
+                        echo $this->Html->link($icon_signal . ' Estadísticas', array('controller' => 'tesis', 'action' => 'agregar'),
+                            array('escape' => false)); 
+                    ?>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <?php 
+                echo $this->Html->link($icon_list . ' Congresos', array('controller' => 'congresos', 'action' => 'index'),
+                    array('class' => 'btn btn-large', 'escape' => false)); 
+            ?>
+            <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <?php 
+                        echo $this->Html->link($icon_signal . ' Estadísticas', array('controller' => 'congresos', 'action' => 'agregar'),
+                            array('escape' => false)); 
+                    ?>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
