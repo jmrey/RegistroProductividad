@@ -1,17 +1,28 @@
 <div class="box form">
-    <?php echo $this->Form->create('User', array('class' => 'form-inline big')); ?>
+    <header>
+        <h1 class="title btn-small">Modificar Datos</h1>
+        <div class="btn-group right">
+            <?php
+                echo $this->Html->link('Perfil', array('controller' => 'users', 'action' => 'profile'),
+                    array('class' => 'btn btn-small', 'escape' => false));
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
+                echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
+                    array('class' => 'btn btn-small', 'escape' => false));
+            ?>
+        </div>
+    </header>
+    <?php echo $this->Form->create('User', array('action' => 'edit','class' => 'form-inline big')); ?>
     <fieldset>
         <legend>Datos de Sesi&oacute;n</legend>
         <?php 
+            echo $this->Html->link('Cambiar contraseña', array('action' => 'nuevopassword', $authUser['keycode']), 
+                        array('class' => 'btn btn-primary btn-small right'));
             echo $this->Form->input('username', array(
                 'label' => 'Nombre de Usuario:'
             ));
             echo $this->Form->input('email', array(
                 'label' => 'Correo Electrónico:',
                 'type' => 'email'
-            ));
-            echo $this->Form->input('password', array(
-                'label' => 'Contraseña:'
             ));
         ?>
     </fieldset>
@@ -38,9 +49,7 @@
             <?php echo $this->Session->flash(); ?>
         </div>
         <?php 
-            echo $this->Form->submit('Registrar', array( 'class' => 'btn btn-success btn-large', 'div' => false));
-            echo $this->Form->button('Limpiar', array('type' => 'reset', 'class' => 'btn btn-large'));
-            echo $this->Html->link('Iniciar Sesión', '/iniciar_sesion');
+            echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
         ?>
     </div>
     <?php echo $this->Form->end(); ?>

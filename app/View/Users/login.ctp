@@ -24,9 +24,10 @@
             <?php echo $this->Session->flash(); ?>
         </div>
         <?php 
-            echo $this->Form->end(array('label' => 'Entrar', 'class' => 'btn btn-success btn-large', 'div' => false));
-            echo $this->Html->link('Registrarme', '/signup');
-            echo $this->Html->link('Recuperar contraseña', '/recover');
+            echo $this->Form->submit('Entrar', array( 'class' => 'btn btn-success btn-large', 'div' => false));
+            echo $this->Html->link('Registrarme', '/registrar');
+            echo $this->Html->link('Recuperar contraseña', '/recuperar_password');
         ?>
     </div>
+    <?php echo $this->Form->end(); ?>
 </div>

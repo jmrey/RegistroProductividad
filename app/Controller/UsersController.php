@@ -5,11 +5,15 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
     public $name = 'Users';
     public $components = array('Session');
-    public $uses = array('User', 'Contenido');
+    //public $uses = array('User', 'Contenido');
     
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'login', 'logout', 'validar');
+        $allowActions = array('add', 'login', 'logout', 'validar', 'resetpassword', 'ticket');
+        if ($this->Session->check('tokenreset')) {
+            array_push($allowActions, 'newpassword');
+        }
+        $this->Auth->allow($allowActions);
     }
     
     public function login() {
@@ -19,6 +23,8 @@ class UsersController extends AppController {
                 $this->error('Tu cuenta no ha sido verificada');
             } else {
                 if ($this->Auth->login()) {
+                    $this->loadModel('Contenido');
+                    $this->Session->write('App.settings', $this->Contenido->getProperties());
                     $this->redirect($this->Auth->redirect());
                 } else {
                     $this->error('Nombre de usuario o contraseña inválidos.');
@@ -31,27 +37,23 @@ class UsersController extends AppController {
         }
     }
     
-    public function admin_login() {
-        $this->redirect(array('action' => 'login', 'admin' => 0));
-    }
-    
     public function logout() {
         $this->redirect($this->Auth->logout());
     }
     
     public function add() {
-        $this->set('deptos', $this->User->deptosArray);
+        $this->loadModel('Contenido');
         if ($this->request->is('post')) {
-            $this->User->create();
             $validate_accounts = $this->Contenido->getPropertyValue('validate_accounts', 'bool');
-            $keycode = Security::hash(date('mdY').rand(4000000,4999999));
             $this->request->data['User']['status'] = (!$validate_accounts) ? 1 : 0;
-            $this->request->data['User']['keycode'] = $keycode;
-            
+            $this->request->data['User']['keycode'] = Security::hash(date('mdY').rand(4000000,4999999));
+            $this->User->create();
             if ($this->User->save($this->request->data)) {
                 if ($validate_accounts) {
-                    $email = $this->request->data['User']['email'];
-                    $this->_sendKeyCode($email, $keycode);
+                    $this->_sendKeyCode(
+                            $this->request->data['User']['email'],
+                            $this->request->data['User']['keycode']
+                    );
                 }
                 $this->success('Te has registrado satisfactoriamente.');
             } else {
@@ -62,14 +64,110 @@ class UsersController extends AppController {
                 $this->redirect($this->Auth->redirect());
             }
         }
+        $this->set('deptos', $this->User->deptosArray);
     }
     
-    public function dashboard() {
-        $this->set('content_articles', $this->Contenido->getPropertyValue('content_articles', 'bool'));
-        $this->set('content_books', $this->Contenido->getPropertyValue('content_books', 'bool'));
-        $this->set('content_chapters', $this->Contenido->getPropertyValue('content_chapters', 'bool'));
-        $this->set('content_patents', $this->Contenido->getPropertyValue('content_patents', 'bool'));
+    public function profile() {
+        $this->set('deptos', $this->User->deptosArray);
+        $this->render('view');
     }
+    
+    public function edit() {
+        $this->set('deptos', $this->User->deptosArray);
+        //  El Usuario sólo puede editar su propio perfil, por eso se pasa su propio id.
+        $id = $this->Auth->user('id');
+        $this->User->id = $id;
+        
+        if (!$this->User->exists()) {
+            throw new NotFoundException('Usuario no existe.');
+        }
+        
+        if ($this->request->is('post') || $this->request->is('put')) {
+            // Se sobreescrube el id por el id correcto (sólo por seguridad).
+            $this->request->data['User']['id'] = $id;
+            $this->request->data['User']['keycode'] = Security::hash(date('mdY').rand(4000000,4999999));
+            /* El usuario solo puede actualizar sólo los siguientes campos. */
+            $fieldList = array('id', 'email', 'nombre', 'depto', 'no_empleado', 'keycode');
+            if ($this->User->save($this->request->data, true, $fieldList)) {
+                $this->refreshAuth();
+                $this->success('Se han actualizado los datos satisfactoriamente.');
+            } else {
+                $this->error('No se han podido actualizar tus datos.');
+            }
+        } else {
+            $user = $this->User->read(null, $id);
+            $this->request->data = $user;
+            unset($this->request->data['User']['password']);
+            unset($this->request->data['User']['id']);
+        }
+    }
+    
+    public function resetpassword() {
+        if ($this->request->is('post')) {
+            $user = $this->User->findByEmail($this->request->data['User']['email']);
+            if (empty($user)) {
+                $this->warning('El correo ingresado no está registrado. Intenta con otro.');
+            } else {
+                //$data = array();
+                $this->loadModel('Ticket');
+                $keycode = Security::hash(date('mdY').rand(4000000,4999999));
+                $email = $user['User']['email'];
+                $this->_sendRecoverPassword($email, $keycode);
+                $data['Ticket']['hash'] = $keycode;
+                $data['Ticket']['data'] = $email;
+                $data['Ticket']['expires'] = $this->Ticket->getExpirationDate();
+                if ($this->Ticket->save($data)) {
+                    $this->success('Ha sido enviado el correo con éxito a ' . $email);
+                } else {
+                    $this->error('Ha ocurrido un error. Intenta más tarde.');
+                }
+            }
+        }
+    }
+    
+    public function ticket($hash) {
+        $this->loadModel('Ticket');
+        $results = $this->Ticket->checkTicket($hash);
+        
+        if (!empty($results)) {
+            $userTicket = $this->User->findByEmail($results['Ticket']['data']);
+            $this->Session->write('tokenreset', $userTicket['User']['keycode']);
+            $this->Ticket->deleteTicket($hash);
+            $this->redirect(array('controller' => 'users', 'action' => 'newpassword', $userTicket['User']['keycode']));
+        } else {
+            $this->warning('Tu ticket ha expidado.');
+            $this->redirect(array('controller' => 'users', 'action' => 'nuevopassword'));
+        }
+    }
+    
+    public function nuevopassword($keycode = null) {
+        $user = $this->User->findByKeycode($keycode);
+        if (!empty($user)) {
+            if ($this->request->is('post') || $this->request->is('put')) {
+                if($this->request->data['User']['password'] != $this->request->data['User']['confirm_password']) {
+                    $this->error('Verifica que las contraseñas sean iguales.');
+                } else {
+                    $user['User']['password'] = $this->request->data['User']['confirm_password'];
+                    $user['User']['keycode'] = Security::hash(date('mdY').rand(4000000,4999999));
+                    if ($this->User->save($user)) {
+                        $this->refreshAuth();
+                        $this->Session->delete('tokenreset');
+                        $this->success('Se ha cambiado tu contraseña con éxito.');
+                        $this->redirect(array('action' => 'login'));
+                    } else {
+                        $this->error('Ha ocurrido un error.');
+                    }
+                }
+            }
+            $this->request->data = $user;
+            unset($this->request->data['User']['password']);
+        } else {
+            $this->error('Tu código clave no es el correcto. No podemos cambiar tu contraseña.');
+            $this->set('userFound', false);
+        }
+        
+    }
+    
     
     public function validar($keycode = null) {
         $this->User->recursive = -1;
@@ -87,26 +185,22 @@ class UsersController extends AppController {
                 $this->success('Tu cuenta ya ha sido activada.');
                 $this->redirect(array('controller' => 'users','action' => 'login'));
             }
-            $this->set('username', $user['User']['username']);
-            $this->set('email', $user['User']['email']);
-            $this->set('keycode', $keycode);
+            $usermame = $user['User']['username']; 
+            $email = $user['User']['email'];
+            $this->set(compact('username', 'email', 'keycode'));
         }
-    }
-    
-    public function admin_config() {
-        if (!parent::isAdmin()) {
-            $this->redirect('/dashboard');
-        }
-        $this->set('validate_accounts', $this->Contenido->getPropertyValue('validate_accounts', 'bool'));
-        $this->set('force_downloads', $this->Contenido->getPropertyValue('force_downloads', 'bool'));
-        $this->set('content_articles', $this->Contenido->getPropertyValue('content_articles', 'bool'));
-        $this->set('content_books', $this->Contenido->getPropertyValue('content_books', 'bool'));
-        $this->set('content_chapters', $this->Contenido->getPropertyValue('content_chapters', 'bool'));
-        $this->set('content_patents', $this->Contenido->getPropertyValue('content_patents', 'bool'));
     }
     
     private function _sendKeyCode($email = null, $keycode = null) {
         $this->_sendEmail($email, 'Sepi: ' . $email, 'validateEmail', array(
+            'email' => $email,
+            'keycode' => $keycode,
+            'linkDomain' => 'http://regprod.org'
+        ));
+    }
+    
+    private function _sendRecoverPassword($email = null, $keycode = null) {
+        $this->_sendEmail($email, 'Sepi: ' . $email, 'recoverPassword', array(
             'email' => $email,
             'keycode' => $keycode,
             'linkDomain' => 'http://regprod.org'
