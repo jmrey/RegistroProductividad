@@ -37,14 +37,15 @@
             </ul>
             <?php
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'capitulos', 'action' => 'agregar'),
+                echo $this->Html->link($icon_plus . ' Nuevo Capítulo', array('controller' => 'capitulos', 'action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
-                echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'dashboard'),
+                echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
                     array('class' => 'btn btn-small', 'escape' => false));
             ?>
         </div> 
     </header>
+    <?php echo $this->Session->flash(); ?>
     <table class="table table-condensed table-striped table-bordered">
         <thead>
             <tr>
@@ -65,7 +66,7 @@
                 <td><?php echo $cap['id']; ?></td>
                 <td>
                     <?php
-                        echo $this->Html->link('Ver', array('controller' => 'capitulos', 'action' => 'ver', $cap['id']),
+                        echo $this->Html->link('Ver', $cap['id'],
                                 array());
                     ?>
                 </td>

@@ -3,17 +3,11 @@
         <h1 class="title btn-small">Capítulos</h1>
         <div class="btn-group right">
             <?php 
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'capitulos', 'action' => 'agregar'),
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
+                echo $this->Html->link($icon_plus . ' Resumen', array('controller' => 'capitulos', 'action' => 'index'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
-                echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'dashboard'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
-                echo $this->Html->link($icon_plus, array('controller' => 'capitulos', 'action' => 'index'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'capitulos', 'action' => 'add'),
+                echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
                     array('class' => 'btn btn-small', 'escape' => false));
             ?>
         </div>
@@ -176,8 +170,9 @@
             <?php echo $this->Session->flash(); ?>
         </div>
         <?php 
-            echo $this->Form->end(array('label' => 'Guardar', 'class' => 'btn btn-success btn-large', 'div' => false));
+            echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
             echo $this->Form->button('Cancelar', array('type' => 'reset', 'class' => 'btn btn-large'));
         ?>
     </div>
+    <?php echo $this->Form->end(); ?>
 </div>

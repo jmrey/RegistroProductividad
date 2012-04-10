@@ -3,19 +3,19 @@
         <h1 class="title btn-small">Artículos</h1>
         <div class="btn-group right">
             <?php 
-                echo $this->Html->link('Ver', array('controller' => 'articulos', 'action' => 'ver', $this->request->data['Articulo']['id']),
-                    array('class' => 'btn btn-small'));
+                $id = $this->request->data['Articulo']['id'];
+                echo $this->Html->link('Ver', $id, array('class' => 'btn btn-small'));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'articulos', 'action' => 'agregar'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
-                echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'dashboard'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
-                echo $this->Html->link($icon_plus, array('controller' => 'articulos', 'action' => 'index'),
+                echo $this->Html->link($icon_plus . ' Nuevo Artículo', array('action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'articulos', 'action' => 'add'),
+                echo $this->Form->postLink($icon_plus . ' Borrar', array('action' => 'borrar', $id),
+                    array('class' => 'btn btn-small', 'escape' => false), '¿Estás seguro?');
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
+                echo $this->Html->link($icon_plus . ' Resumen', array('action' => 'index'),
+                    array('class' => 'btn btn-small', 'escape' => false));
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
+                echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
                     array('class' => 'btn btn-small', 'escape' => false));
             ?>
         </div>
@@ -102,7 +102,7 @@
     <fieldset>
         <legend>Datos de Autores</legend>
         <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
                 <?php 
                     echo $this->Form->input('num_autores', array(
                         'label' => 'Total Autores:',
@@ -118,7 +118,7 @@
             )); ?>
         </div>
         <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
                 <?php 
                     echo $this->Form->input('pos_autor', array(
                         'label' => 'Posición Autor:',
@@ -163,8 +163,11 @@
             <?php echo $this->Session->flash(); ?>
         </div>
         <?php 
-            echo $this->Form->end(array('label' => 'Guardar', 'class' => 'btn btn-success btn-large', 'div' => false));
+            echo $this->Html->link('Ver Archivos', '/'. $this->params['controller'] . '/' . $id . '/archivos', 
+                array('class' => 'btn btn-inverse btn-large'));
+            echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
             echo $this->Form->button('Cancelar', array('type' => 'reset', 'class' => 'btn btn-large'));
         ?>
     </div>
+    <?php echo $this->Form->end(); ?>
 </div>

@@ -7,17 +7,18 @@
                 echo $this->Html->link('Editar', array('controller' => 'articulos', 'action' => 'editar', $art['id']),
                     array('class' => 'btn btn-small'));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'articulos', 'action' => 'agregar'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
-                echo $this->Html->link($icon_plus, array('controller' => 'users', 'action' => 'dashboard'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
-                echo $this->Html->link($icon_plus, array('controller' => 'articulos', 'action' => 'index'),
+                echo $this->Html->link($icon_plus . ' Nuevo Artículo', array('action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
-                echo $this->Html->link($icon_plus, array('controller' => 'articulos', 'action' => 'add'),
+                echo $this->Form->postLink($icon_plus . ' Borrar', array('action' => 'borrar', $art['id']),
+                    array('class' => 'btn btn-small', 'escape' => false), '¿Estás seguro?');
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-list'));
+                echo $this->Html->link($icon_plus . ' Resumen', array('controller' => 'articulos', 'action' => 'index'),
                     array('class' => 'btn btn-small', 'escape' => false));
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
+                echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
+                    array('class' => 'btn btn-small', 'escape' => false));
+                
             ?>
         </div>
     </header>
@@ -99,6 +100,14 @@
             <div class="row-fluid">
                 <div class="span12 no-label">
                     <?php echo $art['resumen']; ?>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12 no-label">
+                    <?php
+                        echo $this->Html->link('Ver Archivos', '/'. $this->params['controller'] . '/' . $art['id'] . '/archivos', 
+                            array('class' => 'btn btn-inverse btn-large'));
+                    ?>
                 </div>
             </div>
         </div>
