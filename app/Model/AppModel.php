@@ -40,4 +40,8 @@ class AppModel extends Model {
         $currentYear = date('Y');
         return ($initYear <= $value && $value <= $currentYear);
     }
+    
+    public function isOwnedBy($modelId, $userId) {
+        return $this->field('id', array('id' => $modelId, 'user_id' => $userId)) === $modelId;
+    }
 }

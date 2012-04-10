@@ -26,6 +26,24 @@
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
+// Load plugin AjaxMultipuload
+CakePlugin::load('AjaxMultiUpload');
+CakePlugin::load('Media');
+require APP . 'Plugin' . DS . 'Media' . DS . 'Config' . DS . 'core.php';
+
+$small = array('fitCrop' => array(34, 34));
+$thumbnail = array('fit' => array(100, 100));
+$sales = array('fitCrop' => array(200, 200));
+$large = array('fit' => array(704, 10000));
+
+Configure::write('Media.filter', array('default' => array(
+    'audio' => array(),
+    'document' => array(),
+    'generic' => array(),
+    'image' => compact('thumbnail', 'large'),
+    'video' => compact('medium', 'large')
+)));
+
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
  *
