@@ -38,6 +38,17 @@ class Archivo extends AppModel {
         return $exists;
     }
     
+    public function getContent($type = null, $id = null) {
+        $content = null;
+        try {
+            $modelClass = Inflector::classify($type);
+            $content = ClassRegistry::init($modelClass)->read(null, $id);
+        } catch (Exception $e) {
+            pr($e);
+        }
+        return $content;
+    }
+    
     public function beforeSave() {
         $this->data[$this->alias]['thumbnail_url'] = '/media/filter/thumbnail/img/' . $this->data[$this->alias]['basename'];
         $this->data[$this->alias]['url'] = '/media/transfer/img/'. $this->data[$this->alias]['basename'];

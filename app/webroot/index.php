@@ -35,14 +35,14 @@
  *
  */
 	if (!defined('ROOT')) {
-		define('ROOT', dirname(dirname(dirname(__FILE__))));
+		define('ROOT', dirname(dirname(__FILE__)));
 	}
 /**
  * The actual directory name for the "app".
  *
  */
 	if (!defined('APP_DIR')) {
-		define('APP_DIR', basename(dirname(dirname(__FILE__))));
+		define('APP_DIR', 'app');
 	}
 
 /**
@@ -57,6 +57,7 @@
  * Leaving this constant undefined will result in it being defined in Cake/bootstrap.php
  */
 	//define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'lib');
+        define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'cake20' . DS . 'lib');
 
 /**
  * Editing below this line should NOT be necessary.

@@ -3,8 +3,14 @@
 class LibrosController extends AppController {
     public $name = 'Libros';
     public $components = array('Session');
-     public $uses = array('Libro', 'Contenido');
-     public $helpers = array('AjaxMultiUpload.Upload');
+    
+    public $paginate = array(
+        'limit' => 20,
+        'order' => array(
+            'Libro.anio_publicacion' => 'asc',
+            'Libro.titulo' => 'asc'
+        )
+    );
     
     public function beforeFilter() {
         parent::beforeFilter();
@@ -12,18 +18,20 @@ class LibrosController extends AppController {
     }
     
     public function index() {
+        $this->paginate['conditions'] = array('Libro.user_id' => $this->Auth->user('id'));
         $this->Libro->recursive = -1;
-        $libros = $this->Libro->findAllByUserId($this->Auth->user('id'));
+        $libros = $this->paginate();
         $this->set('tipo_libros', $this->Libro->tipoLibros);
         $this->set('libros', $libros);
     }
     
     public function admin_index() {
         $this->Libro->recursive = -1;
+        $this->set('tipo_libros', $this->Libro->tipoLibros);
         $this->set('libros', $this->paginate());
     }
     
-    /*public function json_index($field = null, $query = null) {
+    public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
             'conditions' => array('Libro.' . $field . ' LIKE' => '%' . $query .'%'),
@@ -37,9 +45,10 @@ class LibrosController extends AppController {
             array_push($json_array, $value['Libro'][$field]);
         }
         echo json_encode($json_array);
-    }*/
+    }
     
     public function nuevo() {
+        $this->loadModel('Contenido');
         $message_autors = array(
             'total' => $this->Contenido->getPropertyValue('message_total_autor'),
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
@@ -70,16 +79,17 @@ class LibrosController extends AppController {
     }
     
     public function editar($id = null) {
-        $this->set('tipo_libros', $this->Libro->tipoLibros);
         $this->Libro->id = $id;
         if (!$this->Libro->exists()) {
             throw new NotFoundException('Libro no existe.');
         }
+        $this->loadModel('Contenido');
         $message_autors = array(
             'total' => $this->Contenido->getPropertyValue('message_total_autor'),
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
         );
         $this->set('message_autors', $message_autors);
+        $this->set('tipo_libros', $this->Libro->tipoLibros);
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data['Libro']['id'] = $id;
             if ($this->Libro->save($this->request->data)) {
@@ -117,6 +127,17 @@ class LibrosController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         //$this->redirect(array('action' => 'index'));
+    }
+    
+    public function search() {
+        $query = $this->params['url']['q'];
+        if (!$query) {
+            $this->set('libros', array());
+        } else {
+            $this->set('libros', $this->Libro->findByQuery($query, $this->Auth->user('id')));
+        }
+        $this->set('tipo_libros', $this->Libro->tipoLibros);
+        $this->render('index');
     }
     
     public function exportar($type = null) {

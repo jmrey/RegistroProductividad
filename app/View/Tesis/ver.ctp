@@ -7,7 +7,7 @@
                 echo $this->Html->link('Editar', array('action' => 'editar', $t['id']),
                     array('class' => 'btn btn-small'));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus . ' Nueva Tesis', array('action' => 'agregar'),
+                echo $this->Html->link($icon_plus . ' Nueva Tesis', array('action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
                 echo $this->Form->postLink($icon_plus . ' Borrar', array('action' => 'borrar', $t['id']),
@@ -49,14 +49,14 @@
             <div class="row-fluid">
                 <div class="span4">
                     <span class="label">Total Autores:</span>
-                    <?php echo 2;//$t['num_autores']; ?>
+                    <?php echo $t['num_autores']; ?>
                 </div>
                 <span class="info"><i class="icon-info-sign"></i> Se refire al n&uacute;mero de personas que participaron en la elaboraci&oacute;n del art&iacute;culo en cuesti&oacute;n.</span>
             </div>
             <div class="row-fluid">
                 <div class="span4">
                     <span class="label">Posición Autor:</span>
-                    <?php echo 3;//$t['pos_autor']; ?>
+                    <?php echo $t['pos_autor']; ?>
                 </div>
                 <span class="info"><i class="icon-info-sign"></i> Se refire a la posici&oacute;n que ocupa el investigador en la lista de autores.</span>
             </div>

@@ -18,6 +18,7 @@ body footer.fixed-bottom {
   width:100%;
 }
 body footer.fixed-bottom p { margin:0; }
+form.upper .input input, form.upper .input textarea { text-transform:uppercase; }
 .left { float:left !important; }
 .right { float:right !important; }
 .navbar-inner {
@@ -39,6 +40,10 @@ body footer.fixed-bottom p { margin:0; }
   -webkit-border-radius:0;
   -moz-border-radius:0;
   border-radius:0;
+}
+#feedback-box {
+  margin-bottom:20px;
+  position:relative;
 }
 #ipn-header {
   margin-bottom:10px;
@@ -112,7 +117,7 @@ body footer.fixed-bottom p { margin:0; }
   -webkit-box-shadow:0 0 3px rgba(128,128,128,0.25);
   -moz-box-shadow:0 0 3px rgba(128,128,128,0.25);
   box-shadow:0 0 3px rgba(128,128,128,0.25);
-  margin-bottom:20px;
+  margin-bottom:5px;
   padding:10px 20px;
 }
 .box header, .box .header {
@@ -335,13 +340,6 @@ form fieldset .input > div.error-message {
   border-color:#f3dfe2;
   color:#b94a48;
 }
-form .form-actions {
-  margin:15px 0 0;
-  padding:15px 0 0;
-}
-form .form-actions .alert { margin:0; }
-form .form-actions.f-right { text-align:right; }
-form .form-actions > .btn, form .form-actions > a { margin:0 5px; }
 form.big fieldset label { width:200px; }
 form.big fieldset input {
   font-size:18px;
@@ -434,3 +432,10 @@ form.btn .search-btn {
   font-style:normal;
   padding:8px 14px;
 }
+.form-actions {
+  margin:15px 0 0;
+  padding:15px 0 0;
+}
+.form-actions .alert { margin:0; }
+.form-actions.f-right { text-align:right; }
+.form-actions > .btn, .form-actions > a { margin:0 5px; }

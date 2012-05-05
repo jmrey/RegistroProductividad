@@ -7,7 +7,7 @@
                 echo $this->Html->link('Ver', array('controller' => 'libros', 'action' => 'ver', $id),
                     array('class' => 'btn btn-small'));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus . ' Agregar', array('controller' => 'libros', 'action' => 'nuevo'),
+                echo $this->Html->link($icon_plus . ' Nuevo Libro', array('controller' => 'libros', 'action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
                 echo $this->Html->link($icon_plus . ' Borrar', array('controller' => 'libros', 'action' => 'borrar'),
@@ -21,7 +21,7 @@
             ?>
         </div>
     </header>
-    <?php echo $this->Form->create('Libro', array('class' => 'form-inline container-fluid float-messages')); ?>
+    <?php echo $this->Form->create('Libro', array('class' => 'form-inline container-fluid upper float-messages')); ?>
     <fieldset>
         <legend>Datos de Libro</legend>
         <div class="row-fluid">
@@ -209,7 +209,7 @@
             echo $this->Html->link('Ver Archivos', '/'. $this->params['controller'] . '/' . $id . '/archivos', 
                 array('class' => 'btn btn-inverse btn-large'));
             echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
-            echo $this->Form->button('Cancelar', array('type' => 'reset', 'class' => 'btn btn-large'));
+            echo $this->Html->link('Cancelar', $referer, array('class' => 'btn btn-large'));
         ?>
     </div>
     <?php echo $this->Form->end(); ?>

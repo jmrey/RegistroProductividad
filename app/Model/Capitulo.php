@@ -103,5 +103,18 @@ class Capitulo extends AppModel {
             )
         )
     );
+    
+    public function findByQuery($query = '', $id = null) {
+        $conditions = array(
+            'OR' => array(
+                array('Capitulo.titulo_capitulo LIKE' => '%' . $query .'%'),
+                array('Capitulo.titulo_libro LIKE' => '%' . $query .'%')
+            ),
+            'AND' => array(
+                array('Capitulo.user_id' => $id)
+            ));
+        $this->recursive = -1;
+        return $this->find('all', array('conditions' => $conditions));
+    }
 }
 ?>

@@ -12,7 +12,7 @@
             ?>
         </div>
     </header>
-    <?php echo $this->Form->create('Curso', array('class' => 'form-inline container-fluid float-messages')); ?>
+    <?php echo $this->Form->create('Curso', array('class' => 'form-inline container-fluid upper float-messages')); ?>
     <fieldset>
         <legend>Datos de Curso</legend>
         <div class="row-fluid">
@@ -20,7 +20,11 @@
                 <?php 
                     echo $this->Form->input('nombre', array(
                         'label' => 'Nombre:',
-                        'type' => 'text'
+                        'type' => 'text',
+                        'class' => 'autocomplete',
+                        'data-provide' => 'typehead',
+                        'data-field' => 'nombre',
+                        'data-source' => 'cursos'
                     ));
                 ?>
             </div>
@@ -108,6 +112,8 @@
                     ));
                 ?>
             </div>
+            <?php echo $this->Form->checkbox('add_files', array('value' => 1)); ?>
+            <span>Deseo agregar archivos, al guardar este Curso.</span>
         </div>
     </fieldset>
     <div class="form-actions f-right">
@@ -116,7 +122,7 @@
         </div>
         <?php 
             echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
-            echo $this->Form->button('Cancelar', array('type' => 'reset', 'class' => 'btn btn-large'));
+            echo $this->Html->link('Cancelar', $referer, array('class' => 'btn btn-large'));
         ?>
     </div>
     <?php echo $this->Form->end(); ?>

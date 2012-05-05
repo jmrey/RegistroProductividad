@@ -4,7 +4,7 @@
         <h1 class="title btn-small">Cambiar Contraseña</h1>
         <div class="btn-group right">
             <?php 
-                echo $this->Html->link('Perfil', array('controller' => 'users', 'action' => 'profile'),
+                echo $this->Html->link('Perfil', array('controller' => 'users', 'action' => 'perfil'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
                 echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
@@ -17,7 +17,7 @@
         if (isset($userFound) && $userFound == false) {
             echo $this->Session->flash();
         } else { 
-            echo $this->Form->create('User', array('url' => array('action' => 'newpassword', $this->request->data['User']['keycode']),
+            echo $this->Form->create('User', array('url' => array('action' => 'nuevopassword', $this->request->data['User']['keycode']),
                 'class' => 'form-inline big')); 
             echo $this->element('alert', array(
                 'type' => 'alert-info',

@@ -5,10 +5,10 @@
             <?php 
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-cog icon-white'));
                 echo $this->Html->link($icon_plus . ' Administración', array('controller' => 'dashboard', 'action' => 'index', 'admin' => 1),
-                    array('class' => 'btn btn-small btn-success', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home icon-white'));
+                    array('class' => 'btn btn-small btn-inverse', 'escape' => false));
+                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
                 echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index', 'admin' => 0),
-                    array('class' => 'btn btn-small btn-success', 'escape' => false));
+                    array('class' => 'btn btn-small', 'escape' => false));
             ?>
         </div>
     </header>
@@ -24,7 +24,7 @@
                     <button class="btn <?php echo ($contenido_tesis)?'active':''; ?>" data-property="contenido_tesis">Tesis</button>
                     <button class="btn <?php echo ($contenido_congresos)?'active':''; ?>" data-property="contenido_congresos">Congresos</button>
                     <button class="btn <?php echo ($contenido_cursos)?'active':''; ?>" data-property="contenido_cursos">Cursos</button>
-                    
+                    <button class="btn <?php echo ($contenido_derechos)?'active':''; ?>" data-property="contenido_derechos">Derechos de Autor</button>
                 </div>
             </div>
         </div>

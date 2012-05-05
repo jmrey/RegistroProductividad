@@ -3,8 +3,15 @@
 class CapitulosController extends AppController {
     public $name = 'Capitulos';
     public $components = array('Session');
-    public $uses = array('Capitulo', 'Contenido');
-    public $helpers = array('AjaxMultiUpload.Upload');
+    //public $uses = array('Capitulo', 'Contenido');
+    
+    public $paginate = array(
+        'limit' => 20,
+        'order' => array(
+            'Capitulo.anio_publicacion' => 'asc',
+            'Capitulo.titulo_capitulo' => 'asc'
+        )
+    );
     
     public function beforeFilter() {
         parent::beforeFilter();
@@ -13,7 +20,8 @@ class CapitulosController extends AppController {
     
     public function index() {
         $this->Capitulo->recursive = -1;
-        $capitulos = $this->Capitulo->findAllByUserId($this->Auth->user('id'));
+        $this->paginate['conditions'] = array('Capitulo.user_id' => $this->Auth->user('id'));
+        $capitulos = $this->paginate();
         $this->set('capitulos', $capitulos);
     }
     
@@ -22,7 +30,7 @@ class CapitulosController extends AppController {
         $this->set('capitulos', $this->paginate());
     }
     
-    /*public function json_index($field = null, $query = null) {
+    public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
             'conditions' => array('Capitulo.' . $field . ' LIKE' => '%' . $query .'%'),
@@ -36,9 +44,10 @@ class CapitulosController extends AppController {
             array_push($json_array, $value['Capitulo'][$field]);
         }
         echo json_encode($json_array);
-    }*/
+    }
     
     public function nuevo() {
+        $this->loadModel('Contenido');
         $message_autors = array(
             'total' => $this->Contenido->getPropertyValue('message_total_autor'),
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
@@ -72,6 +81,7 @@ class CapitulosController extends AppController {
         if (!$this->Capitulo->exists()) {
             throw new NotFoundException('Capitulo no existe.');
         }
+        $this->loadModel('Contenido');
         $message_autors = array(
             'total' => $this->Contenido->getPropertyValue('message_total_autor'),
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
@@ -114,6 +124,16 @@ class CapitulosController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         //$this->redirect(array('action' => 'index'));
+    }
+    
+    public function search() {
+        $query = $this->params['url']['q'];
+        if (!$query) {
+            $this->set('capitulos', array());
+        } else {
+            $this->set('capitulos', $this->Capitulo->findByQuery($query, $this->Auth->user('id')));
+        }
+        $this->render('index');
     }
     
     public function exportar($type = null) {

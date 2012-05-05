@@ -126,5 +126,18 @@ class Libro extends AppModel {
             )
         )
     );
+    
+    public function findByQuery($query = '', $id = null) {
+        $conditions = array(
+            'OR' => array(
+                array('Libro.titulo LIKE' => '%' . $query .'%'),
+                array('Libro.editorial LIKE' => '%' . $query .'%')
+            ),
+            'AND' => array(
+                array('Libro.user_id' => $id)
+            ));
+        $this->recursive = -1;
+        return $this->find('all', array('conditions' => $conditions));
+    }
 }
 ?>

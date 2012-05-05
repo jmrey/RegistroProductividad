@@ -11,7 +11,7 @@ class UsersController extends AppController {
         parent::beforeFilter();
         $allowActions = array('add', 'login', 'logout', 'validar', 'resetpassword', 'ticket');
         if ($this->Session->check('tokenreset')) {
-            array_push($allowActions, 'newpassword');
+            array_push($allowActions, 'nuevopassword');
         }
         $this->Auth->allow($allowActions);
     }
@@ -25,7 +25,7 @@ class UsersController extends AppController {
                 if ($this->Auth->login()) {
                     $this->loadModel('Contenido');
                     $this->Session->write('App.settings', $this->Contenido->getProperties());
-                    $this->redirect($this->Auth->redirect());
+                    $this->redirect(array('controller' => 'dashboard', 'action' => 'index'));
                 } else {
                     $this->error('Nombre de usuario o contraseña inválidos.');
                 }
@@ -37,8 +37,18 @@ class UsersController extends AppController {
         }
     }
     
+    public function admin_login() {
+        $this->redirect(array('admin' => 0, 'action' => 'login'));
+    }
+    
     public function logout() {
         $this->redirect($this->Auth->logout());
+    }
+    
+    public function admin_index() {
+        $this->User->recursive = -1;
+        $this->set('deptos', $this->User->deptosArray);
+        $this->set('users', $this->paginate());
     }
     
     public function add() {
@@ -67,9 +77,21 @@ class UsersController extends AppController {
         $this->set('deptos', $this->User->deptosArray);
     }
     
-    public function profile() {
+    public function perfil() {
         $this->set('deptos', $this->User->deptosArray);
-        $this->render('view');
+    }
+    
+    public function admin_perfil($id = null) {
+        if (!$id) {
+            $this->redirect(array('admin' => 0, 'action' => 'perfil'));
+        }
+        $this->User->id = $id;
+        if (!$this->User->exists()) { 
+            throw new NotFoundException('Usuario no existe.', 404);
+        }
+        $this->set('deptos', $this->User->deptosArray);
+        $user = $this->User->read(null, $id);
+        $this->set('user', $user['User']);
     }
     
     public function edit() {
@@ -87,7 +109,7 @@ class UsersController extends AppController {
             $this->request->data['User']['id'] = $id;
             $this->request->data['User']['keycode'] = Security::hash(date('mdY').rand(4000000,4999999));
             /* El usuario solo puede actualizar sólo los siguientes campos. */
-            $fieldList = array('id', 'email', 'nombre', 'depto', 'no_empleado', 'keycode');
+            $fieldList = array('id', /*'email',*/'nombre', 'depto', 'no_empleado', 'keycode');
             if ($this->User->save($this->request->data, true, $fieldList)) {
                 $this->refreshAuth();
                 $this->success('Se han actualizado los datos satisfactoriamente.');
@@ -100,6 +122,36 @@ class UsersController extends AppController {
             unset($this->request->data['User']['password']);
             unset($this->request->data['User']['id']);
         }
+    }
+    
+    public function admin_upgrade($id = null, $keycode = null) {
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException('Método no permitido.');
+        }
+        
+        if (!parent::isAdmin()) {
+            $this->warning('No tienes los suficientes permisos.');
+            $this->redirect(array('admin' => 0, 'action' => 'index'));
+        }
+        
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException('Usuario no existe.');
+        }
+        
+        $user = $this->User->read(null, $id);
+        if ($keycode === $user['User']['keycode']) {
+            $this->User->set('status' , 2);
+            if ($this->User->save()) {
+                $this->success('Se ha cambiado el rol con éxito.');
+            } else {
+                $this->warning('Ha ocurrido un error. Intenta más tarde.');
+            }
+        } else {
+            $this->warning('El código clave del usuario no es igual al del sistema.');
+        }
+        $this->redirect(array('admin' => 1, 'action' => 'perfil', $id));
+        
     }
     
     public function resetpassword() {
@@ -133,7 +185,7 @@ class UsersController extends AppController {
             $userTicket = $this->User->findByEmail($results['Ticket']['data']);
             $this->Session->write('tokenreset', $userTicket['User']['keycode']);
             $this->Ticket->deleteTicket($hash);
-            $this->redirect(array('controller' => 'users', 'action' => 'newpassword', $userTicket['User']['keycode']));
+            $this->redirect(array('controller' => 'users', 'action' => 'nuevopassword', $userTicket['User']['keycode']));
         } else {
             $this->warning('Tu ticket ha expidado.');
             $this->redirect(array('controller' => 'users', 'action' => 'nuevopassword'));
@@ -167,7 +219,6 @@ class UsersController extends AppController {
         }
         
     }
-    
     
     public function validar($keycode = null) {
         $this->User->recursive = -1;

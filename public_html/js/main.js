@@ -77,9 +77,30 @@ $(document).on('ready', function(){
     $('[data-property]').bind('click', function () {
         var dataProperty = $(this).attr('data-property');
         var value = !$(this).hasClass('active') ? 1 : 0;
-        $.post('/admin/contenidos/set/' + dataProperty + '/' + value, function (data) {
+        $.post(baseUrl + 'admin/contenidos/set/' + dataProperty + '/' + value, function (data) {
             //alert(data);
             if (data === 'error') return false;
+        });
+    });
+    
+    /*$('form.upper :input').each(function (index) {
+        $(this).bind('keyup', function (e) {
+            if (e.which >= 97 && e.which <= 122) {
+                var newKey = e.which - 32;
+                // I have tried setting those
+                e.keyCode = newKey;
+                e.charCode = newKey;
+            }
+
+            $(this).val(($(this).val()).toUpperCase());
+        });
+    });*/
+    
+    $('form.upper :input').each(function (index) {
+        var self = this;
+        $(this).keyup(function () {
+            //alert('keypress');
+           $(this).val($(this).val().toUpperCase());
         });
     });
     
@@ -96,7 +117,7 @@ $(document).on('ready', function(){
                 if( !self.data('active') && self.val().length > 0){
                     self.data('active', true);
                     //Do data request. Insert your own API logic here.
-                    $.getJSON("/json/" + $(this).attr('data-source') + "/index/" + $(this).attr('data-field') + "/" + $(this).val(),
+                    $.getJSON(baseUrl + "json/" + $(this).attr('data-source') + "/index/" + $(this).attr('data-field') + "/" + $(this).val(),
                         function(data) {
                             //set this to true when your callback executes
                             self.data('active',true);
@@ -119,6 +140,7 @@ $(document).on('ready', function(){
             }
         });
         
+    if($.isFunction($.fn.fileupload)) {
         $('#fileupload').fileupload();
         $('#fileupload').fileupload(
             'option',
@@ -161,5 +183,6 @@ $(document).on('ready', function(){
                 });
             });
         }
+    }
 });
 

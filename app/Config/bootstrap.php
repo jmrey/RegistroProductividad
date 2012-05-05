@@ -27,7 +27,8 @@
 Cache::config('default', array('engine' => 'File'));
 
 // Load plugin AjaxMultipuload
-CakePlugin::load('AjaxMultiUpload');
+//CakePlugin::load('AjaxMultiUpload');
+//CakePlugin::load('TwigView');
 CakePlugin::load('Media');
 require APP . 'Plugin' . DS . 'Media' . DS . 'Config' . DS . 'core.php';
 

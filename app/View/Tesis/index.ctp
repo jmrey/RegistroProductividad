@@ -48,10 +48,21 @@
             <tr>
                 <th>#</th>
                 <th>Detalles</th>
-                <th>Nombre</th>
-                <th>Tipo de Tesis</th>
-                <th>Año</th>
-                <th>Autores</th>
+                <th>Nombre de Tesis
+                    <?php 
+                        $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-retweet'));
+                        echo $this->Paginator->sort('nombre', $icon_plus, array('escape' => false));
+                    ?>
+                </th>
+                <th>Tipo de Tesis
+                    <?php echo $this->Paginator->sort('tipo_tesis', $icon_plus, array('escape' => false)); ?>
+                </th>
+                <th>Año
+                    <?php echo $this->Paginator->sort('anio_publicacion', $icon_plus, array('escape' => false)); ?>
+                </th>
+                <th>Autores
+                    <?php echo $this->Paginator->sort('lista_autores', $icon_plus, array('escape' => false)); ?>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -77,4 +88,9 @@
             ?>
         </tbody>
     </table>
+    <?php 
+        if (isset($this->Paginator)) {
+            echo $this->Paginator->numbers(); 
+        }
+    ?>
 </div>

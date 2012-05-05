@@ -21,6 +21,30 @@ class Curso extends AppModel {
                 'message' => 'Este campo es obligatorio.'
             )
         ),
+        'num_autores' => array(
+            'validate' => array(
+                'rule' => 'notEmpty',
+                'allowEmpty' => false,
+                'required' => true,
+                'message' => 'Este campo es obligatorio.'
+            ),
+            'numeric' => array(
+                'rule' => 'numeric',
+                'message' => 'Ingresa sólo números.'
+            )
+        ),
+        'pos_autor' => array(
+            'validate' => array(
+                'rule' => 'notEmpty',
+                'allowEmpty' => false,
+                'required' => true,
+                'message' => 'Este campo es obligatorio.'
+            ),
+            'numeric' => array(
+                'rule' => 'numeric',
+                'message' => 'Ingresa sólo números.'
+            )
+        ),
         'lista_autores' => array(
             'validate' => array(
                 'rule' => '/^[A-Za-z, ]+$/i',
@@ -67,5 +91,18 @@ class Curso extends AppModel {
             )
         )
     );
+    
+    public function findByQuery($query = '', $id = null) {
+        $conditions = array(
+            'OR' => array(
+                array('Curso.nombre LIKE' => '%' . $query .'%'),
+                array('Curso.lista_autores LIKE' => '%' . $query .'%')
+            ),
+            'AND' => array(
+                array('Curso.user_id' => $id)
+            ));
+        $this->recursive = -1;
+        return $this->find('all', array('conditions' => $conditions));
+    }
 }
 ?>

@@ -37,7 +37,7 @@
             </ul>
             <?php 
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus . ' Agregar', array('controller' => 'libros', 'action' => 'nuevo'),
+                echo $this->Html->link($icon_plus . ' Nuevo Libro', array('controller' => 'libros', 'action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
                 echo $this->Html->link($icon_plus . ' Escritorio', array('controller' => 'dashboard', 'action' => 'index'),
@@ -51,10 +51,21 @@
             <tr>
                 <th>#</th>
                 <th>Detalles</th>
-                <th>Título del Libro</th>
-                <th>Tipo de Libro</th>
-                <th>Año</th>
-                <th>Editorial</th>
+                <th>Título del Libro
+                    <?php 
+                        $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-retweet'));
+                        echo $this->Paginator->sort('titulo', $icon_plus, array('escape' => false));
+                    ?>
+                </th>
+                <th>Tipo de Libro
+                    <?php echo $this->Paginator->sort('tipo_libro', $icon_plus, array('escape' => false)); ?>
+                </th>
+                <th>Año
+                    <?php echo $this->Paginator->sort('anio_publicacion', $icon_plus, array('escape' => false)); ?>
+                </th>
+                <th>Editorial
+                    <?php echo $this->Paginator->sort('editorial', $icon_plus, array('escape' => false)); ?>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -80,4 +91,9 @@
             ?>
         </tbody>
     </table>
+    <?php 
+        if (isset($this->Paginator)) {
+            echo $this->Paginator->numbers(); 
+        }
+    ?>
 </div>

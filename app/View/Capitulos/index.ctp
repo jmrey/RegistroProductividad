@@ -51,10 +51,21 @@
             <tr>
                 <th>#</th>
                 <th>Detalles</th>
-                <th>Título del Capítulo</th>
-                <th>Título del Libro</th>
-                <th>Año</th>
-                <th>Editorial</th>
+                <th>Título del Capítulo
+                    <?php 
+                        $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-retweet'));
+                        echo $this->Paginator->sort('titulo_capitulo', $icon_plus, array('escape' => false));
+                    ?>
+                </th>
+                <th>Título del Libro
+                    <?php echo $this->Paginator->sort('titulo_libro', $icon_plus, array('escape' => false)); ?>
+                </th>
+                <th>Año
+                    <?php echo $this->Paginator->sort('anio_publicacion', $icon_plus, array('escape' => false)); ?>
+                </th>
+                <th>Editorial
+                    <?php echo $this->Paginator->sort('editorial', $icon_plus, array('escape' => false)); ?>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -80,4 +91,9 @@
             ?>
         </tbody>
     </table>
+    <?php 
+        if (isset($this->Paginator)) {
+            echo $this->Paginator->numbers(); 
+        }
+    ?>
 </div>

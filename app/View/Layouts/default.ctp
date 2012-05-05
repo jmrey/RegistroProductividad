@@ -11,20 +11,33 @@
             echo $this->Html->css(array('bootstrap', 'main', 'jquery.fileupload-ui'));
             echo $scripts_for_layout;
         ?>
+        
     </head>
     <body>
         <div class="wrapper">
             <?php echo $this->element('header'); ?>
             <div class="container">
-                <?php echo $content_for_layout; ?>
-            </div>    
+            <?php 
+                echo $content_for_layout;
+                if (($this->name != 'Feedback') && ($isAdmin === false)) {
+                ?>
+                <div id="feedback-box">
+                    <?php echo $this->Html->link('Feedback', array('admin' => 0, 'controller' => 'feedback', 'action' => 'index'),
+                        array('class' => 'btn btn-info')); ?>
+                </div>
+                <?php 
+                }
+            ?>
+            </div>
+            
         </div>
         <footer class="fixed-bottom">
             <?php echo $this->element('footer'); ?>
         </footer>
     </body>
     <?php 
-        //$scripts_array = array();
+        $baseUrl = 'var baseUrl = "' . $this->base . '/";';
+        echo $this->Html->scriptBlock($baseUrl, array('inline' => true));
         $scripts_array = array('jquery-1.7.1');
         if (isset($useJFileUpload)) {
             $extra_scripts = array(

@@ -4,6 +4,11 @@ class DashboardController extends AppController {
     var $name = 'Dashboard';
     var $uses =array();
     
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('feedback');
+    }
+    
     public function index() {
         
     }
@@ -21,5 +26,6 @@ class DashboardController extends AppController {
         $this->loadModel('Contenido');
         $this->set($this->Contenido->getProperties());
     }
+    
 }
 ?>

@@ -33,7 +33,8 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/view/957/The-App-Controller
  */
 class AppController extends Controller {
-    //public $helpers = array('Crumb');
+    //public $viewClass = 'TwigView.Twig';
+    
     /*
      * Array que contiene los componentes que necesita el controlador, en este caso, los componentes
      * que necesita la clase base AppController.
@@ -42,7 +43,7 @@ class AppController extends Controller {
         'Session',
         'Auth' => array(
             'authError' => "No tienes los suficientes privilegios para esta acción.",
-            'loginRedirect' => array('controller' => 'dashboard', 'action' => 'index'),
+            'loginRedirect' => array('admin' => 0,'controller' => 'dashboard', 'action' => 'index'),
             'logoutRedirect' => '/',
             'authorize' => array('Controller')
         )
@@ -88,6 +89,14 @@ class AppController extends Controller {
             }
         }
         
+        
+        if ($this->request->is('get')) {
+            $referer = $this->referer();
+            $this->Session->write('App.referer', $referer);
+            $this->set('referer', $referer);
+        } else {
+            $this->set('referer', array('action' => 'index'));
+        }
         // Llama a la función de la clase padre 'Controller'.
         parent::beforeRender();
     }
@@ -127,6 +136,13 @@ class AppController extends Controller {
      * Revisa si el User ha iniciado sesión.
      */
     public function isAuthorized($user) {
+        if (!empty($this->params['prefix']) && ($this->params['prefix'] == 'admin')) {
+            if ($this->Auth->user('status') != 2 ) {
+                $this->redirect(array('admin' => 0, 'controller' => 'dashboard', 'action' => 'index'));
+                return false;
+            }
+            return true;
+        }
         return isset($user);
     }
     

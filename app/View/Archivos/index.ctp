@@ -1,6 +1,6 @@
 <div class="box content">
     <header>
-        <h1 class="title btn-small">Archivo</h1>
+        <h1 class="title btn-small"><?php echo $title_for_layout; ?></h1>
         <div class="btn-group right">
             <?php 
                 echo $this->Html->link('Ver', array('controller' => $content, 'action' => 'ver', $id),
@@ -14,8 +14,8 @@
             ?>
         </div>
     </header>
+    <?php echo $this->Session->flash(); ?>
     <?php 
-        echo $this->Html->css(array('bootstrap', 'main'));
         echo $this->Form->create('Archivo', array('url' => array('action' => 'agregar', $content),
             'id' => 'fileupload', 'enctype' => 'multipart/form-data')); ?>
         <?php    

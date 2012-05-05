@@ -1,7 +1,7 @@
 <div class="box content">
     <?php $art = $articulo['Articulo']; ?>
     <header>
-        <h1 class="title btn-small">Artículos</h1>
+        <h1 class="title btn-small"><?php echo $title_for_layout; ?></h1>
         <div class="btn-group right">
             <?php 
                 echo $this->Html->link('Editar', array('controller' => 'articulos', 'action' => 'editar', $art['id']),
@@ -22,6 +22,7 @@
             ?>
         </div>
     </header>
+    <?php echo $this->Session->flash(); ?>
     <article class="document">
         <div>
             <h2>Datos de Publicaci&oacute;n</h2>

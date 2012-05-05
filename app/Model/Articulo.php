@@ -102,5 +102,30 @@ class Articulo extends AppModel {
             )
         )
     );
+    
+    public function findByQuery($query = '', $id = null) {
+        $conditions = array(
+            'OR' => array(
+                array('Articulo.titulo LIKE' => '%' . $query .'%'),
+                array('Articulo.titulo_revista LIKE' => '%' . $query .'%')
+            ),
+            'AND' => array(
+                array('Articulo.user_id' => $id)
+            ));
+        $this->recursive = -1;
+        return $this->find('all', array('conditions' => $conditions));
+    }
+    
+     public function queryConditions($query = '', $id = null) {
+        $conditions = array(
+            'OR' => array(
+                array('Articulo.titulo LIKE' => '%' . $query .'%'),
+                array('Articulo.titulo_revista LIKE' => '%' . $query .'%')
+            ),
+            'AND' => array(
+                array('Articulo.user_id' => $id)
+            ));
+        return $conditions;
+    }
 }
 ?>

@@ -9,7 +9,7 @@ class ArchivosController extends AppController {
         // I have other stuff in my AppController.php beforeFilter that needs to be run.
         parent::beforeFilter();
 
-        // Here is where we turn off the SecurityComponent magic.
+        // Aquí desactivamos el componente de Seguridad.
         $noSecurityActions = array('add', 'index');
         if(isset($this->Security) && in_array($this->action, $noSecurityActions)){
             $this->Components->disable('Security');
@@ -17,12 +17,20 @@ class ArchivosController extends AppController {
     }
     
     public function index($id = null, $content = null) {
-        if($this->Archivo->existsContent($content, $id)) {
+        $result = $this->Archivo->getContent($content, $id);
+        if (!empty($result)) {
             $archivos = $this->Archivo->findAllByContentTypeAndContentId($content, $id);
+            $result = array_shift($result);
+            if (isset($result['titulo'])) {
+                $title_for_layout = 'Archivos de ' . $result['titulo'];
+            } else if (isset($result['nombre'])) {
+                $title_for_layout = 'Archivos de ' . $result['nombre'];
+            }
             $this->set(compact('id','content', 'archivos'));
             $this->set('useJFileUpload', true);
+            $this->set('title_for_layout', $title_for_layout);
         } else {
-            //throw new NotFoundException('Lo que buscas no existe.');
+            throw new NotFoundException('El contenido ' . $id . ' de ' . $content . ' no existe.');
         }
     }
 
@@ -66,7 +74,7 @@ class ArchivosController extends AppController {
     
     public function borrar($id = null) {
         $this->autoRender = false;
-        
+
         if (!($this->request->is('post') || $this->request->is('delete'))) {
             throw new MethodNotAllowedException();
         }

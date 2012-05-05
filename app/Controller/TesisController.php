@@ -5,6 +5,14 @@ class TesisController extends AppController {
     public $components = array('Session');
     public $uses = array('Tesis');
     
+    public $paginate = array(
+        'limit' => 20,
+        'order' => array(
+            'Tesis.anio_publicacion' => 'asc',
+            'Tesis.nombre' => 'asc'
+        )
+    );
+    
     public function beforeFilter() {
         parent::beforeFilter();
         //$this->Auth->allow('json_index');
@@ -12,31 +20,33 @@ class TesisController extends AppController {
     
     public function index() {
         $this->Tesis->recursive = -1;
-        $tesis = $this->Tesis->findAllByUserId($this->Auth->user('id'));
+        $this->paginate['conditions'] = array('Tesis.user_id' => $this->Auth->user('id'));
+        $tesis = $this->paginate();
         $this->set('tipo_tesis', $this->Tesis->tipoTesis);
         $this->set('tesis', $tesis);
     }
     
     public function admin_index() {
         $this->Tesis->recursive = -1;
+        $this->set('tipo_tesis', $this->Tesis->tipoTesis);
         $this->set('tesis', $this->paginate());
     }
     
-    /*public function json_index($field = null, $query = null) {
+    public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
-            'conditions' => array('Articulo.' . $field . ' LIKE' => '%' . $query .'%'),
-            'fields' => 'DISTINCT Articulo.' . $field,
-            'order' => 'Articulo.' . $field,
+            'conditions' => array('Tesis.' . $field . ' LIKE' => '%' . $query .'%'),
+            'fields' => 'DISTINCT Tesis.' . $field,
+            'order' => 'Tesis.' . $field,
         );
         
         $results = $this->Tesis->find('all', $conditions);
         $json_array = array();
         foreach ($results as $key => $value) {
-            array_push($json_array, $value['Articulo'][$field]);
+            array_push($json_array, $value['Tesis'][$field]);
         }
         echo json_encode($json_array);
-    }*/
+    }
     
     public function nuevo() {
         $this->loadModel('Contenido');
@@ -119,6 +129,17 @@ class TesisController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         //$this->redirect(array('action' => 'index'));
+    }
+    
+    public function search() {
+        $query = $this->params['url']['q'];
+        if (!$query) {
+            $this->set('tesis', array());
+        } else {
+            $this->set('tesis', $this->Tesis->findByQuery($query, $this->Auth->user('id')));
+        }
+        $this->set('tipo_tesis', $this->Tesis->tipoTesis);
+        $this->render('index');
     }
     
     public function exportar($type = null) {

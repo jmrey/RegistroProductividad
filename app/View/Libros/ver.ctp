@@ -7,7 +7,7 @@
                 echo $this->Html->link('Editar', array('controller' => 'libros', 'action' => 'editar', $lib['id']),
                     array('class' => 'btn btn-small'));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus . ' Agregar', array('controller' => 'libros', 'action' => 'nuevo'),
+                echo $this->Html->link($icon_plus . ' Nuevo Libro', array('controller' => 'libros', 'action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
                 echo $this->Html->link($icon_plus . ' Borrar', array('controller' => 'libros', 'action' => 'borrar'),

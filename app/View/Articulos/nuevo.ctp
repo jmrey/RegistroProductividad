@@ -15,7 +15,7 @@
             ?>
         </div>
     </header>
-    <?php echo $this->Form->create('Articulo', array('class' => 'form-inline container-fluid float-messages')); ?>
+    <?php echo $this->Form->create('Articulo', array('class' => 'form-inline container-fluid upper float-messages')); ?>
     <fieldset>
         <legend>Datos de Publicaci&oacute;n</legend>
         <div class="row-fluid">
@@ -163,6 +163,8 @@
                     ));
                 ?>
             </div>
+            <?php echo $this->Form->checkbox('add_files', array('value' => 1)); ?>
+            <span>Deseo agregar archivos, al guardar este Artículo.</span>
         </div>
     </fieldset>
     <div class="form-actions f-right">
@@ -171,7 +173,7 @@
         </div>
         <?php 
             echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
-            echo $this->Form->button('Cancelar', array('type' => 'reset', 'class' => 'btn btn-large'));
+            echo $this->Html->link('Cancelar', $referer, array('class' => 'btn btn-large'));
         ?>
     </div>
     <?php echo $this->Form->end(); ?>

@@ -51,21 +51,33 @@
             <tr>
                 <th>#</th>
                 <th>Detalles</th>
-                <th>Título del Artículo</th>
-                <th>Año</th>
+                <th>Título del Artículo
+                    <?php
+                        $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-retweet'));
+                        echo $this->Paginator->sort('titulo', $icon_plus, array('escape' => false));
+                    ?>
+                </th>
+                <th>Año
+                    <?php echo $this->Paginator->sort('anio_publicacion', $icon_plus, array('escape' => false)); ?>
+                </th>
                 <th>Vol.</th>
                 <th>Páginas</th>
-                <th>Autores</th>
-                <th>Título de la Revista</th>
+                <th>Autores
+                    <?php echo $this->Paginator->sort('lista_autores', $icon_plus, array('escape' => false)); ?>
+                </th>
+                <th>Título de la Revista
+                    <?php echo $this->Paginator->sort('titulo_revista', $icon_plus, array('escape' => false)); ?>
+                </th>
             </tr>
         </thead>
         <tbody>
             <?php
+                $count = 1;
                 foreach ($articulos as $a):
                     $art = $a['Articulo'];
             ?>
             <tr>
-                <td><?php echo $art['id']; ?></td>
+                <td><?php echo $count++; //$art['id']; ?></td>
                 <td>
                     <?php
                         echo $this->Html->link('Ver', $art['id'],
@@ -84,4 +96,9 @@
             ?>
         </tbody>
     </table>
+    <?php 
+        if (isset($this->Paginator)) {
+            echo $this->Paginator->numbers(); 
+        }
+    ?>
 </div>

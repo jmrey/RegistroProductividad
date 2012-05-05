@@ -4,6 +4,14 @@ class CongresosController extends AppController {
     public $name = 'Congresos';
     public $components = array('Session');
     
+    public $paginate = array(
+        'limit' => 20,
+        'order' => array(
+            'Congreso.anio_publicacion' => 'asc',
+            'Congreso.nombre' => 'asc'
+        )
+    );
+    
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('json_index');
@@ -11,13 +19,15 @@ class CongresosController extends AppController {
     
     public function index() {
         $this->Congreso->recursive = -1;
-        $congresos = $this->Congreso->findAllByUserId($this->Auth->user('id'));
+        $this->paginate['conditions'] = array('Congreso.user_id' => $this->Auth->user('id'));
+        $congresos = $this->paginate();
         $this->set('tipo_congreso', $this->Congreso->tipoCongreso);
         $this->set('congresos', $congresos);
     }
     
     public function admin_index() {
         $this->Congreso->recursive = -1;
+        $this->set('tipo_congreso', $this->Congreso->tipoCongreso);
         $this->set('congresos', $this->paginate());
     }
     
@@ -118,6 +128,17 @@ class CongresosController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         //$this->redirect(array('action' => 'index'));
+    }
+    
+    public function search() {
+        $query = $this->params['url']['q'];
+        if (!$query) {
+            $this->set('congresos', array());
+        } else {
+            $this->set('congresos', $this->Congreso->findByQuery($query, $this->Auth->user('id')));
+        }
+        $this->set('tipo_congreso', $this->Congreso->tipoCongreso);
+        $this->render('index');
     }
     
     public function exportar($type = null) {

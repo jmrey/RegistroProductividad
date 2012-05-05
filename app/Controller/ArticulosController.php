@@ -4,16 +4,24 @@ class ArticulosController extends AppController {
     public $name = 'Articulos';
     public $components = array('Session');
     //public $uses = array('Articulo', 'Contenido');
-    public $helpers = array('AjaxMultiUpload.Upload');
+    
+    public $paginate = array(
+        'limit' => 20,
+        'order' => array(
+            'Articulo.anio_publicacion' => 'asc',
+            'Articulo.titulo' => 'asc'
+        )
+    );
     
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow('json_index');
+        $this->set('title_for_layout', $this->name);
     }
     
     public function index() {
         $this->Articulo->recursive = -1;
-        $articulos = $this->Articulo->findAllByUserId($this->Auth->user('id'));
+        $this->paginate['conditions'] = array('Articulo.user_id' => $this->Auth->user('id'));
+        $articulos = $this->paginate();
         $this->set('articulos', $articulos);
     }
     
@@ -22,7 +30,7 @@ class ArticulosController extends AppController {
         $this->set('articulos', $this->paginate());
     }
     
-    /*public function json_index($field = null, $query = null) {
+    public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
             'conditions' => array('Articulo.' . $field . ' LIKE' => '%' . $query .'%'),
@@ -36,7 +44,7 @@ class ArticulosController extends AppController {
             array_push($json_array, $value['Articulo'][$field]);
         }
         echo json_encode($json_array);
-    }*/
+    }
     
     public function nuevo() {
         $this->loadModel('Contenido');
@@ -45,12 +53,17 @@ class ArticulosController extends AppController {
             'pos' => $this->Contenido->getPropertyValue('message_pos_autor')
         );
         $this->set('message_autors', $message_autors);
+        //pr($this->request->data);
         if ($this->request->is('post')) {
             $this->Articulo->create();
             $this->request->data['Articulo']['user_id'] = $this->Auth->user('id');
             if ($this->Articulo->save($this->request->data)) {
                 $this->success('Se ha registrado el artículo satisfactoriamente.');
-                $this->redirect('/articulos/' . $this->Articulo->id . '/archivos');
+                if ($this->request->data['Articulo']['add_files'] == 1) {
+                    $this->redirect('/articulos/' . $this->Articulo->id . '/archivos');
+                } else {
+                    $this->redirect('/articulos/' . $this->Articulo->id);
+                }
             } else {
                 $this->warning('Ha ocurrido un problema. Verifica los datos.');
             }
@@ -118,9 +131,25 @@ class ArticulosController extends AppController {
         //$this->redirect(array('action' => 'index'));
     }
     
+    public function search() {
+        $query = $this->params['url']['q'];
+        if (!$query) {
+            $this->set('articulos', array());
+        } else {
+            $this->set('articulos', $this->Articulo->findByQuery($query, $this->Auth->user('id')));
+        }
+        $this->render('index');
+    }
+    
     public function exportar($type = null) {
         $this->Articulo->recursive = -1;
         $results = $this->Articulo->findAllByUserId($this->Auth->user('id'));
+        $this->_exportar($results, $type);
+    }
+    
+    public function admin_exportar($type = null) {
+        $this->Articulo->recursive = -1;
+        $results = $this->Articulo->find('all');
         $this->_exportar($results, $type);
     }
 }

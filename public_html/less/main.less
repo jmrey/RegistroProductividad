@@ -27,6 +27,14 @@ body {
   }
 }
 
+form.upper {
+  .input{
+    input, textarea {
+      text-transform: uppercase;
+    }
+  }
+}
+
 .left {
   float: left !important;
 }
@@ -42,6 +50,11 @@ body {
   .box-shadow(@shadow);
    border-bottom: 1px solid #ccc;
   .border-radius(0);
+}
+
+#feedback-box {
+  margin-bottom:20px;
+  position:relative;
 }
 
 #ipn-header{
@@ -102,7 +115,7 @@ body {
   border: 1px solid #ccc;
   .border-radius(4px);
   .box-shadow(0 0 3px rgba(128,128,128,0.25));
-  margin-bottom:20px;
+  margin-bottom:5px;
   padding: 10px 20px;
   header, .header {
     .buttonBackground(@box-color, darken(@box-color, 10%));
@@ -310,19 +323,6 @@ form {
       }
     }
   }
-  .form-actions {
-    margin: 15px 0 0;
-    padding: 15px 0 0;
-    .alert {
-      margin:0;
-    }
-    &.f-right {
-      text-align: right;
-    }
-    > .btn, > a {
-      margin: 0 5px;
-    }
-  }
   &.big {
     fieldset {
       label {
@@ -439,6 +439,20 @@ form {
       font-style:normal;
       padding: 8px 14px;
     }
+  }
+}
+
+.form-actions {
+  margin: 15px 0 0;
+  padding: 15px 0 0;
+  .alert {
+    margin:0;
+  }
+  &.f-right {
+    text-align: right;
+  }
+  > .btn, > a {
+    margin: 0 5px;
   }
 }
 

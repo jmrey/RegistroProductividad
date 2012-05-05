@@ -7,7 +7,7 @@
                 echo $this->Html->link('Ver', $id,
                     array('class' => 'btn btn-small'));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-plus'));
-                echo $this->Html->link($icon_plus . ' Nuevo Artículo', array('action' => 'nuevo'),
+                echo $this->Html->link($icon_plus . ' Nueva Tesis', array('action' => 'nuevo'),
                     array('class' => 'btn btn-small', 'escape' => false));
                 $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-minus'));
                 echo $this->Form->postLink($icon_plus . ' Borrar', array('action' => 'borrar', $id),
@@ -21,7 +21,7 @@
             ?>
         </div>
     </header>
-    <?php echo $this->Form->create('Tesis', array('class' => 'form-inline container-fluid float-messages')); ?>
+    <?php echo $this->Form->create('Tesis', array('class' => 'form-inline container-fluid upper float-messages')); ?>
     <fieldset>
         <legend>Datos de Tesis</legend>
         <div class="row-fluid">
@@ -137,7 +137,7 @@
             echo $this->Html->link('Ver Archivos', '/'. $this->params['controller'] . '/' . $id . '/archivos', 
                 array('class' => 'btn btn-inverse btn-large'));
             echo $this->Form->submit('Guardar', array('class' => 'btn btn-success btn-large', 'div' => false));
-            echo $this->Form->button('Cancelar', array('type' => 'reset', 'class' => 'btn btn-large'));
+            echo $this->Html->link('Cancelar', $referer, array('class' => 'btn btn-large'));
         ?>
     </div>
     <?php echo $this->Form->end(); ?>

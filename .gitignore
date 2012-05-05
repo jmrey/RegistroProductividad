@@ -7,3 +7,5 @@ app/Config/email.php
 nbproject/
 cake20/
 public_html/js/ckeditor/*
+public_html/media/*
+public_html/files/*
