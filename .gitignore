@@ -1,5 +1,6 @@
 app/tmp/*
 *.pdf
+*~
 !empty
 app/Config/database.php
 app/Config/passwords.php
