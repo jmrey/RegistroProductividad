@@ -11,6 +11,7 @@
             ?>
         </div>
     </header>
+    <?php echo $this->Session->flash(); ?>
     <div class="well">
         <h1>Datos de Sesi&oacute;n</h1>
         
@@ -27,7 +28,10 @@
             <span class="label">Nombre:</span><span><?php echo $authUser['nombre']; ?></span>
         </div>
         <div class="control-group">
-            <span class="label">Departamento:</span><span><?php echo $deptos[$authUser['depto']]; ?></span>
+            <span class="label">Escuela:</span><span><?php echo $escuela[$authUser['escuela']]; ?></span>
+        </div>
+        <div class="control-group">
+            <span class="label">Departamento:</span><span><?php echo $depto[$authUser['depto']]; ?></span>
         </div>
         <div class="control-group">
             <span class="label">N&uacute;mero de Empleado:</span><span><?php echo $authUser['no_empleado']; ?></span>

@@ -53,6 +53,8 @@ class UsersController extends AppController {
     
     public function add() {
         $this->loadModel('Contenido');
+        $this->loadModel('Escuela');
+        $this->loadModel('Departamento');
         if ($this->request->is('post')) {
             $validate_accounts = $this->Contenido->getPropertyValue('validate_accounts', 'bool');
             $this->request->data['User']['status'] = (!$validate_accounts) ? 1 : 0;
@@ -69,16 +71,20 @@ class UsersController extends AppController {
             } else {
                 $this->warning('Ha ocurrido un problema. Verifica tus datos.');
             }
+            $this->set('deptos', $this->Departamento->listDeptosFromEscuela($this->request->data['User']['escuela']));
         } else {
             if($this->Auth->user()) {
                 $this->redirect($this->Auth->redirect());
             }
         }
-        $this->set('deptos', $this->User->deptosArray);
+        $this->set('escuelas', $this->Escuela->listEscuelas());
     }
     
     public function perfil() {
-        $this->set('deptos', $this->User->deptosArray);
+        $this->loadModel('Escuela');
+        $this->loadModel('Departamento');
+        $this->set('escuela', $this->Escuela->listEscuelas());
+        $this->set('depto', $this->Departamento->listDeptosFromEscuela($this->Auth->user('escuela')));
     }
     
     public function admin_perfil($id = null) {
@@ -95,7 +101,9 @@ class UsersController extends AppController {
     }
     
     public function edit() {
-        $this->set('deptos', $this->User->deptosArray);
+        $this->loadModel('Contenido');
+        $this->loadModel('Escuela');
+        $this->loadModel('Departamento');
         //  El Usuario sólo puede editar su propio perfil, por eso se pasa su propio id.
         $id = $this->Auth->user('id');
         $this->User->id = $id;
@@ -103,25 +111,31 @@ class UsersController extends AppController {
         if (!$this->User->exists()) {
             throw new NotFoundException('Usuario no existe.');
         }
-        
+        $deptos = array();
+
         if ($this->request->is('post') || $this->request->is('put')) {
             // Se sobreescrube el id por el id correcto (sólo por seguridad).
             $this->request->data['User']['id'] = $id;
             $this->request->data['User']['keycode'] = Security::hash(date('mdY').rand(4000000,4999999));
+            $deptos = $this->Departamento->listDeptosFromEscuela($this->request->data['User']['escuela']);
             /* El usuario solo puede actualizar sólo los siguientes campos. */
-            $fieldList = array('id', /*'email',*/'nombre', 'depto', 'no_empleado', 'keycode');
+            $fieldList = array('id', /*'email',*/'nombre', 'escuela', 'depto', 'no_empleado', 'keycode');
             if ($this->User->save($this->request->data, true, $fieldList)) {
                 $this->refreshAuth();
                 $this->success('Se han actualizado los datos satisfactoriamente.');
+                $this->redirect(array('action' => 'perfil'));
             } else {
                 $this->error('No se han podido actualizar tus datos.');
             }
         } else {
             $user = $this->User->read(null, $id);
+            $deptos = $this->Departamento->listDeptos($user['User']['escuela']);
             $this->request->data = $user;
             unset($this->request->data['User']['password']);
             unset($this->request->data['User']['id']);
         }
+        $this->set('escuelas', $this->Escuela->listEscuelas());
+        $this->set('deptos', $deptos);
     }
     
     public function admin_upgrade($id = null, $keycode = null) {
@@ -236,7 +250,7 @@ class UsersController extends AppController {
                 $this->success('Tu cuenta ya ha sido activada.');
                 $this->redirect(array('controller' => 'users','action' => 'login'));
             }
-            $usermame = $user['User']['username']; 
+            $usermame = $user['User']['username'];
             $email = $user['User']['email'];
             $this->set(compact('username', 'email', 'keycode'));
         }

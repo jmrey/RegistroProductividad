@@ -213,6 +213,7 @@ form.upper .input input, form.upper .input textarea { text-transform:uppercase; 
   font-size:13px;
   font-style:normal;
 }
+div.deptos.hidden { display:none; }
 button.btn[data-toggle="button"] {
   background-color:#da4f49;
   background-image:-moz-linear-gradient(top,#ee5f5b,#bd362f);

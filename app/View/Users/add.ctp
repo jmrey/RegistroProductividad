@@ -22,9 +22,20 @@
                 'label' => 'Nombre completo:',
                 'class' => 'capitalize'
             ));
+            echo $this->Form->input('escuela', array(
+                'label' => 'Escuela:',
+                'options' => $escuelas,
+                'empty' => 'Elige una escuela:'
+            ));
+            
+            $existsDeptos = isset($deptos) && !empty($deptos);
             echo $this->Form->input('depto', array(
-                'label' => 'Depto. de Adscripción:',
-                'options' => $deptos
+                'label' => 'Departamento:',
+                'options' => ($existsDeptos ? $deptos : array()),
+                'empty' => 'Elige un departamento:',
+                'div' => array(
+                    'class' => 'input select deptos ' . ($existsDeptos ? '' : 'hidden')
+                )
             ));
             echo $this->Form->input('no_empleado', array(
                 'label' => 'Número de Empleado:',
@@ -39,7 +50,7 @@
         </div>
         <?php 
             echo $this->Form->submit('Registrar', array( 'class' => 'btn btn-success btn-large', 'div' => false));
-            echo $this->Form->button('Limpiar', array('type' => 'reset', 'class' => 'btn btn-large'));
+            echo $this->Html->link('Limpiar', '/registrar', array('class' => 'btn btn-large'));
             echo $this->Html->link('Iniciar Sesión', '/iniciar_sesion');
         ?>
     </div>

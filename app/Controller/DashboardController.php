@@ -1,5 +1,7 @@
 <?php
 
+App::uses('ConnectionManager', 'Model');
+
 class DashboardController extends AppController {
     var $name = 'Dashboard';
     var $uses =array();
@@ -25,6 +27,20 @@ class DashboardController extends AppController {
         }
         $this->loadModel('Contenido');
         $this->set($this->Contenido->getProperties());
+    }
+    
+    public function admin_smtp() {
+        if (!parent::isAdmin()) {
+            $this->redirect('/dashboard');
+        }
+        $this->loadModel('Contenido');
+        $this->set($this->Contenido->getProperties());
+    }
+    
+    public function admin_dbquery() {
+        $db = &ConnectionManager::getDataSource('default');
+        $db->query('ALTER TABLE  `usuarios` ADD  `escuela` INT UNSIGNED NOT NULL AFTER  `status`;');
+        
     }
     
 }

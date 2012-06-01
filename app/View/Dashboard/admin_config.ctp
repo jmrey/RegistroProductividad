@@ -40,5 +40,11 @@
                 <button class="btn <?php echo ($forzar_descargas)?'active':''; ?>" data-toggle="button" data-property="forzar_descargas"></button>
             </div>
         </div>
+        <div class="row">
+            <div class="span12 input">
+                <label>Correo Electrónico:</label>
+                <?php echo $this->Html->link('Configurar Servidor SMTP', array('admin' => 1, 'action' => 'smtp'), array('class' => 'btn btn-primary')); ?>
+            </div>
+        </div>
     </div>
 </div>

@@ -20,10 +20,12 @@
             echo $this->Form->input('username', array(
                 'label' => 'Nombre de Usuario:',
                 'class' => 'disabled',
+                'value' => $authUser['username'],
                 'disabled' => true
             ));
             echo $this->Form->input('email', array(
                 'label' => 'Correo Electrónico:',
+                'value' => $authUser['email'],
                 'type' => 'email',
                 'class' => 'disabled',
                 'disabled' => true
@@ -37,9 +39,16 @@
                 'label' => 'Nombre completo:',
                 'class' => 'capitalize'
             ));
+            echo $this->Form->input('escuela', array(
+                'label' => 'Escuela:',
+                'options' => $escuelas
+            ));
             echo $this->Form->input('depto', array(
-                'label' => 'Depto. de Adscripción:',
-                'options' => $deptos
+                'label' => 'Departamento:',
+                'options' => $deptos,
+                'div' => array(
+                    'class' => 'input select deptos'
+                )
             ));
             echo $this->Form->input('no_empleado', array(
                 'label' => 'Número de Empleado:',

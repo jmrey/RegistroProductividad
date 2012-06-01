@@ -1,24 +1,4 @@
 <div class="box dashboard">
-    <header class="admin">
-        <h1 class="title btn-small">Administraci&oacute;n</h1>
-        <div class="btn-group right">
-            <?php 
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-user icon-white'));
-                echo $this->Html->link($icon_plus . ' Usuarios', array('admin' => 1, 'controller' => 'users', 'action' => 'index'),
-                    array('class' => 'btn btn-small btn-success', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-book icon-white'));
-                echo $this->Html->link($icon_plus . ' Departamentos', array('admin' => 1, 'controller' => 'departamentos', 'action' => 'index'),
-                    array('class' => 'btn btn-small btn-success', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-cog icon-white'));
-                echo $this->Html->link($icon_plus . ' Ajustes', array('admin' => 1, 'controller' => 'dashboard', 'action' => 'config'),
-                    array('class' => 'btn btn-small btn-success', 'escape' => false));
-                $icon_plus = $this->Html->tag('i', '', array('class' => 'icon-home'));
-                echo $this->Html->link($icon_plus . ' Escritorio', array('admin' => 0, 'controller' => 'dashboard', 'action' => 'index'),
-                    array('class' => 'btn btn-small', 'escape' => false));
-                
-            ?>
-        </div>
-    </header>
     <div class="pane">
         <?php 
             $icon_signal = $this->Html->tag('i', '', array('class' => 'icon-list-alt'));

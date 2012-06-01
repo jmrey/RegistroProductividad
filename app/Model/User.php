@@ -59,6 +59,22 @@ class User extends AppModel {
                 'message' => 'Ya ha sido registrado esta cuenta de correo.'
             )
         ),
+        'escuela' => array(
+            'isNumber' => array(
+                'rule' => 'numeric',
+                'required' => true,
+                'allowEmpty' => false,
+                'message' => 'Por favor, elige una escuela.'
+            )
+        ),
+        'depto' => array(
+            'isNumber' => array(
+                'rule' => 'numeric',
+                'required' => true,
+                'allowEmpty' => false,
+                'message' => 'Por favor, elige un departamento.'
+            )
+        ),
         'no_empleado' => array(
             'validateNumEmpleado' => array(
                 'rule' => 'numeric',

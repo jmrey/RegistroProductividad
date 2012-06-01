@@ -1,4 +1,4 @@
-/* 
+  /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -83,18 +83,23 @@ $(document).on('ready', function(){
         });
     });
     
-    /*$('form.upper :input').each(function (index) {
-        $(this).bind('keyup', function (e) {
-            if (e.which >= 97 && e.which <= 122) {
-                var newKey = e.which - 32;
-                // I have tried setting those
-                e.keyCode = newKey;
-                e.charCode = newKey;
-            }
-
-            $(this).val(($(this).val()).toUpperCase());
+    $('#UserEscuela').change(function() {
+      $deptos = $('form .deptos');
+      $select = $deptos.find('select');
+      $select.empty();
+      if ($(this).val() != '' ) {
+        $.getJSON(baseUrl + 'json/departamentos/get/escuela/' + $(this).val(), function (data) {
+           $.each(data, function(n, item) {
+              // add a new option with the JSON-specified value and text
+              $("<option />").attr("value", n).text(item).appendTo($select);
+          });
         });
-    });*/
+        $deptos.removeClass('hidden');
+      } else {
+        $deptos.addClass('hidden');
+      }
+      
+    });
     
     $('form.upper :input').each(function (index) {
         var self = this;
