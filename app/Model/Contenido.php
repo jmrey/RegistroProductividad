@@ -1,15 +1,38 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Contenido. 
+ */
 class Contenido extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Contenido';
+    
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'contenidos';
     
+    /**
+     * Obtiene el valor de la propiedad con NOMBRE = $name
+     * @param type $name
+     * @return string 
+     */
     public function getValue($name = null) {
         $contenido = $this->findByName($name);
         return ($contenido != null) ? $contenido['Contenido']['content'] : null;
     }
     
+    /**
+     * Establece un valor a una propiedad en base a su nombre.
+     * @param type $name Nombre de la Propiedad
+     * @param type $value Nuevo valor de la propiedad.
+     * @return boolean 
+     */
     public function setProperty($name = null, $value = null) {
         $contenido = $this->findByName($name);
         if (!empty($contenido)) {
@@ -21,6 +44,12 @@ class Contenido extends AppModel {
         return false;
     }
     
+    /**
+     * Obtiene una porpiedad en base a su nombre y tipo.
+     * @param String $property Nombre de la Propiedad
+     * @param String $type Tipo de la Propiedad
+     * @return type 
+     */
     public function getPropertyValue($property = null, $type = 'text') {
         $conditions = array(
             'Contenido.name' => $property,
@@ -33,6 +62,10 @@ class Contenido extends AppModel {
         return $this->field('content', $conditions);
     }
     
+    /**
+     * Obtiene todos las propiedades de la aplicación.
+     * @return array 
+     */
     public function getProperties() {
         $conditions = array(
             'conditions'=> array('Contenido.type' => 'property'),
@@ -40,17 +73,5 @@ class Contenido extends AppModel {
         );
         return $this->find('list', $conditions);
     }
-    
-    /*public function getSettings() {
-        $content_articles = $this->getPropertyValue('content_articles', 'bool');
-        $content_books = $this->getPropertyValue('content_books', 'bool');
-        $content_chapters = $this->getPropertyValue('content_chapters', 'bool');
-        $content_patents = $this->getPropertyValue('content_patents', 'bool');
-        $validate_accounts = $this->getPropertyValue('validate_accounts', 'bool');
-        $force_downloads = $this->getPropertyValue('force_downloads', 'bool');
-        
-        return compact('content_articles', 'content_books', 'content_chapters',
-                'content_patents', 'validate_accounts', 'force_downloads');
-    }*/
 }
 ?>

@@ -1,10 +1,32 @@
 <?php
 
+/**
+ * Controlador de Tesis.
+ * @class TesisController 
+ */
 class TesisController extends AppController {
+    /**
+     * Nombre del Controlador.
+     * @var String
+     */
     public $name = 'Tesis';
+    
+    /**
+     * Componentes necesarios que utiliza el Controlador.
+     * @var Array 
+     */
     public $components = array('Session');
+    
+    /**
+     * Array de Modelos que usará el controlador.
+     * @var Array
+     */
     public $uses = array('Tesis');
     
+    /**
+     * Opciones para la paginación de las Tesis.
+     * @var Array 
+     */
     public $paginate = array(
         'limit' => 20,
         'order' => array(
@@ -13,11 +35,17 @@ class TesisController extends AppController {
         )
     );
     
+    /**
+     * Función llamada antes de ejecutar cualquier acción del controlador. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow('json_index');
+        $this->Auth->allow('json_index');
     }
     
+    /**
+     * index(): Recupera todas las Tesis asociados al usuario que ha iniciado sesión.
+     */
     public function index() {
         $this->Tesis->recursive = -1;
         $this->paginate['conditions'] = array('Tesis.user_id' => $this->Auth->user('id'));
@@ -26,12 +54,21 @@ class TesisController extends AppController {
         $this->set('tesis', $tesis);
     }
     
+    /**
+     * admin_index(): Recupera todas las Tesis que existen en la Base de Datos. 
+     */
     public function admin_index() {
         $this->Tesis->recursive = -1;
         $this->set('tipo_tesis', $this->Tesis->tipoTesis);
         $this->set('tesis', $this->paginate());
     }
     
+    /**
+     * json_index(): Busca las Tesis en base a un campo y un patrón.
+     * Los resultados son mostrados en formato JSON.
+     * @param String $field
+     * @param String $query 
+     */
     public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
@@ -48,6 +85,9 @@ class TesisController extends AppController {
         echo json_encode($json_array);
     }
     
+    /**
+     * nuevo(): Crea una nueva Tesis. 
+     */
     public function nuevo() {
         $this->loadModel('Contenido');
         $message_autors = array(
@@ -68,6 +108,11 @@ class TesisController extends AppController {
         }
     }
     
+    /**
+     * ver(): Muestra la Tesis con el ID = $id.
+     * @param Integer $id Identificador de Tesis
+     * @throws NotFoundException Si no encuentra la Tesis con el respectivo ID.
+     */
     public function ver($id = null) {
         $this->Tesis->id = isset($id) ? $id : $this->request->params['id'];
         if (!$this->Tesis->exists()) {
@@ -80,6 +125,11 @@ class TesisController extends AppController {
         }
     }
     
+    /**
+     * editar(): Obtiene la Tesis con el ID = $id y muestra la vista para editarlo.
+     * @param Integer $id
+     * @throws NotFoundException Si no encuentra la Tesis con el respectivo ID.
+     */
     public function editar($id = null) {
         $this->Tesis->id = $id;
         if (!$this->Tesis->exists()) {
@@ -105,6 +155,12 @@ class TesisController extends AppController {
         }
     }
     
+    /**
+     * Borra una Tesis con ID = $id, verificando si el usuario posee permisos para borrar la Tesis.
+     * @param Integer $id Identificador de Tesis.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST o DELETE
+     * @throws NotFoundException Si no encuentra la Tesis con el respectivo ID.
+     */
     public function borrar($id = null) {
         $this->autoRender = false;
         
@@ -131,6 +187,9 @@ class TesisController extends AppController {
         //$this->redirect(array('action' => 'index'));
     }
     
+    /**
+     * search(): Busca una Tesis en base a un patrón. 
+     */
     public function search() {
         $query = $this->params['url']['q'];
         if (!$query) {
@@ -139,13 +198,27 @@ class TesisController extends AppController {
             $this->set('tesis', $this->Tesis->findByQuery($query, $this->Auth->user('id')));
         }
         $this->set('tipo_tesis', $this->Tesis->tipoTesis);
-        $this->render('index');
     }
     
+    
+    /**
+     * Obtiene las Tesis del usuario que ha iniciado sesión.
+     * @param String $type Formato en que exportará las Tesis (XML, PDF, TXT).  
+     */
     public function exportar($type = null) {
         $this->Tesis->recursive = -1;
         $results = $this->Tesis->findAllByUserId($this->Auth->user('id'));
         $this->set('tipo_tesis', $this->Tesis->tipoTesis);
+        $this->_exportar($results, $type);
+    }
+    
+    /**
+     * Obtiene todas las Tesis de la base de Datos y los exporta a un archivo (XML, PDF, TXT).
+     * @param String $type Formato en que exportará las Tesis (XML, PDF, TXT). 
+     */
+    public function admin_exportar($type = null) {
+        $this->Tesis->recursive = -1;
+        $results = $this->Tesis->find('all');
         $this->_exportar($results, $type);
     }
 }

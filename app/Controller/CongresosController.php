@@ -1,9 +1,26 @@
 <?php
 
+/**
+ * Controlador de Congresos.
+ * @class CongresosController 
+ */
 class CongresosController extends AppController {
+    /**
+     * Nombre del Controlador.
+     * @var String
+     */
     public $name = 'Congresos';
+    
+    /**
+     * Componentes necesarios que utiliza el Controlador.
+     * @var Array 
+     */
     public $components = array('Session');
     
+    /**
+     * Opciones para la paginación de los Congresos.
+     * @var Array 
+     */
     public $paginate = array(
         'limit' => 20,
         'order' => array(
@@ -12,11 +29,17 @@ class CongresosController extends AppController {
         )
     );
     
+    /**
+     * Función llamada antes de ejecutar cualquier acción del controlador. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('json_index');
     }
     
+    /**
+     * index(): Recupera todos los artículos asociados al usuario que ha iniciado sesión.
+     */
     public function index() {
         $this->Congreso->recursive = -1;
         $this->paginate['conditions'] = array('Congreso.user_id' => $this->Auth->user('id'));
@@ -25,28 +48,40 @@ class CongresosController extends AppController {
         $this->set('congresos', $congresos);
     }
     
+    /**
+     * admin_index(): Recupera todos los artículos que existen en la Base de Datos. 
+     */
     public function admin_index() {
         $this->Congreso->recursive = -1;
         $this->set('tipo_congreso', $this->Congreso->tipoCongreso);
         $this->set('congresos', $this->paginate());
     }
     
+    /**
+     * json_index(): Busca los congresos en base a un campo y un patrón.
+     * Los resultados son mostrados en formato JSON.
+     * @param String $field
+     * @param String $query 
+     */
     public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
-            'conditions' => array('Articulo.' . $field . ' LIKE' => '%' . $query .'%'),
-            'fields' => 'DISTINCT Articulo.' . $field,
-            'order' => 'Articulo.' . $field,
+            'conditions' => array('Congreso.' . $field . ' LIKE' => '%' . $query .'%'),
+            'fields' => 'DISTINCT Congreso.' . $field,
+            'order' => 'Congreso.' . $field,
         );
         
         $results = $this->Congreso->find('all', $conditions);
         $json_array = array();
         foreach ($results as $key => $value) {
-            array_push($json_array, $value['Articulo'][$field]);
+            array_push($json_array, $value['Congreso'][$field]);
         }
         echo json_encode($json_array);
     }
     
+    /**
+     * nuevo(): Crea un nuevo Congreso. 
+     */
     public function nuevo() {
         $this->loadModel('Contenido');
         $message_autors = array(
@@ -67,10 +102,15 @@ class CongresosController extends AppController {
         }
     }
     
+    /**
+     * ver(): Muestra un artículo con el ID = $id.
+     * @param Integer $id Identificador del Congreso
+     * @throws NotFoundException Si no encuentra aun artículo con el respectivo ID.
+     */
     public function ver($id = null) {
         $this->Congreso->id = isset($id) ? $id : $this->request->params['id'];
         if (!$this->Congreso->exists()) {
-            throw new NotFoundException('Articulo que buscas no existe.');
+            throw new NotFoundException('Congreso que buscas no existe.');
         } else {
             $this->Congreso->recursive = -1;
             $congreso = $this->Congreso->read(null, $id);
@@ -79,10 +119,15 @@ class CongresosController extends AppController {
         }
     }
     
+    /**
+     * editar(): Obtiene el artículo con el ID = $id y muestra la vista para editarlo.
+     * @param Integer $id
+     * @throws NotFoundException Si no encuentra aun artículo con el respectivo ID.
+     */
     public function editar($id = null) {
         $this->Congreso->id = $id;
         if (!$this->Congreso->exists()) {
-            throw new NotFoundException('Articulo no existe.');
+            throw new NotFoundException('Congreso no existe.');
         }
         $this->loadModel('Contenido');
         $message_autors = array(
@@ -104,6 +149,12 @@ class CongresosController extends AppController {
         }
     }
     
+    /**
+     * Borra un artículo con ID = $id, verificando si el usuario posee permisos para borrar el artículo.
+     * @param Integer $id Identificador de Congreso.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST o DELETE
+     * @throws NotFoundException Si no encuentra aun artículo con el respectivo ID.
+     */
     public function borrar($id = null) {
         $this->autoRender = false;
         
@@ -130,6 +181,9 @@ class CongresosController extends AppController {
         //$this->redirect(array('action' => 'index'));
     }
     
+    /**
+     * search(): Busca un artículo en base a un patrón. 
+     */
     public function search() {
         $query = $this->params['url']['q'];
         if (!$query) {
@@ -138,13 +192,26 @@ class CongresosController extends AppController {
             $this->set('congresos', $this->Congreso->findByQuery($query, $this->Auth->user('id')));
         }
         $this->set('tipo_congreso', $this->Congreso->tipoCongreso);
-        $this->render('index');
     }
     
+    /**
+     * Obtiene los artículos del usuario que ha iniciado sesión.
+     * @param String $type Formato en que exportará los artículos (XML, PDF, TXT).  
+     */
     public function exportar($type = null) {
         $this->Congreso->recursive = -1;
         $results = $this->Congreso->findAllByUserId($this->Auth->user('id'));
         $this->set('tipo_congreso', $this->Congreso->tipoCongreso);
+        $this->_exportar($results, $type);
+    }
+    
+    /**
+     * Obtiene todos los artículos de la base de Datos y los exporta a un archivo (XML, PDF, TXT).
+     * @param String $type Formato en que exportará los artículos(XML, PDF, TXT). 
+     */
+    public function admin_exportar($type = null) {
+        $this->Congreso->recursive = -1;
+        $results = $this->Congreso->find('all');
         $this->_exportar($results, $type);
     }
 }

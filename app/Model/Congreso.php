@@ -1,15 +1,34 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Congreso 
+ */
 class Congreso extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Congreso';
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'congresos';
     
+    /**
+     * Tipos de Congresos
+     * @var array 
+     */
     public $tipoCongreso = array( 
         'escopus' => 'Escopus',
         'noescopus' => 'No escopus'
     );
     
+    /**
+     * Array de validaciones del Congreso.
+     * @var Array 
+     */
     public $validate = array(
         'nombre' => array(
             'validate' => array(
@@ -90,6 +109,12 @@ class Congreso extends AppModel {
         )
     );
     
+    /**
+     * Busca un Congreso del usuario en base a un patrón.
+     * @param String $query Patrón de búsqueda.
+     * @param Integer $id Identificador de Usuario
+     * @return Array Array que contiene al Congreso encontrado.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(

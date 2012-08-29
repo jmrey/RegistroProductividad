@@ -1,10 +1,26 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Tesis 
+ */
 class Tesis extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Tesis';
+    
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'tesis';
     
+    /**
+     * Tipo de las Tesis
+     * @var array 
+     */
     public $tipoTesis = array( 
         'licenciatura' => 'Licenciatura',
         'maestria' => 'Maestría',
@@ -12,6 +28,10 @@ class Tesis extends AppModel {
         'doctorado' => 'Doctorado'
     );
     
+    /**
+     * Array de validaciones de Tesis.
+     * @var Array 
+     */
     public $validate = array(
         'nombre' => array(
             'validate' => array(
@@ -100,6 +120,12 @@ class Tesis extends AppModel {
         )
     );
     
+    /**
+     * Busca una Tesis del usuario en base a un patrón.
+     * @param string $query Patrón de búsqueda.
+     * @param integer $id Identificador de Usuario
+     * @return array Array que contiene a la Tesis encontrada.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(

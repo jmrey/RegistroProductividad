@@ -1,9 +1,25 @@
 <?php
 
+/**
+ * Controlador de Cursos.
+ * @class CursosController 
+ */
 class CursosController extends AppController {
+    /**
+     * Nombre del Controlador.
+     * @var String
+     */
     public $name = 'Cursos';
+    /**
+     * Componentes necesarios que utiliza el Controlador.
+     * @var Array 
+     */
     public $components = array('Session');
     
+    /**
+     * Opciones para la paginación de los Cursos.
+     * @var Array 
+     */
     public $paginate = array(
         'limit' => 20,
         'order' => array(
@@ -12,11 +28,18 @@ class CursosController extends AppController {
         )
     );
     
+    /**
+     * Función llamada antes de ejecutar cualquier acción del controlador. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('json_index');
+        $this->set('title_for_layout', $this->name);
     }
     
+    /**
+     * index(): Recupera todos los cursos asociados al usuario que ha iniciado sesión.
+     */
     public function index() {
         $this->Curso->recursive = -1;
         $this->paginate['conditions'] = array('Curso.user_id' => $this->Auth->user('id'));
@@ -25,28 +48,40 @@ class CursosController extends AppController {
         $this->set('cursos', $cursos);
     }
     
+    /**
+     * admin_index(): Recupera todos los cursos que existen en la Base de Datos. 
+     */
     public function admin_index() {
         $this->Curso->recursive = -1;
         $this->set('tipo_curso', $this->Curso->tipoCurso);
         $this->set('cursos', $this->paginate());
     }
     
+    /**
+     * json_index(): Busca los cursos en base a un campo y un patrón.
+     * Los resultados son mostrados en formato JSON.
+     * @param String $field
+     * @param String $query 
+     */
     public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
-            'conditions' => array('Articulo.' . $field . ' LIKE' => '%' . $query .'%'),
-            'fields' => 'DISTINCT Articulo.' . $field,
-            'order' => 'Articulo.' . $field,
+            'conditions' => array('Curso.' . $field . ' LIKE' => '%' . $query .'%'),
+            'fields' => 'DISTINCT Curso.' . $field,
+            'order' => 'Curso.' . $field,
         );
         
         $results = $this->Curso->find('all', $conditions);
         $json_array = array();
         foreach ($results as $key => $value) {
-            array_push($json_array, $value['Articulo'][$field]);
+            array_push($json_array, $value['Curso'][$field]);
         }
         echo json_encode($json_array);
     }
     
+    /**
+     * nuevo(): Crea un nuevo Curso. 
+     */
     public function nuevo() {
         $this->loadModel('Contenido');
         $message_autors = array(
@@ -67,10 +102,15 @@ class CursosController extends AppController {
         }
     }
     
+    /**
+     * ver(): Muestra un curso con el ID = $id.
+     * @param Integer $id Identificador del Curso
+     * @throws NotFoundException Si no encuentra aun curso con el respectivo ID.
+     */
     public function ver($id = null) {
         $this->Curso->id = isset($id) ? $id : $this->request->params['id'];
         if (!$this->Curso->exists()) {
-            throw new NotFoundException('Articulo que buscas no existe.');
+            throw new NotFoundException('Curso que buscas no existe.');
         } else {
             $this->Curso->recursive = -1;
             $curso = $this->Curso->read(null, $id);
@@ -79,10 +119,15 @@ class CursosController extends AppController {
         }
     }
     
+    /**
+     * editar(): Obtiene el curso con el ID = $id y muestra la vista para editarlo.
+     * @param Integer $id
+     * @throws NotFoundException Si no encuentra aun curso con el respectivo ID.
+     */
     public function editar($id = null) {
         $this->Curso->id = $id;
         if (!$this->Curso->exists()) {
-            throw new NotFoundException('Articulo no existe.');
+            throw new NotFoundException('Curso no existe.');
         }
         $this->loadModel('Contenido');
         $message_autors = array(
@@ -104,6 +149,12 @@ class CursosController extends AppController {
         }
     }
     
+    /**
+     * Borra un curso con ID = $id, verificando si el usuario posee permisos para borrar el curso.
+     * @param Integer $id Identificador de Curso.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST o DELETE
+     * @throws NotFoundException Si no encuentra aun curso con el respectivo ID.
+     */
     public function borrar($id = null) {
         $this->autoRender = false;
         
@@ -130,6 +181,9 @@ class CursosController extends AppController {
         //$this->redirect(array('action' => 'index'));
     }
     
+    /**
+     * search(): Busca un curso en base a un patrón. 
+     */
     public function search() {
         $query = $this->params['url']['q'];
         if (!$query) {
@@ -139,13 +193,26 @@ class CursosController extends AppController {
         }
 
         $this->set('tipo_curso', $this->Curso->tipoCurso);
-        $this->render('index');
     }
     
+    /**
+     * Obtiene los cursos del usuario que ha iniciado sesión.
+     * @param String $type Formato en que exportará los cursos (XML, PDF, TXT).  
+     */
     public function exportar($type = null) {
         $this->Curso->recursive = -1;
         $results = $this->Curso->findAllByUserId($this->Auth->user('id'));
         $this->set('tipo_curso', $this->Curso->tipoCurso);
+        $this->_exportar($results, $type);
+    }
+    
+    /**
+     * Obtiene todos los cursos de la base de Datos y los exporta a un archivo (XML, PDF, TXT).
+     * @param String $type Formato en que exportará los cursos(XML, PDF, TXT). 
+     */
+    public function admin_exportar($type = null) {
+        $this->Curso->recursive = -1;
+        $results = $this->Curso->find('all');
         $this->_exportar($results, $type);
     }
 }

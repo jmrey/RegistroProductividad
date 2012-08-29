@@ -1,17 +1,25 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de User 
+ */
 class User extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'User';
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'usuarios';
-    public $deptosArray = array(
-        '0' => 'Posgrado',
-        '1' => 'Formación Básica',
-        '2' => 'Ingeniería en Sistemas Computacionales',
-        '3' => 'Ciencias e Ingenierías de la Computación',
-        '4' => 'Formación Integral e Institucional'
-    );
     
+    /**
+     * Condiciones que validarán los datos del Usuario.
+     * @var array 
+     */
     public $validate = array(
         'username' => array(
             'validateUsername' => array(
@@ -93,6 +101,11 @@ class User extends AppModel {
         )
     );
     
+    /**
+     * Método que se ejecuta antes de guardar los datos del usuario.
+     * Aplica una función HASH al password del usuario para que no se guarde en texto plano.
+     * @return boolean 
+     */
     public function beforeSave() {
         if(isset($this->data[$this->alias]['password'])) {
             $this->data[$this->alias]['password'] = AuthComponent::password(

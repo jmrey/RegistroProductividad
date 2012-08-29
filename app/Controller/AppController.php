@@ -23,21 +23,19 @@
 App::uses('Controller', 'Controller');
 
 /**
- * This is a placeholder class.
- * Create the same file in app/Controller/AppController.php
+ * Clase base de los controladores.
  *
- * Add your application-wide methods in the class below, your controllers
- * will inherit them.
+ * En esta clase se agregan los métodos y propiedades que deberán tener todos los controladores.
  *
  * @package       Cake.Controller
  * @link http://book.cakephp.org/view/957/The-App-Controller
  */
 class AppController extends Controller {
-    //public $viewClass = 'TwigView.Twig';
     
-    /*
+    /**
      * Array que contiene los componentes que necesita el controlador, en este caso, los componentes
      * que necesita la clase base AppController.
+     * @var Array 
      */
     public $components = array(
         'Session',
@@ -101,6 +99,11 @@ class AppController extends Controller {
         parent::beforeRender();
     }
     
+    /**
+     * Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales.
+     * @param String $field
+     * @param String $value 
+     */
     function refreshAuth($field = '', $value = '') {
         if ($this->Auth->user()) {
             if (!empty($field) && !empty($value)) {
@@ -119,8 +122,11 @@ class AppController extends Controller {
         }
     }
     
-    /*
-     * Revisa si el usuario tiene como rol 'Administrador'.
+    /**
+     * Verifica si el Usuario es administrador.
+     * Si la propiedad status es igual a 2, entonces el usuario es administrador.
+     * @param User $user
+     * @return boolean 
      */
     public function isAdmin($user = null) {
         if ($user === null) {
@@ -132,8 +138,10 @@ class AppController extends Controller {
         return false;
     }
     
-    /* 
-     * Revisa si el User ha iniciado sesión.
+    /**
+     * Verifica si el usuario está autorizado para determinadas acciones de los controladores.
+     * @param User $user
+     * @return boolean 
      */
     public function isAuthorized($user) {
         if (!empty($this->params['prefix']) && ($this->params['prefix'] == 'admin')) {
@@ -146,29 +154,54 @@ class AppController extends Controller {
         return isset($user);
     }
     
-    /*
-     * Mensajes Flash.
+    /**
+     * Establece mensajes en las sesiones.
+     * @param String $message
+     * @param String $type
+     * @param String $key 
      */
     public function alert($message, $type = 'warning', $key = null) {
         $this->Session->setFlash($message, 'alert', array('type' => 'alert-' . $type));
     }
     
+    /**
+     * Establece mensajes de error.
+     * @param String $message 
+     */
     public function error($message) {
         $this->alert($message, 'error');
     }
     
+    /**
+     * Establece mensajes de éxito.
+     * @param String $message 
+     */
     public function success($message) {
         $this->alert($message, 'success');
     }
     
+    /**
+     * Establece mensajes de advertencia.
+     * @param String $message 
+     */
     public function warning($message) {
         $this->alert($message, 'warning');
     }
     
+    /**
+     * Establece mensajes de información.
+     * @param String $message 
+     */
     public function info($message) {
         $this->alert($message, 'info');
     }
     
+    /**
+     * Función que permite exportar los datos de los modelos en PDF, TXT o XML.
+     * 
+     * @param Array $results
+     * @param String $type 
+     */
     function _exportar($results = array(), $type = null) {
         $this->layout = false;
         $modelName = strtolower($this->name);
@@ -190,7 +223,6 @@ class AppController extends Controller {
             }
             $this->response->disableCache();
             $this->set($modelName, $this->_fixAssociativeArray($results));
-            //$this->set('articulos', $this->_fix_assoc_array($articulos));
             $this->render('export_xml');
         } else if ($type == 'pdf') {
             $this->layout = 'pdf';
@@ -204,6 +236,11 @@ class AppController extends Controller {
         }
     }
     
+    /**
+     * Arregla el array de contenidos para que puede ser parseado a un objeto XML.
+     * @param Array $array
+     * @return array 
+     */
     private function _fixAssociativeArray($array = array()) {
         $modelName = $this->modelKey;
         $assoc_articulos = array($modelName => array());

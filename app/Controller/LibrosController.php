@@ -1,9 +1,25 @@
 <?php
 
+/**
+ * Controlador de Libros.
+ * @class LibrosController 
+ */
 class LibrosController extends AppController {
+    /**
+     * Nombre del Controlador.
+     * @var String
+     */
     public $name = 'Libros';
+    /**
+     * Componentes necesarios que utiliza el Controlador.
+     * @var Array 
+     */
     public $components = array('Session');
     
+    /**
+     * Opciones para la paginación de los Libros.
+     * @var Array 
+     */
     public $paginate = array(
         'limit' => 20,
         'order' => array(
@@ -12,11 +28,17 @@ class LibrosController extends AppController {
         )
     );
     
+    /**
+     * Función llamada antes de ejecutar cualquier acción del controlador. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow('add', 'login', 'logout');
+        $this->Auth->allow('json_index');
     }
     
+    /**
+     * index(): Recupera todos los libros asociados al usuario que ha iniciado sesión.
+     */
     public function index() {
         $this->paginate['conditions'] = array('Libro.user_id' => $this->Auth->user('id'));
         $this->Libro->recursive = -1;
@@ -25,12 +47,21 @@ class LibrosController extends AppController {
         $this->set('libros', $libros);
     }
     
+    /**
+     * admin_index(): Recupera todos los libros que existen en la Base de Datos. 
+     */
     public function admin_index() {
         $this->Libro->recursive = -1;
         $this->set('tipo_libros', $this->Libro->tipoLibros);
         $this->set('libros', $this->paginate());
     }
     
+    /**
+     * json_index(): Busca los libros en base a un campo y un patrón.
+     * Los resultados son mostrados en formato JSON.
+     * @param String $field
+     * @param String $query 
+     */
     public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
@@ -47,6 +78,9 @@ class LibrosController extends AppController {
         echo json_encode($json_array);
     }
     
+    /**
+     * nuevo(): Crea un nuevo Libro. 
+     */
     public function nuevo() {
         $this->loadModel('Contenido');
         $message_autors = array(
@@ -59,7 +93,7 @@ class LibrosController extends AppController {
             $this->Libro->create();
             $this->request->data['Libro']['user_id'] = $this->Auth->user('id');
             if ($this->Libro->save($this->request->data)) {
-                $this->success('Se ha registrado el artículo satisfactoriamente.');
+                $this->success('Se ha registrado el libro satisfactoriamente.');
                 $this->redirect('/libros/' . $this->Libro->id . '/archivos');
             } else {
                 $this->warning('Ha ocurrido un problema. Verifica los datos.');
@@ -67,6 +101,11 @@ class LibrosController extends AppController {
         }
     }
     
+    /**
+     * ver(): Muestra un libro con el ID = $id.
+     * @param Integer $id Identificador del Libro
+     * @throws NotFoundException Si no encuentra al libro con el respectivo ID.
+     */
     public function ver($id = null) {
         $this->Libro->id = isset($id) ? $id : $this->request->params['id'];
         if (!$this->Libro->exists()) {
@@ -78,6 +117,11 @@ class LibrosController extends AppController {
         }
     }
     
+    /**
+     * editar(): Obtiene el libro con el ID = $id y muestra la vista para editarlo.
+     * @param Integer $id
+     * @throws NotFoundException Si no encuentra al libro con el respectivo ID.
+     */
     public function editar($id = null) {
         $this->Libro->id = $id;
         if (!$this->Libro->exists()) {
@@ -103,6 +147,12 @@ class LibrosController extends AppController {
         }
     }
     
+    /**
+     * Borra un libro con ID = $id, verificando si el usuario posee permisos para borrar el libro.
+     * @param Integer $id Identificador de Libro.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST o DELETE
+     * @throws NotFoundException Si no encuentra al libro con el respectivo ID.
+     */
     public function borrar($id = null) {
         $this->autoRender = false;
         
@@ -129,6 +179,9 @@ class LibrosController extends AppController {
         //$this->redirect(array('action' => 'index'));
     }
     
+    /**
+     * search(): Busca un libro en base a un patrón. 
+     */
     public function search() {
         $query = $this->params['url']['q'];
         if (!$query) {
@@ -137,13 +190,26 @@ class LibrosController extends AppController {
             $this->set('libros', $this->Libro->findByQuery($query, $this->Auth->user('id')));
         }
         $this->set('tipo_libros', $this->Libro->tipoLibros);
-        $this->render('index');
     }
     
+    /**
+     * Obtiene los libros del usuario que ha iniciado sesión.
+     * @param String $type Formato en que exportará los libros (XML, PDF, TXT).  
+     */
     public function exportar($type = null) {
         $this->Libro->recursive = -1;
         $results = $this->Libro->findAllByUserId($this->Auth->user('id'));
         $this->set('tipo_libros', $this->Libro->tipoLibros);
+        $this->_exportar($results, $type);
+    }
+    
+    /**
+     * Obtiene todos los libros de la base de Datos y los exporta a un archivo (XML, PDF, TXT).
+     * @param String $type Formato en que exportará los libros(XML, PDF, TXT). 
+     */
+    public function admin_exportar($type = null) {
+        $this->Articulo->recursive = -1;
+        $results = $this->Libro->find('all');
         $this->_exportar($results, $type);
     }
 }

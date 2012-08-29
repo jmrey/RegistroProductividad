@@ -2,20 +2,44 @@
 
 App::uses('CakeEmail', 'Network/Email');
 
+/**
+ * Controlador de Departamentos.
+ * @class DepartamentosController 
+ */
 class DepartamentosController extends AppController {
+    /**
+     * Nombre del Controlador.
+     * @var String
+     */
     public $name = 'Departamentos';
+    /**
+     * Componentes necesarios que utiliza el Controlador.
+     * @var Array 
+     */
     public $components = array('Session');
     
+    /**
+     * Función llamada antes de ejecutar cualquier acción del controlador. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow(array('json_get'));
     }
     
+    /**
+     * admin_index(): Recupera todos los departamentos que existen en la Base de Datos. 
+     */
     public function admin_index() {
         $this->Departamento->recursive = 0;
         $this->set('deptos', $this->paginate());
     }
     
+    /**
+     * json_get(): Obtiene una lista de los departamentos asociados a una escuela.
+     * Los resultados son mostrados en formato JSON.
+     * @param String $field
+     * @param String $query 
+     */
     public function json_get($field = null, $query = null) {
         $this->autoRender = false;
         $field = ($field === 'escuela') ? 'escuela_id' : $field; 
@@ -31,6 +55,9 @@ class DepartamentosController extends AppController {
         echo json_encode($results);
     }
     
+    /**
+     * admin_nuevo(): Permite al administrador crea una nuevo Departamento. 
+     */
     public function admin_nuevo() {
         $this->loadModel('Escuela');
         if ($this->request->is('post')) {

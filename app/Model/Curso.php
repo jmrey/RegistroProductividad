@@ -1,10 +1,24 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
-
+/**
+ * Modelo de Curso 
+ */
 class Curso extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Curso';
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'cursos';
     
+    /**
+     * Tipo de Cursos
+     * @var array 
+     */
     public $tipoCurso = array( 
         'licenciatura' => 'Licenciatura',
         'maestria' => 'Maestría',
@@ -12,6 +26,10 @@ class Curso extends AppModel {
         'doctorado' => 'Doctorado'
     );
     
+    /**
+     * Array de validaciones del Curso.
+     * @var Array 
+     */
     public $validate = array(
         'nombre' => array(
             'validate' => array(
@@ -92,6 +110,12 @@ class Curso extends AppModel {
         )
     );
     
+    /**
+     * Busca un Curso del usuario en base a un patrón.
+     * @param String $query Patrón de búsqueda.
+     * @param Integer $id Identificador de Usuario
+     * @return Array Array que contiene al Curso encontrado.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(

@@ -1,0 +1,550 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>Registro de Productividad » \UsersController</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">Registro de Productividad</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Cake.html"><i class="icon-folder-open"></i> Cake</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/app.html"><i class="icon-folder-open"></i> app</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">62</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public inherited"><a href="#_exportar" title="_exportar :: Función que permite exportar los datos de los modelos en PDF, TXT o XML."><span class="description">Función que permite exportar los datos de los modelos en PDF, TXT o XML.</span><pre>_exportar()</pre></a></li>
+<li class="method public "><a href="#add" title="add :: add(): Permite crear una nueva cuenta de usuario."><span class="description">add(): Permite crear una nueva cuenta de usuario.</span><pre>add()</pre></a></li>
+<li class="method public "><a href="#admin_index" title="admin_index :: admin_login(): Muestra al administrador todos los usuarios registrados."><span class="description">admin_login(): Muestra al administrador todos los usuarios registrados.</span><pre>admin_index()</pre></a></li>
+<li class="method public "><a href="#admin_login" title="admin_login :: admin_login(): Redirecciona a la acción login sin permisos de administrador."><span class="description">admin_login(): Redirecciona a la acción login sin permisos de administrador.</span><pre>admin_login()</pre></a></li>
+<li class="method public "><a href="#admin_perfil" title="admin_perfil :: admin_perfil(): Permite ver el perfil del usuario con el ID = $id al administrador."><span class="description">admin_perfil(): Permite ver el perfil del usuario con el ID = $id al administrador.</span><pre>admin_perfil()</pre></a></li>
+<li class="method public "><a href="#admin_upgrade" title="admin_upgrade :: admin_upgrade(): Permite al administrador cambiar el rol del usuario con el ID = $id."><span class="description">admin_upgrade(): Permite al administrador cambiar el rol del usuario con el ID = $id.</span><pre>admin_upgrade()</pre></a></li>
+<li class="method public inherited"><a href="#alert" title="alert :: Establece mensajes en las sesiones."><span class="description">Establece mensajes en las sesiones.</span><pre>alert()</pre></a></li>
+<li class="method public "><a href="#beforeFilter" title="beforeFilter :: Método que se ejecuta antes de cualquier acción."><span class="description">Método que se ejecuta antes de cualquier acción.</span><pre>beforeFilter()</pre></a></li>
+<li class="method public inherited"><a href="#beforeRender" title="beforeRender :: Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista."><span class="description">Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista.</span><pre>beforeRender()</pre></a></li>
+<li class="method public "><a href="#edit" title="edit :: edit(): Permite al usuario editar el perfil con el que ha iniciado sesión."><span class="description">edit(): Permite al usuario editar el perfil con el que ha iniciado sesión.</span><pre>edit()</pre></a></li>
+<li class="method public inherited"><a href="#error" title="error :: Establece mensajes de error."><span class="description">Establece mensajes de error.</span><pre>error()</pre></a></li>
+<li class="method public inherited"><a href="#info" title="info :: Establece mensajes de información."><span class="description">Establece mensajes de información.</span><pre>info()</pre></a></li>
+<li class="method public inherited"><a href="#isAdmin" title="isAdmin :: Verifica si el Usuario es administrador."><span class="description">Verifica si el Usuario es administrador.</span><pre>isAdmin()</pre></a></li>
+<li class="method public inherited"><a href="#isAuthorized" title="isAuthorized :: Verifica si el usuario está autorizado para determinadas acciones de los controladores."><span class="description">Verifica si el usuario está autorizado para determinadas acciones de los controladores.</span><pre>isAuthorized()</pre></a></li>
+<li class="method public "><a href="#login" title="login :: login(): Permite iniciar sesión a los usuarios."><span class="description">login(): Permite iniciar sesión a los usuarios.</span><pre>login()</pre></a></li>
+<li class="method public "><a href="#logout" title="logout :: logout(): Cierra sesión."><span class="description">logout(): Cierra sesión.</span><pre>logout()</pre></a></li>
+<li class="method public "><a href="#nuevopassword" title="nuevopassword :: Permite generar una nueva contraseña al usuario con el CÓDIGO CLAVE = $keycode"><span class="description">Permite generar una nueva contraseña al usuario con el CÓDIGO CLAVE = $keycode</span><pre>nuevopassword()</pre></a></li>
+<li class="method public "><a href="#perfil" title="perfil :: perfil(): Carga el perfil del usuario que ha iniciado sesión."><span class="description">perfil(): Carga el perfil del usuario que ha iniciado sesión.</span><pre>perfil()</pre></a></li>
+<li class="method public inherited"><a href="#refreshAuth" title="refreshAuth :: Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales."><span class="description">Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales.</span><pre>refreshAuth()</pre></a></li>
+<li class="method public "><a href="#resetpassword" title="resetpassword :: resetpassword(): Permite al usuario recuperar su contraseña en caso de ser olvidada."><span class="description">resetpassword(): Permite al usuario recuperar su contraseña en caso de ser olvidada.</span><pre>resetpassword()</pre></a></li>
+<li class="method public inherited"><a href="#success" title="success :: Establece mensajes de éxito."><span class="description">Establece mensajes de éxito.</span><pre>success()</pre></a></li>
+<li class="method public "><a href="#ticket" title="ticket :: Verifica si ha sido generado un ticket para cambiar la contraseña."><span class="description">Verifica si ha sido generado un ticket para cambiar la contraseña.</span><pre>ticket()</pre></a></li>
+<li class="method public "><a href="#validar" title="validar :: validar(): Valida el correo electrónico del usuario."><span class="description">validar(): Valida el correo electrónico del usuario.</span><pre>validar()</pre></a></li>
+<li class="method public inherited"><a href="#warning" title="warning :: Establece mensajes de advertencia."><span class="description">Establece mensajes de advertencia.</span><pre>warning()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private inherited"><a href="#_fixAssociativeArray" title="_fixAssociativeArray :: Arregla el array de contenidos para que puede ser parseado a un objeto XML."><span class="description">Arregla el array de contenidos para que puede ser parseado a un objeto XML.</span><pre>_fixAssociativeArray()</pre></a></li>
+<li class="method private "><a href="#_sendEmail" title="_sendEmail :: Envia un email a $mail, con el asunto $subject, utilizando la plantilla $template."><span class="description">Envia un email a $mail, con el asunto $subject, utilizando la plantilla $template.</span><pre>_sendEmail()</pre></a></li>
+<li class="method private "><a href="#_sendKeyCode" title="_sendKeyCode :: Envía email de verificación de la cuenta."><span class="description">Envía email de verificación de la cuenta.</span><pre>_sendKeyCode()</pre></a></li>
+<li class="method private "><a href="#_sendRecoverPassword" title="_sendRecoverPassword :: Envía email para regenerar contraseña."><span class="description">Envía email para regenerar contraseña.</span><pre>_sendRecoverPassword()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24components" title="$components :: Componentes que usa el controlador."><span class="description">Componentes que usa el controlador.</span><pre>$components</pre></a></li>
+<li class="property public "><a href="#%24name" title="$name :: Nombre del Controlador"><span class="description">Nombre del Controlador</span><pre>$name</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CUsersController" id="\UsersController"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/UsersController.html">UsersController</a>
+</li>
+</ul>
+<div href="../classes/UsersController.html" class="element class">
+<p class="short_description">Controlador de Usuario</p>
+<div class="details">
+<p class="long_description"><p>En esta clase se agregan los métodos y propiedades que deberán tener todos los controladores.</p></p>
+<table class="table table-bordered"><tr>
+<th>package</th>
+<td><a href="../packages/Default.html">Cake.Controller</a></td>
+</tr></table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="_exportar" id="_exportar"></a><div class="element clickable method public _exportar" data-toggle="collapse" data-target="._exportar .collapse">
+<h2>Función que permite exportar los datos de los modelos en PDF, TXT o XML.</h2>
+<pre>_exportar(Array $results, String $type) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::_exportar()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$results</h4>
+<code>Array</code>
+</div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="add" id="add"></a><div class="element clickable method public add" data-toggle="collapse" data-target=".add .collapse">
+<h2>add(): Permite crear una nueva cuenta de usuario.</h2>
+<pre>add() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="admin_index" id="admin_index"></a><div class="element clickable method public admin_index" data-toggle="collapse" data-target=".admin_index .collapse">
+<h2>admin_login(): Muestra al administrador todos los usuarios registrados.</h2>
+<pre>admin_index() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="admin_login" id="admin_login"></a><div class="element clickable method public admin_login" data-toggle="collapse" data-target=".admin_login .collapse">
+<h2>admin_login(): Redirecciona a la acción login sin permisos de administrador.</h2>
+<pre>admin_login() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="admin_perfil" id="admin_perfil"></a><div class="element clickable method public admin_perfil" data-toggle="collapse" data-target=".admin_perfil .collapse">
+<h2>admin_perfil(): Permite ver el perfil del usuario con el ID = $id al administrador.</h2>
+<pre>admin_perfil(Integer $id) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>Integer</code><p>Identidicador del usuario.</p></div>
+<h3>Exceptions</h3>
+<table class="table table-bordered"><tr>
+<th><code>\NotFoundException</code></th>
+<td>Si el usuario con el ID = $id no existe en la Base de Datos.</td>
+</tr></table>
+</div></div>
+</div>
+<a name="admin_upgrade" id="admin_upgrade"></a><div class="element clickable method public admin_upgrade" data-toggle="collapse" data-target=".admin_upgrade .collapse">
+<h2>admin_upgrade(): Permite al administrador cambiar el rol del usuario con el ID = $id.</h2>
+<pre>admin_upgrade(\type $id, \type $keycode) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>\type</code><p>Identificador del usuario.</p></div>
+<div class="subelement argument">
+<h4>$keycode</h4>
+<code>\type</code><p>Código de seguridad del Usuario.</p>
+</div>
+<h3>Exceptions</h3>
+<table class="table table-bordered">
+<tr>
+<th><code>\MethodNotAllowedException</code></th>
+<td>Si el método de la petición no es POST</td>
+</tr>
+<tr>
+<th><code>\NotFoundException</code></th>
+<td>Si el usuario con ID = $id no existe.</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a name="alert" id="alert"></a><div class="element clickable method public alert" data-toggle="collapse" data-target=".alert .collapse">
+<h2>Establece mensajes en las sesiones.</h2>
+<pre>alert(String $message, String $type, String $key) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::alert()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$key</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="beforeFilter" id="beforeFilter"></a><div class="element clickable method public beforeFilter" data-toggle="collapse" data-target=".beforeFilter .collapse">
+<h2>Método que se ejecuta antes de cualquier acción.</h2>
+<pre>beforeFilter() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="beforeRender" id="beforeRender"></a><div class="element clickable method public beforeRender" data-toggle="collapse" data-target=".beforeRender .collapse">
+<h2>Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista.</h2>
+<pre>beforeRender() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::beforeRender()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="edit" id="edit"></a><div class="element clickable method public edit" data-toggle="collapse" data-target=".edit .collapse">
+<h2>edit(): Permite al usuario editar el perfil con el que ha iniciado sesión.</h2>
+<pre>edit() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Una vez cambiados los datos del usuario se genera un nuevo código clave para el usuario.</p></p>
+<h3>Exceptions</h3>
+<table class="table table-bordered"><tr>
+<th><code>\NotFoundException</code></th>
+<td>Si el usuario con el ID = ID de sesión no existe en la Base de Datos.</td>
+</tr></table>
+</div></div>
+</div>
+<a name="error" id="error"></a><div class="element clickable method public error" data-toggle="collapse" data-target=".error .collapse">
+<h2>Establece mensajes de error.</h2>
+<pre>error(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::error()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="info" id="info"></a><div class="element clickable method public info" data-toggle="collapse" data-target=".info .collapse">
+<h2>Establece mensajes de información.</h2>
+<pre>info(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::info()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="isAdmin" id="isAdmin"></a><div class="element clickable method public isAdmin" data-toggle="collapse" data-target=".isAdmin .collapse">
+<h2>Verifica si el Usuario es administrador.</h2>
+<pre>isAdmin(<a href="../classes/User.html">\User</a> $user) : boolean</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Si la propiedad status es igual a 2, entonces el usuario es administrador.</p></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::isAdmin()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$user</h4>
+<code><a href="../classes/User.html">\User</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="isAuthorized" id="isAuthorized"></a><div class="element clickable method public isAuthorized" data-toggle="collapse" data-target=".isAuthorized .collapse">
+<h2>Verifica si el usuario está autorizado para determinadas acciones de los controladores.</h2>
+<pre>isAuthorized(<a href="../classes/User.html">\User</a> $user) : boolean</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::isAuthorized()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$user</h4>
+<code><a href="../classes/User.html">\User</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="login" id="login"></a><div class="element clickable method public login" data-toggle="collapse" data-target=".login .collapse">
+<h2>login(): Permite iniciar sesión a los usuarios.</h2>
+<pre>login() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="logout" id="logout"></a><div class="element clickable method public logout" data-toggle="collapse" data-target=".logout .collapse">
+<h2>logout(): Cierra sesión.</h2>
+<pre>logout() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="nuevopassword" id="nuevopassword"></a><div class="element clickable method public nuevopassword" data-toggle="collapse" data-target=".nuevopassword .collapse">
+<h2>Permite generar una nueva contraseña al usuario con el CÓDIGO CLAVE = $keycode</h2>
+<pre>nuevopassword(String $keycode) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Una vez cambiada la contraseña de usuario genera un nuevo código clave para el usuario.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$keycode</h4>
+<code>String</code><p>Código de seguridad del usuario.</p>
+</div>
+</div></div>
+</div>
+<a name="perfil" id="perfil"></a><div class="element clickable method public perfil" data-toggle="collapse" data-target=".perfil .collapse">
+<h2>perfil(): Carga el perfil del usuario que ha iniciado sesión.</h2>
+<pre>perfil() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="refreshAuth" id="refreshAuth"></a><div class="element clickable method public refreshAuth" data-toggle="collapse" data-target=".refreshAuth .collapse">
+<h2>Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales.</h2>
+<pre>refreshAuth(String $field, String $value) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::refreshAuth()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$field</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="resetpassword" id="resetpassword"></a><div class="element clickable method public resetpassword" data-toggle="collapse" data-target=".resetpassword .collapse">
+<h2>resetpassword(): Permite al usuario recuperar su contraseña en caso de ser olvidada.</h2>
+<pre>resetpassword() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"><p>El correo de recuperación de contraseña será enviado al correo electrónico que el usuario tenga registrado.
+Se generará un Ticket por motivos de seguridad que expirará en un determinado tiempo.
+Ver Ticket->getExpirationDate().</p></p></div></div>
+</div>
+<a name="success" id="success"></a><div class="element clickable method public success" data-toggle="collapse" data-target=".success .collapse">
+<h2>Establece mensajes de éxito.</h2>
+<pre>success(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::success()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="ticket" id="ticket"></a><div class="element clickable method public ticket" data-toggle="collapse" data-target=".ticket .collapse">
+<h2>Verifica si ha sido generado un ticket para cambiar la contraseña.</h2>
+<pre>ticket(String $hash) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$hash</h4>
+<code>String</code><p>Hash generado para comprobar que el usuario quiere recuperar sus contraseña.</p>
+</div>
+</div></div>
+</div>
+<a name="validar" id="validar"></a><div class="element clickable method public validar" data-toggle="collapse" data-target=".validar .collapse">
+<h2>validar(): Valida el correo electrónico del usuario.</h2>
+<pre>validar(String $keycode) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Una vez validada la cuenta de usuario, cambia el status del usuario para permitirle iniciar sesión.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$keycode</h4>
+<code>String</code><p>Código de seguridad (HASH)</p>
+</div>
+</div></div>
+</div>
+<a name="warning" id="warning"></a><div class="element clickable method public warning" data-toggle="collapse" data-target=".warning .collapse">
+<h2>Establece mensajes de advertencia.</h2>
+<pre>warning(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::warning()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="_fixAssociativeArray" id="_fixAssociativeArray"></a><div class="element clickable method private _fixAssociativeArray" data-toggle="collapse" data-target="._fixAssociativeArray .collapse">
+<h2>Arregla el array de contenidos para que puede ser parseado a un objeto XML.</h2>
+<pre>_fixAssociativeArray(Array $array) : array</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::_fixAssociativeArray()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$array</h4>
+<code>Array</code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="_sendEmail" id="_sendEmail"></a><div class="element clickable method private _sendEmail" data-toggle="collapse" data-target="._sendEmail .collapse">
+<h2>Envia un email a $mail, con el asunto $subject, utilizando la plantilla $template.</h2>
+<pre>_sendEmail(String $mail, String $subject, String $template, Array $vars) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mail</h4>
+<code>String</code><p>Correo electrónico del destinatario.</p>
+</div>
+<div class="subelement argument">
+<h4>$subject</h4>
+<code>String</code><p>Asunto del correo electrónico.</p>
+</div>
+<div class="subelement argument">
+<h4>$template</h4>
+<code>String</code><p>Plantilla que se usará al enviar.</p>
+</div>
+<div class="subelement argument">
+<h4>$vars</h4>
+<code>Array</code><p>Array asociativo de variables que utiliza la plantilla.</p></div>
+</div></div>
+</div>
+<a name="_sendKeyCode" id="_sendKeyCode"></a><div class="element clickable method private _sendKeyCode" data-toggle="collapse" data-target="._sendKeyCode .collapse">
+<h2>Envía email de verificación de la cuenta.</h2>
+<pre>_sendKeyCode(String $email, \Stirng $keycode) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$email</h4>
+<code>String</code><p>Correo electrónido del usuario.</p>
+</div>
+<div class="subelement argument">
+<h4>$keycode</h4>
+<code>\Stirng</code><p>Código de seguridad (HASH)</p>
+</div>
+</div></div>
+</div>
+<a name="_sendRecoverPassword" id="_sendRecoverPassword"></a><div class="element clickable method private _sendRecoverPassword" data-toggle="collapse" data-target="._sendRecoverPassword .collapse">
+<h2>Envía email para regenerar contraseña.</h2>
+<pre>_sendRecoverPassword(String $email, \Stirng $keycode) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$email</h4>
+<code>String</code><p>Correo electrónido del usuario.</p>
+</div>
+<div class="subelement argument">
+<h4>$keycode</h4>
+<code>\Stirng</code><p>Código de seguridad (HASH)</p>
+</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24components" id="$components"> </a><div class="element clickable property public $components" data-toggle="collapse" data-target=".$components .collapse">
+<h2>Componentes que usa el controlador.</h2>
+<pre>$components : Array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24name" id="$name"> </a><div class="element clickable property public $name" data-toggle="collapse" data-target=".$name .collapse">
+<h2>Nombre del Controlador</h2>
+<pre>$name : String</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a8</a> and<br>
+            generated on 2012-08-08T12:02:30-05:00.<br></footer></div>
+</div>
+</body>
+</html>

@@ -1,10 +1,25 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Artículo 
+ */
 class Articulo extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Articulo';
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'articulos';
     
+    /**
+     * Array de validaciones del Artículo.
+     * @var Array 
+     */
     public $validate = array(
         'titulo' => array(
             'validate' => array(
@@ -103,6 +118,12 @@ class Articulo extends AppModel {
         )
     );
     
+    /**
+     * Busca un Artículo del usuario en base a un patrón.
+     * @param String $query Patrón de búsqueda.
+     * @param Integer $id Identificador de Usuario
+     * @return Array Array que contiene al Artículo encontrado.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(
@@ -116,7 +137,13 @@ class Articulo extends AppModel {
         return $this->find('all', array('conditions' => $conditions));
     }
     
-     public function queryConditions($query = '', $id = null) {
+    /**
+     * Genera condiciones de búsqueda.
+     * @param String $query Patrón de búsqueda.
+     * @param String $id Identificador de Usuario
+     * @return array Retorna las condiciones de búsqueda.
+     */
+    public function queryConditions($query = '', $id = null) {
         $conditions = array(
             'OR' => array(
                 array('Articulo.titulo LIKE' => '%' . $query .'%'),

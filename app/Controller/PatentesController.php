@@ -1,10 +1,26 @@
 <?php
 
+/**
+ * Controlador de Patentes.
+ * @class PatentesController 
+ */
 class PatentesController extends AppController {
+    /**
+     * Nombre del Controlador.
+     * @var String
+     */
     public $name = 'Patentes';
-    public $components = array('Session');
-    //public $uses = array('Patente', 'Contenido');
     
+    /**
+     * Componentes necesarios que utiliza el Controlador.
+     * @var Array 
+     */
+    public $components = array('Session');
+    
+    /**
+     * Opciones para la paginación de las Patentes.
+     * @var Array 
+     */
     public $paginate = array(
         'limit' => 20,
         'order' => array(
@@ -13,14 +29,20 @@ class PatentesController extends AppController {
         )
     );
     
+    /**
+     * Método llamado antes de ejecutar cualquier acción del controlador. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $this->set('title_for_layout', $this->name);
         $this->set('estado_patentes', $this->Patente->estadoPatentes);
         $this->set('tipo_patentes', $this->Patente->tipoPatentes);
-        //$this->Auth->allow('json_index');
+        $this->Auth->allow('json_index');
     }
     
+    /**
+     * index(): Recupera todas las patentes asociadas al usuario que ha iniciado sesión.
+     */
     public function index() {
         $this->Patente->recursive = -1;
         $this->paginate['conditions'] = array('Patente.user_id' => $this->Auth->user('id'));
@@ -28,11 +50,20 @@ class PatentesController extends AppController {
         $this->set('patentes', $patentes);
     }
     
+    /**
+     * admin_index(): Recupera todas las patentes que existen en la Base de Datos. 
+     */
     public function admin_index() {
         $this->Patente->recursive = -1;
         $this->set('patentes', $this->paginate());
     }
     
+    /**
+     * json_index(): Busca las patentes en base a un campo y un patrón.
+     * Los resultados son mostrados en formato JSON.
+     * @param String $field
+     * @param String $query 
+     */
     public function json_index($field = null, $query = null) {
         $this->autoRender = false;
         $conditions = array(
@@ -49,6 +80,9 @@ class PatentesController extends AppController {
         echo json_encode($json_array);
     }
     
+    /**
+     * nuevo(): Crea una nueva patente. 
+     */
     public function nuevo() {
         $this->loadModel('Contenido');
         $message_autors = array(
@@ -68,6 +102,11 @@ class PatentesController extends AppController {
         }
     }
     
+    /**
+     * ver(): Muestra la Patente con el ID = $id.
+     * @param Integer $id Identificador de la Patente
+     * @throws NotFoundException Si no encuentra a la Patente con el respectivo ID.
+     */
     public function ver($id = null) {
         $this->Patente->id = isset($id) ? $id : $this->request->params['id'];
         if (!$this->Patente->exists()) {
@@ -79,6 +118,11 @@ class PatentesController extends AppController {
         }
     }
     
+    /**
+     * editar(): Obtiene la Patente con el ID = $id y muestra la vista para editarla.
+     * @param Integer $id Identificador de la Patente
+     * @throws NotFoundException Si no encuentra a la patente con el respectivo ID.
+     */
     public function editar($id = null) {
         $this->Patente->id = $id;
         if (!$this->Patente->exists()) {
@@ -103,6 +147,12 @@ class PatentesController extends AppController {
         }
     }
     
+    /**
+     * Borra un artículo con ID = $id, verificando si el usuario posee permisos para borrar la patente.
+     * @param Integer $id Identificador de Patente.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST o DELETE
+     * @throws NotFoundException Si no encuentra a la Patente con el respectivo ID.
+     */
     public function borrar($id = null) {
         $this->autoRender = false;
         
@@ -129,6 +179,9 @@ class PatentesController extends AppController {
         //$this->redirect(array('action' => 'index'));
     }
     
+    /**
+     * search(): Busca una patente en base a un patrón. 
+     */
     public function search() {
         $query = $this->params['url']['q'];
         if (!$query) {
@@ -136,15 +189,22 @@ class PatentesController extends AppController {
         } else {
             $this->set('patentes', $this->Patente->findByQuery($query, $this->Auth->user('id')));
         }
-        $this->render('index');
     }
     
+    /**
+     * Obtiene las Patentes del usuario que ha iniciado sesión.
+     * @param String $type Formato en que exportará las patentes (XML, PDF, TXT).  
+     */
     public function exportar($type = null) {
         $this->Patente->recursive = -1;
         $results = $this->Patente->findAllByUserId($this->Auth->user('id'));
         $this->_exportar($results, $type);
     }
     
+    /**
+     * Obtiene todos las patentes de la base de Datos y los exporta a un archivo (XML, PDF, TXT).
+     * @param String $type Formato en que exportará las patentes (XML, PDF, TXT). 
+     */
     public function admin_exportar($type = null) {
         $this->Patente->recursive = -1;
         $results = $this->Patente->find('all');

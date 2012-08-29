@@ -1,11 +1,25 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Capítulo 
+ */
 class Capitulo extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Capitulo';
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'capitulos';
     
-    
+    /**
+     * Array de validaciones del Capítulo.
+     * @var Array 
+     */
     public $validate = array(
         'titulo_capitulo' => array(
             'validate' => array(
@@ -104,6 +118,12 @@ class Capitulo extends AppModel {
         )
     );
     
+    /**
+     * Busca un Capítulo del usuario en base a un patrón.
+     * @param String $query Patrón de búsqueda.
+     * @param Integer $id Identificador de Usuario
+     * @return Array Array que contiene al Capítulo encontrado.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(

@@ -1,12 +1,33 @@
 <?php
 
+/**
+ *  Controlador de Archivos
+ * 
+ *  @extends AppController
+ */
 class ArchivosController extends AppController {
+    /**
+     * Nombre del Controlador
+     * @var String
+     */
     public $name = 'Archivos';
+    /**
+     * Componentes del Controlador
+     * @var Array
+     */
     public $components = array('Session', 'RequestHandler');
+    /**
+     * Ayudantes del Controlador
+     * @var Array 
+     */
     public $helpers = array('Number');
     
+    /**
+     *  Función llamada antes de ejecutar cada acción del controlador.
+     *  @return void
+     */
     function beforeFilter() {
-        // I have other stuff in my AppController.php beforeFilter that needs to be run.
+        // Llama a beforeFilter de AppController.
         parent::beforeFilter();
 
         // Aquí desactivamos el componente de Seguridad.
@@ -16,6 +37,13 @@ class ArchivosController extends AppController {
         }
     }
     
+    /**
+     * index(): Muestra el archivo con el respectivo ID y el tipo de contenido.
+     * 
+     * @param Integer $id Identificador del Archivo.
+     * @param String $content Tipo de contenido del Archivo
+     * @throws NotFoundException Si el ID y el tipo de contenido no es encontrado.
+     */
     public function index($id = null, $content = null) {
         $result = $this->Archivo->getContent($content, $id);
         if (!empty($result)) {
@@ -34,6 +62,10 @@ class ArchivosController extends AppController {
         }
     }
 
+    /**
+     * agregar(): Registra un nuevo archivo.
+     * @param String $content Tipo de contenido
+     */
     public function agregar($content = null) {
         $this->layout = false;
         if ($this->request->is('post')) {
@@ -72,6 +104,13 @@ class ArchivosController extends AppController {
         }
     }
     
+    /**
+     * borrar(): Borra el archivo.
+     * 
+     * @param Integer $id Identificador de Archivo.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST o DELETE
+     * @throws NotFoundException Si no encuntra el archivo con el ID asociado.
+     */
     public function borrar($id = null) {
         $this->autoRender = false;
 
@@ -93,7 +132,6 @@ class ArchivosController extends AppController {
         } else {
             $this->error('No tienes los permisos para está acción.');
         }
-        //$this->redirect(array('action' => 'index'));
     }
 }
 ?>

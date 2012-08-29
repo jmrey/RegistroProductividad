@@ -1,22 +1,46 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Patente 
+ */
 class Patente extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Patente';
+    
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'patentes';
     
+    /**
+     * Estado de las Patentes
+     * @var array 
+     */
     public $estadoPatentes = array(
         '0' => 'En trámite',
         '1' => 'En explotación comercial',
         '2' => 'Registrada'
     );
     
+    /**
+     * Tipo de las Patentes
+     * @var array 
+     */
     public $tipoPatentes = array(
         '0' => 'Diseño Industrial',
         '1' => 'Modelo de Utilidad',
         '2' => 'Patente'
     );
     
+    /**
+     * Array de validaciones de Patente.
+     * @var Array 
+     */
     public $validate = array(
         'titulo' => array(
             'validate' => array(
@@ -40,6 +64,12 @@ class Patente extends AppModel {
         )
     );
     
+    /**
+     * Busca una Patente del usuario en base a un patrón.
+     * @param string $query Patrón de búsqueda.
+     * @param integer $id Identificador de Usuario
+     * @return array Array que contiene a la patente encontrada.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(
@@ -53,7 +83,13 @@ class Patente extends AppModel {
         return $this->find('all', array('conditions' => $conditions));
     }
     
-     public function queryConditions($query = '', $id = null) {
+    /**
+     * Genera condiciones de búsqueda.
+     * @param String $query Patrón de búsqueda.
+     * @param String $id Identificador de Usuario
+     * @return array Retorna las condiciones de búsqueda.
+     */
+    public function queryConditions($query = '', $id = null) {
         $conditions = array(
             'OR' => array(
                 array('Patente.titulo LIKE' => '%' . $query .'%'),

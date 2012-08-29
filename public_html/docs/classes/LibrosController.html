@@ -1,0 +1,484 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>Registro de Productividad » \LibrosController</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">Registro de Productividad</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Cake.html"><i class="icon-folder-open"></i> Cake</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/app.html"><i class="icon-folder-open"></i> app</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">62</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public inherited"><a href="#_exportar" title="_exportar :: Función que permite exportar los datos de los modelos en PDF, TXT o XML."><span class="description">Función que permite exportar los datos de los modelos en PDF, TXT o XML.</span><pre>_exportar()</pre></a></li>
+<li class="method public "><a href="#admin_exportar" title="admin_exportar :: Obtiene todos los libros de la base de Datos y los exporta a un archivo (XML, PDF, TXT)."><span class="description">Obtiene todos los libros de la base de Datos y los exporta a un archivo (XML, PDF, TXT).</span><pre>admin_exportar()</pre></a></li>
+<li class="method public "><a href="#admin_index" title="admin_index :: admin_index(): Recupera todos los libros que existen en la Base de Datos."><span class="description">admin_index(): Recupera todos los libros que existen en la Base de Datos.</span><pre>admin_index()</pre></a></li>
+<li class="method public inherited"><a href="#alert" title="alert :: Establece mensajes en las sesiones."><span class="description">Establece mensajes en las sesiones.</span><pre>alert()</pre></a></li>
+<li class="method public "><a href="#beforeFilter" title="beforeFilter :: Función llamada antes de ejecutar cualquier acción del controlador."><span class="description">Función llamada antes de ejecutar cualquier acción del controlador.</span><pre>beforeFilter()</pre></a></li>
+<li class="method public inherited"><a href="#beforeRender" title="beforeRender :: Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista."><span class="description">Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista.</span><pre>beforeRender()</pre></a></li>
+<li class="method public "><a href="#borrar" title="borrar :: Borra un libro con ID = $id, verificando si el usuario posee permisos para borrar el libro."><span class="description">Borra un libro con ID = $id, verificando si el usuario posee permisos para borrar el libro.</span><pre>borrar()</pre></a></li>
+<li class="method public "><a href="#editar" title="editar :: editar(): Obtiene el libro con el ID = $id y muestra la vista para editarlo."><span class="description">editar(): Obtiene el libro con el ID = $id y muestra la vista para editarlo.</span><pre>editar()</pre></a></li>
+<li class="method public inherited"><a href="#error" title="error :: Establece mensajes de error."><span class="description">Establece mensajes de error.</span><pre>error()</pre></a></li>
+<li class="method public "><a href="#exportar" title="exportar :: Obtiene los libros del usuario que ha iniciado sesión."><span class="description">Obtiene los libros del usuario que ha iniciado sesión.</span><pre>exportar()</pre></a></li>
+<li class="method public "><a href="#index" title="index :: index(): Recupera todos los libros asociados al usuario que ha iniciado sesión."><span class="description">index(): Recupera todos los libros asociados al usuario que ha iniciado sesión.</span><pre>index()</pre></a></li>
+<li class="method public inherited"><a href="#info" title="info :: Establece mensajes de información."><span class="description">Establece mensajes de información.</span><pre>info()</pre></a></li>
+<li class="method public inherited"><a href="#isAdmin" title="isAdmin :: Verifica si el Usuario es administrador."><span class="description">Verifica si el Usuario es administrador.</span><pre>isAdmin()</pre></a></li>
+<li class="method public inherited"><a href="#isAuthorized" title="isAuthorized :: Verifica si el usuario está autorizado para determinadas acciones de los controladores."><span class="description">Verifica si el usuario está autorizado para determinadas acciones de los controladores.</span><pre>isAuthorized()</pre></a></li>
+<li class="method public "><a href="#json_index" title="json_index :: json_index(): Busca los libros en base a un campo y un patrón."><span class="description">json_index(): Busca los libros en base a un campo y un patrón.</span><pre>json_index()</pre></a></li>
+<li class="method public "><a href="#nuevo" title="nuevo :: nuevo(): Crea un nuevo Libro."><span class="description">nuevo(): Crea un nuevo Libro.</span><pre>nuevo()</pre></a></li>
+<li class="method public inherited"><a href="#refreshAuth" title="refreshAuth :: Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales."><span class="description">Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales.</span><pre>refreshAuth()</pre></a></li>
+<li class="method public "><a href="#search" title="search :: search(): Busca un libro en base a un patrón."><span class="description">search(): Busca un libro en base a un patrón.</span><pre>search()</pre></a></li>
+<li class="method public inherited"><a href="#success" title="success :: Establece mensajes de éxito."><span class="description">Establece mensajes de éxito.</span><pre>success()</pre></a></li>
+<li class="method public "><a href="#ver" title="ver :: ver(): Muestra un libro con el ID = $id."><span class="description">ver(): Muestra un libro con el ID = $id.</span><pre>ver()</pre></a></li>
+<li class="method public inherited"><a href="#warning" title="warning :: Establece mensajes de advertencia."><span class="description">Establece mensajes de advertencia.</span><pre>warning()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private inherited"><a href="#_fixAssociativeArray" title="_fixAssociativeArray :: Arregla el array de contenidos para que puede ser parseado a un objeto XML."><span class="description">Arregla el array de contenidos para que puede ser parseado a un objeto XML.</span><pre>_fixAssociativeArray()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24components" title="$components :: Componentes necesarios que utiliza el Controlador."><span class="description">Componentes necesarios que utiliza el Controlador.</span><pre>$components</pre></a></li>
+<li class="property public "><a href="#%24name" title="$name :: Nombre del Controlador."><span class="description">Nombre del Controlador.</span><pre>$name</pre></a></li>
+<li class="property public "><a href="#%24paginate" title="$paginate :: Opciones para la paginación de los Libros."><span class="description">Opciones para la paginación de los Libros.</span><pre>$paginate</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CLibrosController" id="\LibrosController"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/LibrosController.html">LibrosController</a>
+</li>
+</ul>
+<div href="../classes/LibrosController.html" class="element class">
+<p class="short_description">Controlador de Libros.</p>
+<div class="details">
+<p class="long_description"><p>En esta clase se agregan los métodos y propiedades que deberán tener todos los controladores.</p></p>
+<table class="table table-bordered">
+<tr>
+<th>class</th>
+<td>LibrosController</td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="../packages/Default.html">Cake.Controller</a></td>
+</tr>
+</table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="_exportar" id="_exportar"></a><div class="element clickable method public _exportar" data-toggle="collapse" data-target="._exportar .collapse">
+<h2>Función que permite exportar los datos de los modelos en PDF, TXT o XML.</h2>
+<pre>_exportar(Array $results, String $type) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::_exportar()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$results</h4>
+<code>Array</code>
+</div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="admin_exportar" id="admin_exportar"></a><div class="element clickable method public admin_exportar" data-toggle="collapse" data-target=".admin_exportar .collapse">
+<h2>Obtiene todos los libros de la base de Datos y los exporta a un archivo (XML, PDF, TXT).</h2>
+<pre>admin_exportar(String $type) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code><p>Formato en que exportará los libros(XML, PDF, TXT).</p>
+</div>
+</div></div>
+</div>
+<a name="admin_index" id="admin_index"></a><div class="element clickable method public admin_index" data-toggle="collapse" data-target=".admin_index .collapse">
+<h2>admin_index(): Recupera todos los libros que existen en la Base de Datos.</h2>
+<pre>admin_index() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="alert" id="alert"></a><div class="element clickable method public alert" data-toggle="collapse" data-target=".alert .collapse">
+<h2>Establece mensajes en las sesiones.</h2>
+<pre>alert(String $message, String $type, String $key) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::alert()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$key</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="beforeFilter" id="beforeFilter"></a><div class="element clickable method public beforeFilter" data-toggle="collapse" data-target=".beforeFilter .collapse">
+<h2>Función llamada antes de ejecutar cualquier acción del controlador.</h2>
+<pre>beforeFilter() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="beforeRender" id="beforeRender"></a><div class="element clickable method public beforeRender" data-toggle="collapse" data-target=".beforeRender .collapse">
+<h2>Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista.</h2>
+<pre>beforeRender() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::beforeRender()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="borrar" id="borrar"></a><div class="element clickable method public borrar" data-toggle="collapse" data-target=".borrar .collapse">
+<h2>Borra un libro con ID = $id, verificando si el usuario posee permisos para borrar el libro.</h2>
+<pre>borrar(Integer $id) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>Integer</code><p>Identificador de Libro.</p></div>
+<h3>Exceptions</h3>
+<table class="table table-bordered">
+<tr>
+<th><code>\MethodNotAllowedException</code></th>
+<td>Si el método de la petición no es POST o DELETE</td>
+</tr>
+<tr>
+<th><code>\NotFoundException</code></th>
+<td>Si no encuentra al libro con el respectivo ID.</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a name="editar" id="editar"></a><div class="element clickable method public editar" data-toggle="collapse" data-target=".editar .collapse">
+<h2>editar(): Obtiene el libro con el ID = $id y muestra la vista para editarlo.</h2>
+<pre>editar(Integer $id) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>Integer</code>
+</div>
+<h3>Exceptions</h3>
+<table class="table table-bordered"><tr>
+<th><code>\NotFoundException</code></th>
+<td>Si no encuentra al libro con el respectivo ID.</td>
+</tr></table>
+</div></div>
+</div>
+<a name="error" id="error"></a><div class="element clickable method public error" data-toggle="collapse" data-target=".error .collapse">
+<h2>Establece mensajes de error.</h2>
+<pre>error(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::error()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="exportar" id="exportar"></a><div class="element clickable method public exportar" data-toggle="collapse" data-target=".exportar .collapse">
+<h2>Obtiene los libros del usuario que ha iniciado sesión.</h2>
+<pre>exportar(String $type) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code><p>Formato en que exportará los libros (XML, PDF, TXT).</p>
+</div>
+</div></div>
+</div>
+<a name="index" id="index"></a><div class="element clickable method public index" data-toggle="collapse" data-target=".index .collapse">
+<h2>index(): Recupera todos los libros asociados al usuario que ha iniciado sesión.</h2>
+<pre>index() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="info" id="info"></a><div class="element clickable method public info" data-toggle="collapse" data-target=".info .collapse">
+<h2>Establece mensajes de información.</h2>
+<pre>info(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::info()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="isAdmin" id="isAdmin"></a><div class="element clickable method public isAdmin" data-toggle="collapse" data-target=".isAdmin .collapse">
+<h2>Verifica si el Usuario es administrador.</h2>
+<pre>isAdmin(<a href="../classes/User.html">\User</a> $user) : boolean</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Si la propiedad status es igual a 2, entonces el usuario es administrador.</p></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::isAdmin()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$user</h4>
+<code><a href="../classes/User.html">\User</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="isAuthorized" id="isAuthorized"></a><div class="element clickable method public isAuthorized" data-toggle="collapse" data-target=".isAuthorized .collapse">
+<h2>Verifica si el usuario está autorizado para determinadas acciones de los controladores.</h2>
+<pre>isAuthorized(<a href="../classes/User.html">\User</a> $user) : boolean</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::isAuthorized()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$user</h4>
+<code><a href="../classes/User.html">\User</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="json_index" id="json_index"></a><div class="element clickable method public json_index" data-toggle="collapse" data-target=".json_index .collapse">
+<h2>json_index(): Busca los libros en base a un campo y un patrón.</h2>
+<pre>json_index(String $field, String $query) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Los resultados son mostrados en formato JSON.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$field</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$query</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="nuevo" id="nuevo"></a><div class="element clickable method public nuevo" data-toggle="collapse" data-target=".nuevo .collapse">
+<h2>nuevo(): Crea un nuevo Libro.</h2>
+<pre>nuevo() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="refreshAuth" id="refreshAuth"></a><div class="element clickable method public refreshAuth" data-toggle="collapse" data-target=".refreshAuth .collapse">
+<h2>Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales.</h2>
+<pre>refreshAuth(String $field, String $value) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::refreshAuth()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$field</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="search" id="search"></a><div class="element clickable method public search" data-toggle="collapse" data-target=".search .collapse">
+<h2>search(): Busca un libro en base a un patrón.</h2>
+<pre>search() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="success" id="success"></a><div class="element clickable method public success" data-toggle="collapse" data-target=".success .collapse">
+<h2>Establece mensajes de éxito.</h2>
+<pre>success(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::success()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="ver" id="ver"></a><div class="element clickable method public ver" data-toggle="collapse" data-target=".ver .collapse">
+<h2>ver(): Muestra un libro con el ID = $id.</h2>
+<pre>ver(Integer $id) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>Integer</code><p>Identificador del Libro</p></div>
+<h3>Exceptions</h3>
+<table class="table table-bordered"><tr>
+<th><code>\NotFoundException</code></th>
+<td>Si no encuentra al libro con el respectivo ID.</td>
+</tr></table>
+</div></div>
+</div>
+<a name="warning" id="warning"></a><div class="element clickable method public warning" data-toggle="collapse" data-target=".warning .collapse">
+<h2>Establece mensajes de advertencia.</h2>
+<pre>warning(String $message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::warning()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="_fixAssociativeArray" id="_fixAssociativeArray"></a><div class="element clickable method private _fixAssociativeArray" data-toggle="collapse" data-target="._fixAssociativeArray .collapse">
+<h2>Arregla el array de contenidos para que puede ser parseado a un objeto XML.</h2>
+<pre>_fixAssociativeArray(Array $array) : array</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\AppController::_fixAssociativeArray()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$array</h4>
+<code>Array</code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24components" id="$components"> </a><div class="element clickable property public $components" data-toggle="collapse" data-target=".$components .collapse">
+<h2>Componentes necesarios que utiliza el Controlador.</h2>
+<pre>$components : Array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24name" id="$name"> </a><div class="element clickable property public $name" data-toggle="collapse" data-target=".$name .collapse">
+<h2>Nombre del Controlador.</h2>
+<pre>$name : String</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24paginate" id="$paginate"> </a><div class="element clickable property public $paginate" data-toggle="collapse" data-target=".$paginate .collapse">
+<h2>Opciones para la paginación de los Libros.</h2>
+<pre>$paginate : Array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a8</a> and<br>
+            generated on 2012-08-08T12:02:30-05:00.<br></footer></div>
+</div>
+</body>
+</html>

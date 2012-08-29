@@ -1,10 +1,25 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Derecho de Autor 
+ */
 class Derecho extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Derecho';
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'derechos_autor';
     
+    /**
+     * Array de validaciones del Derecho de Autor.
+     * @var Array 
+     */
     public $validate = array(
         'titulo' => array(
             'validate' => array(
@@ -48,6 +63,12 @@ class Derecho extends AppModel {
         )
     );
     
+    /**
+     * Busca un Derecho de Autor del usuario en base a un patrón.
+     * @param String $query Patrón de búsqueda.
+     * @param Integer $id Identificador de Usuario
+     * @return Array Array que contiene al Derecho de Autor encontrado.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(
@@ -61,7 +82,13 @@ class Derecho extends AppModel {
         return $this->find('all', array('conditions' => $conditions));
     }
     
-     public function queryConditions($query = '', $id = null) {
+    /**
+     * Genera condiciones de búsqueda.
+     * @param String $query Patrón de búsqueda.
+     * @param String $id Identificador de Usuario
+     * @return array Retorna las condiciones de búsqueda.
+     */
+    public function queryConditions($query = '', $id = null) {
         $conditions = array(
             'OR' => array(
                 array('Derecho.titulo LIKE' => '%' . $query .'%'),

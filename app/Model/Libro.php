@@ -1,10 +1,26 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Libro 
+ */
 class Libro extends AppModel {
+    /**
+     * Nombre de Modelo
+     * @var String 
+     */
     public $name = 'Libro';
+    
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * @var String 
+     */
     public $useTable = 'libros';
     
+    /**
+     * Tipo de Libros
+     * @var array 
+     */
     public $tipoLibros = array( 
         '0' => 'Autorizado',
         '1' => 'Compilación',
@@ -13,6 +29,10 @@ class Libro extends AppModel {
         '4' => 'Traducido'
     );
     
+    /**
+     * Array de Validaciones de Libro.
+     * @var array
+     */
     public $validate = array(
         'isbn' => array(
             'validateISBN' => array(
@@ -127,6 +147,12 @@ class Libro extends AppModel {
         )
     );
     
+    /**
+     * Busca un Libro del usuario en base a un patrón.
+     * @param String $query Patrón de búsqueda.
+     * @param Integer $id Identificador de Usuario
+     * @return Array Array que contiene al Libro encontrado.
+     */
     public function findByQuery($query = '', $id = null) {
         $conditions = array(
             'OR' => array(

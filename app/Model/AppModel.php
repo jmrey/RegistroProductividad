@@ -23,16 +23,19 @@
 App::uses('Model', 'Model');
 
 /**
- * Application model for Cake.
+ * Modelo Base
  *
- * This is a placeholder class.
- * Create the same file in app/Model/AppModel.php
- * Add your application-wide methods to the class, your models will inherit them.
+ * Todos los métodos de este clase serán heredados a todos los Modelos.
  *
  * @package       Cake.Model
  */
 class AppModel extends Model {
     
+    /**
+     * Verifica si un Año está en el rango permitido (1949 - Año Actual)
+     * @param Array $check Añó a verificar.
+     * @return Boolen Si el añó está en el rango permitido retorna True. 
+     */
     public function isYearInRange($check) {
         $value = array_values($check);
         $value = $value[0];
@@ -41,6 +44,12 @@ class AppModel extends Model {
         return ($initYear <= $value && $value <= $currentYear);
     }
     
+    /**
+     *
+     * @param Integer $modelId Identificador del Modelo
+     * @param Intefer $userId Identificador del Usuario.
+     * @return Boolen Retorna True si el Modelos es encontrado, en otro caso False 
+     */
     public function isOwnedBy($modelId, $userId) {
         return $this->field('id', array('id' => $modelId, 'user_id' => $userId)) === $modelId;
     }

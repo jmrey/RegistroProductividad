@@ -2,11 +2,24 @@
 
 App::uses('CakeEmail', 'Network/Email');
 
+/**
+ * Controlador de Usuario 
+ */
 class UsersController extends AppController {
+    /**
+     * Nombre del Controlador
+     * @var String 
+     */
     public $name = 'Users';
+    /**
+     * Componentes que usa el controlador.
+     * @var Array 
+     */
     public $components = array('Session');
-    //public $uses = array('User', 'Contenido');
     
+    /**
+     * Método que se ejecuta antes de cualquier acción. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $allowActions = array('add', 'login', 'logout', 'validar', 'resetpassword', 'ticket');
@@ -16,14 +29,19 @@ class UsersController extends AppController {
         $this->Auth->allow($allowActions);
     }
     
+    /**
+     * login(): Permite iniciar sesión a los usuarios. 
+     */
     public function login() {
         if ($this->request->is('post')) {
             $user = $this->User->findByUsername($this->request->data['User']['username']);
+            // Verifica si la cuenta de usuario ha sido activada (status debe ser mayor que cero).
             if ($user != null && $user['User']['status'] <= 0) {
                 $this->error('Tu cuenta no ha sido verificada');
             } else {
                 if ($this->Auth->login()) {
                     $this->loadModel('Contenido');
+                    // Carga todos las propiedades de la aplicación.
                     $this->Session->write('App.settings', $this->Contenido->getProperties());
                     $this->redirect(array('controller' => 'dashboard', 'action' => 'index'));
                 } else {
@@ -37,20 +55,32 @@ class UsersController extends AppController {
         }
     }
     
+    /**
+     * admin_login(): Redirecciona a la acción login sin permisos de administrador. 
+     */
     public function admin_login() {
         $this->redirect(array('admin' => 0, 'action' => 'login'));
     }
     
+    /**
+     * logout(): Cierra sesión. 
+     */
     public function logout() {
         $this->redirect($this->Auth->logout());
     }
     
+    /**
+     * admin_login(): Muestra al administrador todos los usuarios registrados.
+     */
     public function admin_index() {
         $this->User->recursive = -1;
         $this->set('deptos', $this->User->deptosArray);
         $this->set('users', $this->paginate());
     }
     
+    /**
+     * add(): Permite crear una nueva cuenta de usuario. 
+     */
     public function add() {
         $this->loadModel('Contenido');
         $this->loadModel('Escuela');
@@ -62,6 +92,7 @@ class UsersController extends AppController {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
                 if ($validate_accounts) {
+                    // Envía correo de verificación si está habilitado.
                     $this->_sendKeyCode(
                             $this->request->data['User']['email'],
                             $this->request->data['User']['keycode']
@@ -80,6 +111,9 @@ class UsersController extends AppController {
         $this->set('escuelas', $this->Escuela->listEscuelas());
     }
     
+    /**
+     * perfil(): Carga el perfil del usuario que ha iniciado sesión. 
+     */
     public function perfil() {
         $this->loadModel('Escuela');
         $this->loadModel('Departamento');
@@ -87,6 +121,11 @@ class UsersController extends AppController {
         $this->set('depto', $this->Departamento->listDeptosFromEscuela($this->Auth->user('escuela')));
     }
     
+    /**
+     * admin_perfil(): Permite ver el perfil del usuario con el ID = $id al administrador.
+     * @param Integer $id Identidicador del usuario.
+     * @throws NotFoundException Si el usuario con el ID = $id no existe en la Base de Datos.
+     */
     public function admin_perfil($id = null) {
         if (!$id) {
             $this->redirect(array('admin' => 0, 'action' => 'perfil'));
@@ -100,6 +139,12 @@ class UsersController extends AppController {
         $this->set('user', $user['User']);
     }
     
+    /**
+     * edit(): Permite al usuario editar el perfil con el que ha iniciado sesión. 
+     * Una vez cambiados los datos del usuario se genera un nuevo código clave para el usuario.
+     * 
+     * @throws NotFoundException Si el usuario con el ID = ID de sesión no existe en la Base de Datos.
+     */
     public function edit() {
         $this->loadModel('Contenido');
         $this->loadModel('Escuela');
@@ -116,6 +161,7 @@ class UsersController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             // Se sobreescrube el id por el id correcto (sólo por seguridad).
             $this->request->data['User']['id'] = $id;
+            // Se genera un  nuevo código clave.
             $this->request->data['User']['keycode'] = Security::hash(date('mdY').rand(4000000,4999999));
             $deptos = $this->Departamento->listDeptosFromEscuela($this->request->data['User']['escuela']);
             /* El usuario solo puede actualizar sólo los siguientes campos. */
@@ -129,7 +175,7 @@ class UsersController extends AppController {
             }
         } else {
             $user = $this->User->read(null, $id);
-            $deptos = $this->Departamento->listDeptos($user['User']['escuela']);
+            $deptos = $this->Departamento->listDeptosFromEscuela($user['User']['escuela']);
             $this->request->data = $user;
             unset($this->request->data['User']['password']);
             unset($this->request->data['User']['id']);
@@ -138,6 +184,13 @@ class UsersController extends AppController {
         $this->set('deptos', $deptos);
     }
     
+    /**
+     * admin_upgrade(): Permite al administrador cambiar el rol del usuario con el ID = $id.
+     * @param type $id Identificador del usuario.
+     * @param type $keycode Código de seguridad del Usuario.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST
+     * @throws NotFoundException Si el usuario con ID = $id no existe.
+     */
     public function admin_upgrade($id = null, $keycode = null) {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException('Método no permitido.');
@@ -168,6 +221,13 @@ class UsersController extends AppController {
         
     }
     
+    /**
+     * resetpassword(): Permite al usuario recuperar su contraseña en caso de ser olvidada.
+     * 
+     * El correo de recuperación de contraseña será enviado al correo electrónico que el usuario tenga registrado.
+     * Se generará un Ticket por motivos de seguridad que expirará en un determinado tiempo.
+     * Ver Ticket->getExpirationDate().
+     */
     public function resetpassword() {
         if ($this->request->is('post')) {
             $user = $this->User->findByEmail($this->request->data['User']['email']);
@@ -181,7 +241,7 @@ class UsersController extends AppController {
                 $this->_sendRecoverPassword($email, $keycode);
                 $data['Ticket']['hash'] = $keycode;
                 $data['Ticket']['data'] = $email;
-                $data['Ticket']['expires'] = $this->Ticket->getExpirationDate();
+                $data['Ticket']['expires'] = $this->getExpirationDate();
                 if ($this->Ticket->save($data)) {
                     $this->success('Ha sido enviado el correo con éxito a ' . $email);
                 } else {
@@ -191,6 +251,10 @@ class UsersController extends AppController {
         }
     }
     
+    /**
+     * Verifica si ha sido generado un ticket para cambiar la contraseña.
+     * @param String $hash Hash generado para comprobar que el usuario quiere recuperar sus contraseña.
+     */
     public function ticket($hash) {
         $this->loadModel('Ticket');
         $results = $this->Ticket->checkTicket($hash);
@@ -206,6 +270,12 @@ class UsersController extends AppController {
         }
     }
     
+    /**
+     * Permite generar una nueva contraseña al usuario con el CÓDIGO CLAVE = $keycode
+     * 
+     * Una vez cambiada la contraseña de usuario genera un nuevo código clave para el usuario.
+     * @param String $keycode Código de seguridad del usuario. 
+     */
     public function nuevopassword($keycode = null) {
         $user = $this->User->findByKeycode($keycode);
         if (!empty($user)) {
@@ -214,6 +284,7 @@ class UsersController extends AppController {
                     $this->error('Verifica que las contraseñas sean iguales.');
                 } else {
                     $user['User']['password'] = $this->request->data['User']['confirm_password'];
+                    // Se genera un  nuevo código clave.
                     $user['User']['keycode'] = Security::hash(date('mdY').rand(4000000,4999999));
                     if ($this->User->save($user)) {
                         $this->refreshAuth();
@@ -234,6 +305,11 @@ class UsersController extends AppController {
         
     }
     
+    /**
+     * validar(): Valida el correo electrónico del usuario.
+     * Una vez validada la cuenta de usuario, cambia el status del usuario para permitirle iniciar sesión.
+     * @param String $keycode Código de seguridad (HASH)
+     */
     public function validar($keycode = null) {
         $this->User->recursive = -1;
         $user = $this->User->findByKeycode($keycode);
@@ -256,6 +332,11 @@ class UsersController extends AppController {
         }
     }
     
+    /**
+     * Envía email de verificación de la cuenta.
+     * @param String $email Correo electrónido del usuario.
+     * @param Stirng $keycode Código de seguridad (HASH)
+     */
     private function _sendKeyCode($email = null, $keycode = null) {
         $this->_sendEmail($email, 'Sepi: ' . $email, 'validateEmail', array(
             'email' => $email,
@@ -264,6 +345,11 @@ class UsersController extends AppController {
         ));
     }
     
+    /**
+     * Envía email para regenerar contraseña.
+     * @param String $email Correo electrónido del usuario.
+     * @param Stirng $keycode Código de seguridad (HASH)
+     */
     private function _sendRecoverPassword($email = null, $keycode = null) {
         $this->_sendEmail($email, 'Sepi: ' . $email, 'recoverPassword', array(
             'email' => $email,
@@ -272,6 +358,13 @@ class UsersController extends AppController {
         ));
     }
     
+    /**
+     * Envia un email a $mail, con el asunto $subject, utilizando la plantilla $template.
+     * @param String $mail Correo electrónico del destinatario.
+     * @param String $subject Asunto del correo electrónico.
+     * @param String $template Plantilla que se usará al enviar.
+     * @param Array $vars Array asociativo de variables que utiliza la plantilla.
+     */
     private function _sendEmail($mail = null, $subject = null, $template = null, $vars = array()) {
         $email = new CakeEmail('gmail');
         $email->template($template, 'default')

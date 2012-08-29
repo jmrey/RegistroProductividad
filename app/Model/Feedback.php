@@ -1,16 +1,36 @@
 <?php
 App::uses('AuthComponent', 'Controller/Component');
 
+/**
+ * Modelo de Retroalimentación 
+ */
 class Feedback extends AppModel {
+    /**
+     * Nombre del Modelos
+     * @var string 
+     */
     public $name = 'Feedback';
+    /**
+     * Nombre de la Tabla en la Base de Datos que utilizará el modelo.
+     * En este caso no se usará tabla.
+     * @var string 
+     */
     public $useTable = false;
     
+    /**
+     * Esquema asociado al Modelo.
+     * @var array 
+     */
     var $_schema = array(
         'nombre'	=> array('type' => 'string', 'length' => 100), 
         'email'		=> array('type' => 'string', 'length' => 255), 
         'detalles'	=> array('type' => 'text')
     );
     
+    /**
+     * Array de validaciones de Feedback.
+     * @var array 
+     */
     var $validate = array(
         'nombre' => array(
             'required' => array(

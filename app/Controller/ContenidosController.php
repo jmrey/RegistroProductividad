@@ -1,14 +1,34 @@
 <?php
-
+/**
+ * Controlador de Contenidos.
+ * @class ContenidosController
+ * @extends AppController 
+ */
 class ContenidosController extends AppController {
+    /**
+     * Nombre del Controlador
+     * @var string 
+     */
     public $name = 'Contenidos';
+    /**
+     * Componentes que utilizará el Controlador.
+     * @var array 
+     */
     public $components = array('Session');
     
+    /**
+     * Función llamada antes de ejecutar cualquier acción del controlador. 
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('display');
     }
     
+    /**
+     * Muestra el contenido con el NOMBRE = $name
+     * @param String $name Nombre de Contenido
+     * @throws NotFoundException Si el contenido no ha sido encontrado.
+     */
     public function display($name = null) {
         $contenido = $this->Contenido->findByName($name);
         if ($contenido == null) {
@@ -21,6 +41,9 @@ class ContenidosController extends AppController {
         $this->set('contenido', $contenido['Contenido']);
     }
     
+    /**
+     * admin_add(): Permite al administrador agregar un nuevo contenido. 
+     */
     public function admin_add() {
         if (!parent::isAdmin()) {
             $this->redirect('/');
@@ -35,6 +58,12 @@ class ContenidosController extends AppController {
         }
     }
     
+    /**
+     * admin_set(): Permite agregar propiedades para configurar la aplicación.
+     * @param String $property Nombre de la propiedad de Contenido.
+     * @param String $value Valor de la Propiedad de Conteido.
+     * @throws MethodNotAllowedException Si el método de la petición no es POST o DELETE
+     */
     public function admin_set($property = null, $value = null) {
         $this->autoRender = false;
         if (!$this->request->is('post')) {
@@ -52,6 +81,11 @@ class ContenidosController extends AppController {
         echo $response;
     }
     
+    /**
+     * admin_editar(): Permite al administrador editar al contenido con NOMBRE = $name.
+     * @param String $name Nombre de Contenido
+     * @throws NotFoundException Si el contenido no ha sido encontrado.
+     */
     public function admin_editar($name = null) {
         if (!parent::isAdmin()) {
             $this->redirect('/');

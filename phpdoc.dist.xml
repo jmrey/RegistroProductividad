@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+	<title>Registro de Productividad</title>
+  <parser>
+    <target>docs/</target>
+  </parser>
+  <transformer>
+    <target>docs/</target>
+  </transformer>
+  <files>
+    <directory>app/</directory>
+    <ignore>app/Console/*</ignore>
+    <ignore>app/Lib/*</ignore>
+    <ignore>app/Locale/*</ignore>
+    <ignore>app/Plugin/*</ignore>
+    <ignore>app/Test/*</ignore>
+    <ignore>app/tmp/*</ignore>
+    <ignore>app/Vendor/*</ignore>
+  </files>
+</phpdoc>

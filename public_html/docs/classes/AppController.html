@@ -1,0 +1,292 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>Registro de Productividad » \AppController</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">Registro de Productividad</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Cake.html"><i class="icon-folder-open"></i> Cake</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/app.html"><i class="icon-folder-open"></i> app</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">62</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#_exportar" title="_exportar :: Función que permite exportar los datos de los modelos en PDF, TXT o XML."><span class="description">Función que permite exportar los datos de los modelos en PDF, TXT o XML.</span><pre>_exportar()</pre></a></li>
+<li class="method public "><a href="#alert" title="alert :: Establece mensajes en las sesiones."><span class="description">Establece mensajes en las sesiones.</span><pre>alert()</pre></a></li>
+<li class="method public "><a href="#beforeFilter" title="beforeFilter :: Función llamada antes de ejecutar cada acción del controlador."><span class="description">Función llamada antes de ejecutar cada acción del controlador.</span><pre>beforeFilter()</pre></a></li>
+<li class="method public "><a href="#beforeRender" title="beforeRender :: Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista."><span class="description">Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista.</span><pre>beforeRender()</pre></a></li>
+<li class="method public "><a href="#error" title="error :: Establece mensajes de error."><span class="description">Establece mensajes de error.</span><pre>error()</pre></a></li>
+<li class="method public "><a href="#info" title="info :: Establece mensajes de información."><span class="description">Establece mensajes de información.</span><pre>info()</pre></a></li>
+<li class="method public "><a href="#isAdmin" title="isAdmin :: Verifica si el Usuario es administrador."><span class="description">Verifica si el Usuario es administrador.</span><pre>isAdmin()</pre></a></li>
+<li class="method public "><a href="#isAuthorized" title="isAuthorized :: Verifica si el usuario está autorizado para determinadas acciones de los controladores."><span class="description">Verifica si el usuario está autorizado para determinadas acciones de los controladores.</span><pre>isAuthorized()</pre></a></li>
+<li class="method public "><a href="#refreshAuth" title="refreshAuth :: Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales."><span class="description">Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales.</span><pre>refreshAuth()</pre></a></li>
+<li class="method public "><a href="#success" title="success :: Establece mensajes de éxito."><span class="description">Establece mensajes de éxito.</span><pre>success()</pre></a></li>
+<li class="method public "><a href="#warning" title="warning :: Establece mensajes de advertencia."><span class="description">Establece mensajes de advertencia.</span><pre>warning()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#_fixAssociativeArray" title="_fixAssociativeArray :: Arregla el array de contenidos para que puede ser parseado a un objeto XML."><span class="description">Arregla el array de contenidos para que puede ser parseado a un objeto XML.</span><pre>_fixAssociativeArray()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24components" title="$components :: Array que contiene los componentes que necesita el controlador, en este caso, los componentes
+que necesita la clase base AppController."><span class="description">Array que contiene los componentes que necesita el controlador, en este caso, los componentes
+que necesita la clase base AppController.</span><pre>$components</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CAppController" id="\AppController"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/AppController.html">AppController</a>
+</li>
+</ul>
+<div href="../classes/AppController.html" class="element class">
+<p class="short_description">Clase base de los controladores.</p>
+<div class="details">
+<p class="long_description"><p>En esta clase se agregan los métodos y propiedades que deberán tener todos los controladores.</p></p>
+<table class="table table-bordered">
+<tr>
+<th>package</th>
+<td><a href="../packages/Cake.Controller.html">Cake.Controller</a></td>
+</tr>
+<tr>
+<th>link</th>
+<td><a href="http://book.cakephp.org/view/957/The-App-Controller">http://book.cakephp.org/view/957/The-App-Controller</a></td>
+</tr>
+</table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="_exportar" id="_exportar"></a><div class="element clickable method public _exportar" data-toggle="collapse" data-target="._exportar .collapse">
+<h2>Función que permite exportar los datos de los modelos en PDF, TXT o XML.</h2>
+<pre>_exportar(Array $results, String $type) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$results</h4>
+<code>Array</code>
+</div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="alert" id="alert"></a><div class="element clickable method public alert" data-toggle="collapse" data-target=".alert .collapse">
+<h2>Establece mensajes en las sesiones.</h2>
+<pre>alert(String $message, String $type, String $key) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$key</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="beforeFilter" id="beforeFilter"></a><div class="element clickable method public beforeFilter" data-toggle="collapse" data-target=".beforeFilter .collapse">
+<h2>Función llamada antes de ejecutar cada acción del controlador.</h2>
+<pre>beforeFilter() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="beforeRender" id="beforeRender"></a><div class="element clickable method public beforeRender" data-toggle="collapse" data-target=".beforeRender .collapse">
+<h2>Función llamada después de que cada acción del controlador ha sido ejecutada,
+pero antes de renderizar su vista.</h2>
+<pre>beforeRender() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="error" id="error"></a><div class="element clickable method public error" data-toggle="collapse" data-target=".error .collapse">
+<h2>Establece mensajes de error.</h2>
+<pre>error(String $message) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="info" id="info"></a><div class="element clickable method public info" data-toggle="collapse" data-target=".info .collapse">
+<h2>Establece mensajes de información.</h2>
+<pre>info(String $message) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="isAdmin" id="isAdmin"></a><div class="element clickable method public isAdmin" data-toggle="collapse" data-target=".isAdmin .collapse">
+<h2>Verifica si el Usuario es administrador.</h2>
+<pre>isAdmin(<a href="../classes/User.html">\User</a> $user) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Si la propiedad status es igual a 2, entonces el usuario es administrador.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$user</h4>
+<code><a href="../classes/User.html">\User</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="isAuthorized" id="isAuthorized"></a><div class="element clickable method public isAuthorized" data-toggle="collapse" data-target=".isAuthorized .collapse">
+<h2>Verifica si el usuario está autorizado para determinadas acciones de los controladores.</h2>
+<pre>isAuthorized(<a href="../classes/User.html">\User</a> $user) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$user</h4>
+<code><a href="../classes/User.html">\User</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="refreshAuth" id="refreshAuth"></a><div class="element clickable method public refreshAuth" data-toggle="collapse" data-target=".refreshAuth .collapse">
+<h2>Actualiza los datos de la Sesión del usuario que ha ingresado sus credenciales.</h2>
+<pre>refreshAuth(String $field, String $value) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$field</h4>
+<code>String</code>
+</div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="success" id="success"></a><div class="element clickable method public success" data-toggle="collapse" data-target=".success .collapse">
+<h2>Establece mensajes de éxito.</h2>
+<pre>success(String $message) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="warning" id="warning"></a><div class="element clickable method public warning" data-toggle="collapse" data-target=".warning .collapse">
+<h2>Establece mensajes de advertencia.</h2>
+<pre>warning(String $message) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code>String</code>
+</div>
+</div></div>
+</div>
+<a name="_fixAssociativeArray" id="_fixAssociativeArray"></a><div class="element clickable method private _fixAssociativeArray" data-toggle="collapse" data-target="._fixAssociativeArray .collapse">
+<h2>Arregla el array de contenidos para que puede ser parseado a un objeto XML.</h2>
+<pre>_fixAssociativeArray(Array $array) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$array</h4>
+<code>Array</code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24components" id="$components"> </a><div class="element clickable property public $components" data-toggle="collapse" data-target=".$components .collapse">
+<h2>Array que contiene los componentes que necesita el controlador, en este caso, los componentes
+que necesita la clase base AppController.</h2>
+<pre>$components : Array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a8</a> and<br>
+            generated on 2012-08-08T12:02:30-05:00.<br></footer></div>
+</div>
+</body>
+</html>
